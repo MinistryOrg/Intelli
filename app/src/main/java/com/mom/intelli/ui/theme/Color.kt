@@ -1,11 +1,27 @@
 package com.mom.intelli.ui.theme
 
 import androidx.compose.ui.graphics.Color
+//Main Color
+val MainBackgroundColor = Color(0xFF121212)
+val TextWhite = Color(0xffeeeeee)
+val IconsColor = Color(0xFF9B9B9B)
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+//Colors For Home Screen
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+//Colors For Calendar
+
+//Colors For Weather
+
+//Colors For Search
+
+//Colors For Email
+
+//Colors For Maps
+
+//Colors For News And Sports
+
+//Colors For Eshop
+
+//Colors For Smart Home
+
+//Colors For Music Player
