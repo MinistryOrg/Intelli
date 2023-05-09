@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.service.IntelliService
 import com.mom.intelli.ui.screens.CalendarWidget
+import com.mom.intelli.ui.screens.EmailWidget
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -133,7 +134,8 @@ fun MainList(
 
             CalendarWidget(paddingValues = vrtpadding, navController = navController)
             WeatherWidget(paddingValues = vrtpadding, intelliService = intelliService)
-            EmailWidget(paddingValues = vrtpadding)
+            // TODO ADD SEARCH WIDGET
+            EmailWidget(paddingValues = vrtpadding, navController = navController)
             MapsWidget(paddingValues = vrtpadding, intelliService = intelliService)
             NewsWidget(paddingValues = vrtpadding)
             EshopWidget(paddingValues = vrtpadding)
@@ -170,24 +172,7 @@ fun WeatherWidget(
     }
 }
 
-@Composable
-fun EmailWidget(
-    paddingValues: Dp
-) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = paddingValues)
-            .background(MainBackgroundColor),
-        shape = RoundedCornerShape(15.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.email),
-            contentDescription = null,
-            modifier = Modifier
-                .background(MainBackgroundColor)
-        )
-    }
-}
+
 
 @Composable
 fun MapsWidget(
