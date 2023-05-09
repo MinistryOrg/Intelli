@@ -31,24 +31,25 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.service.IntelliService
+import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.theme.IconsColor
-import com.mom.intelli.ui.theme.IntelliTheme
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController
+) {
     Column {
         Scaffold(
             modifier = Modifier,
@@ -77,7 +78,7 @@ fun HomeScreen() {
             },
             content = { paddingValues: PaddingValues ->
                 200.dp
-                MainList(paddingValues)
+                MainList(paddingValues, navController)
 
             }
         )
@@ -106,7 +107,8 @@ fun ImgLogo() {
 
 @Composable
 fun MainList(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navController: NavController
 ) {
     val context = LocalContext.current
     val intelliService = IntelliService(context)
@@ -129,7 +131,7 @@ fun MainList(
                 modifier = Modifier.padding(12.dp)
             )
 
-            CalendarWidget(paddingValues = vrtpadding)
+            CalendarWidget(paddingValues = vrtpadding, navController = navController)
             WeatherWidget(paddingValues = vrtpadding, intelliService = intelliService)
             EmailWidget(paddingValues = vrtpadding)
             MapsWidget(paddingValues = vrtpadding, intelliService = intelliService)
@@ -141,67 +143,7 @@ fun MainList(
     }
 }
 
-@Composable
-fun CalendarWidget(
-    paddingValues: Dp
-) {
-    Card(
-        modifier = Modifier
-            .background(MainBackgroundColor)
-            .padding(vertical = paddingValues),
-        shape = RoundedCornerShape(15.dp),
-        colors = CardDefaults.cardColors(containerColor = MainBackgroundColor)
-    ) {
-        Box(
-            modifier = Modifier
-                .height(174.dp)
-                .background(MainBackgroundColor)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.calendar),
-                contentDescription = null,
-                modifier = Modifier
-                    .background(MainBackgroundColor),
-                contentScale = ContentScale.Crop
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(5.dp)
 
-            ) {
-                Text(
-                    text = "Day,Date,Month,Year",
-                    color = TextWhite,
-                    modifier = Modifier.padding(8.dp)
-                )
-                Box(modifier = Modifier.align(Alignment.BottomStart)) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.calendar_icon),
-                        contentDescription = "Calendar_icon",
-                        tint = TextWhite,
-                        modifier = Modifier
-                            .size(25.dp),
-                    )
-                    Text(
-                        text = "Calendar",
-                        color = TextWhite,
-                        modifier = Modifier.padding(start = 30.dp)
-                    )
-                }
-            }
-        }
-
-    }
-}
-
-@Preview
-@Composable
-fun CalendarPreview() {
-    IntelliTheme {
-        CalendarWidget(paddingValues = 5.dp)
-    }
-}
 
 
 @Composable

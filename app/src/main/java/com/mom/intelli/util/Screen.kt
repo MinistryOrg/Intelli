@@ -1,0 +1,11 @@
+package com.mom.intelli.util
+
+
+const val ROOT_GRAPH_ROUTE = "root"
+const val HOME_GRAPH_ROUTE = "home"
+
+sealed class Screen (val route : String) {
+    object Home : Screen("home_screen")
+
+    object Calendar : Screen("cal_screen")
+}
