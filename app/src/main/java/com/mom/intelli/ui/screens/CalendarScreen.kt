@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -115,7 +118,7 @@ fun CalendarScreen(
                     .background(MainBackgroundColor)
             ) {
                 CenterAlignedTopAppBar(
-                    { ImgLogo() },
+                    { ImgCalendarLogo() },
                     colors = TopAppBarDefaults
                         .centerAlignedTopAppBarColors(MainBackgroundColor),
                     navigationIcon = {
@@ -144,8 +147,34 @@ fun CalendarScreen(
                 )
             }
         },
-        content = { }
+        content = {
+            Box(
+                modifier = Modifier
+                    .background(MainBackgroundColor)
+                    .fillMaxSize()
+            ){
+
+            }
+        }
     )
     
 }
 
+@Composable
+fun ImgCalendarLogo() {
+    Column(
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .fillMaxHeight()
+            .background(MainBackgroundColor)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.intelli_calendar_logo_2), // Replace with your image resource
+            contentDescription = "Image",
+            modifier = Modifier
+                .width(170.dp)
+                .height(100.dp), // Set the desired height of the image
+            alignment = Alignment.Center
+        )
+    }
+}
