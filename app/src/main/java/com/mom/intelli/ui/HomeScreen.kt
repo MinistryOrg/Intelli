@@ -87,24 +87,7 @@ fun HomeScreen(
 
 }
 
-@Composable
-fun ImgLogo() {
-    Column(
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .fillMaxHeight()
-            .background(MainBackgroundColor)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.intelli_logo), // Replace with your image resource
-            contentDescription = "Image",
-            modifier = Modifier
-                .width(100.dp)
-                .height(40.dp), // Set the desired height of the image
-            alignment = Alignment.Center
-        )
-    }
-}
+
 
 @Composable
 fun MainList(

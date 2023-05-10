@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.mom.intelli.R
+import com.mom.intelli.ui.ImgEmailLogo
 import com.mom.intelli.ui.ImgLogo
 import com.mom.intelli.ui.theme.CancelBtnClr
 import com.mom.intelli.ui.theme.IconsColor
@@ -63,6 +64,7 @@ import com.mom.intelli.ui.theme.TextFieldColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 
+//THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
 fun EmailWidget(
     paddingValues: Dp,
@@ -175,6 +177,7 @@ fun EmailWidgetPrev() {
     }
 }
 
+//THIS IS THE EMAIL SCREEN
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -189,7 +192,7 @@ fun EmailScreen(
                     .background(MainBackgroundColor)
             ) {
                 CenterAlignedTopAppBar(
-                    { ImgLogo() },
+                    { ImgEmailLogo() },
                     colors = TopAppBarDefaults
                         .centerAlignedTopAppBarColors(MainBackgroundColor),
                     navigationIcon = {

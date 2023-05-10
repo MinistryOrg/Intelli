@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.ui.ImgCalendarLogo
 import com.mom.intelli.ui.ImgLogo
 import com.mom.intelli.ui.MainList
 import com.mom.intelli.ui.theme.IconsColor
@@ -43,7 +44,7 @@ import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 
-
+//THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
 fun CalendarWidget(
     paddingValues: Dp,
@@ -102,6 +103,7 @@ fun CalendarWidget(
     }
 }
 
+//THIS IS THE CALENDAR SCREEN
 /*TODO !!TO GO BACK TO HOME SCREEN USE navController.popBackStack()*/
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -160,21 +162,3 @@ fun CalendarScreen(
     
 }
 
-@Composable
-fun ImgCalendarLogo() {
-    Column(
-        verticalArrangement = Arrangement.SpaceAround,
-        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-            .fillMaxHeight()
-            .background(MainBackgroundColor)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.intelli_calendar_logo_2), // Replace with your image resource
-            contentDescription = "Image",
-            modifier = Modifier
-                .width(170.dp)
-                .height(100.dp), // Set the desired height of the image
-            alignment = Alignment.Center
-        )
-    }
-}
