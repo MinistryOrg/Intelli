@@ -41,6 +41,9 @@ import com.mom.intelli.R
 import com.mom.intelli.service.IntelliService
 import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.screens.EmailWidget
+import com.mom.intelli.ui.screens.EshopWidget
+import com.mom.intelli.ui.screens.NewsWidget
+import com.mom.intelli.ui.screens.SmartHomeWidget
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -120,9 +123,9 @@ fun MainList(
             // TODO ADD SEARCH WIDGET
             EmailWidget(paddingValues = vrtpadding, navController = navController)
             MapsWidget(paddingValues = vrtpadding, intelliService = intelliService)
-            NewsWidget(paddingValues = vrtpadding)
-            EshopWidget(paddingValues = vrtpadding)
-            SmartHomeWidget(paddingValues = vrtpadding)
+            NewsWidget(paddingValues = vrtpadding, navController= navController)
+            EshopWidget(paddingValues = vrtpadding, navController = navController)
+            SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
 
         }
     }
@@ -177,63 +180,5 @@ fun MapsWidget(
                     intelliService.openMaps()
                 }
         )
-    }
-}
-
-@Composable
-fun NewsWidget(
-    paddingValues: Dp
-) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = paddingValues)
-            .background(MainBackgroundColor),
-        shape = RoundedCornerShape(15.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.news_and_sports),
-            contentDescription = null,
-            modifier = Modifier
-                .background(MainBackgroundColor)
-        )
-    }
-}
-
-@Composable
-fun EshopWidget(
-    paddingValues: Dp
-) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = paddingValues)
-            .background(MainBackgroundColor),
-        shape = RoundedCornerShape(15.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.eshop),
-            contentDescription = null,
-            modifier = Modifier
-                .background(MainBackgroundColor)
-        )
-    }
-}
-
-@Composable
-fun SmartHomeWidget(
-    paddingValues: Dp
-) {
-    Card(
-        modifier = Modifier
-            .padding(vertical = paddingValues)
-            .background(MainBackgroundColor),
-        shape = RoundedCornerShape(15.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.smart_home),
-            contentDescription = null,
-            modifier = Modifier
-                .background(MainBackgroundColor)
-        )
-
     }
 }

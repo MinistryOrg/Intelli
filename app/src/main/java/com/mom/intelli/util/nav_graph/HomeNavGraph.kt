@@ -7,6 +7,9 @@ import androidx.navigation.compose.navigation
 import com.mom.intelli.ui.HomeScreen
 import com.mom.intelli.ui.screens.CalendarScreen
 import com.mom.intelli.ui.screens.EmailScreen
+import com.mom.intelli.ui.screens.EshopScreen
+import com.mom.intelli.ui.screens.NewsScreen
+import com.mom.intelli.ui.screens.SmartHomeScreen
 import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
 
@@ -31,6 +34,21 @@ fun NavGraphBuilder.homeNavGraph(
             route = Screen.Email.route
         ){
             EmailScreen(navController = navController)
+        }
+        composable(
+            route = Screen.News.route
+        ){
+            NewsScreen(navController = navController)
+        }
+        composable(
+            route = Screen.Eshop.route
+        ){
+            EshopScreen(navController = navController)
+        }
+        composable(
+            route = Screen.SmartHome.route
+        ){
+            SmartHomeScreen(navController = navController)
         }
     }
 }

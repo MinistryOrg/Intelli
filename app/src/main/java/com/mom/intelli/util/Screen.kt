@@ -10,4 +10,11 @@ sealed class Screen (val route : String) {
     object Calendar : Screen("cal_screen")
 
     object Email: Screen("email_screen")
+
+    object News: Screen("news_screen")
+
+    object Eshop: Screen("eshop_screen")
+
+    object SmartHome: Screen("smart_home_screen")
+
 }

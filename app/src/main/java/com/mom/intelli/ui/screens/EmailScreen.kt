@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
@@ -30,11 +28,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -53,8 +47,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgEmailLogo
-import com.mom.intelli.ui.ImgLogo
 import com.mom.intelli.ui.theme.CancelBtnClr
+import com.mom.intelli.ui.theme.DecorColor
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.IntelliTheme
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -266,7 +260,7 @@ fun EmainMainScreen(
                             focusedBorderColor = TextFieldColor,
                             focusedLabelColor = TextColor,
                             focusedSupportingTextColor = TextColor,
-                            cursorColor = TextColor,
+                            cursorColor = DecorColor,
                             unfocusedLabelColor = TextColor
                         )
                     )
@@ -283,7 +277,7 @@ fun EmainMainScreen(
                             focusedBorderColor = TextFieldColor,
                             focusedLabelColor = TextColor,
                             focusedSupportingTextColor = TextColor,
-                            cursorColor = TextColor,
+                            cursorColor = DecorColor,
                             unfocusedLabelColor = TextColor
                         )
                     )
@@ -298,7 +292,7 @@ fun EmainMainScreen(
                             focusedBorderColor = TextFieldColor,
                             focusedLabelColor = TextColor,
                             focusedSupportingTextColor = TextColor,
-                            cursorColor = TextColor,
+                            cursorColor = DecorColor,
                             unfocusedLabelColor = TextColor
                         ),
                         modifier = Modifier

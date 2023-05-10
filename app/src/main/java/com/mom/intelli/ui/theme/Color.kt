@@ -17,6 +17,7 @@ val IconsColor = Color(0xFF9B9B9B)
 //Colors For Email
 val TextFieldColor = Color(0xFFDEDBE2)
 val TextColor = Color(0xffeeeeee)
+val DecorColor = Color(0xffeeeeee)
 val SendEmailBtnClr = Color(0xFF64409E)
 val CancelBtnClr = Color(0xFFBE3333)
 //Colors For Maps

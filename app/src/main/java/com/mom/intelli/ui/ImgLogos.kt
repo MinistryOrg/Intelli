@@ -55,7 +55,7 @@ fun ImgCalendarLogo() {
     }
 }
 
-//IMAGE LOGO FOR CALENDAR
+//IMAGE LOGO FOR EMAIL
 @Composable
 fun ImgEmailLogo() {
     Column(
@@ -74,3 +74,66 @@ fun ImgEmailLogo() {
         )
     }
 }
+
+//IMAGE LOGO FOR ESHOP
+@Composable
+fun ImgEshopLogo() {
+    Column(
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .fillMaxHeight()
+            .background(MainBackgroundColor)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.intelli_eshop_logo), // Replace with your image resource
+            contentDescription = "Image",
+            modifier = Modifier
+                .width(110.dp)
+                .height(100.dp), // Set the desired height of the image
+            alignment = Alignment.Center
+        )
+    }
+}
+
+//IMAGE LOGO FOR SMART HOME
+@Composable
+fun ImgSmartHomeLogo() {
+    Column(
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .fillMaxHeight()
+            .background(MainBackgroundColor)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.intelli_smart_home_logo), // Replace with your image resource
+            contentDescription = "Image",
+            modifier = Modifier
+                .width(110.dp)
+                .height(100.dp), // Set the desired height of the image
+            alignment = Alignment.Center
+        )
+    }
+}
+
+//IMAGE LOGO FOR NEWS
+@Composable
+fun ImgnNewsLogo() {
+    Column(
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .fillMaxHeight()
+            .background(MainBackgroundColor)
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.intelli_news_logo), // Replace with your image resource
+            contentDescription = "Image",
+            modifier = Modifier
+                .width(110.dp)
+                .height(100.dp), // Set the desired height of the image
+            alignment = Alignment.Center
+        )
+    }
+}
+
+
+

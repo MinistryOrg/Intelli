@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -37,8 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgCalendarLogo
-import com.mom.intelli.ui.ImgLogo
-import com.mom.intelli.ui.MainList
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -104,7 +98,7 @@ fun CalendarWidget(
 }
 
 //THIS IS THE CALENDAR SCREEN
-/*TODO !!TO GO BACK TO HOME SCREEN USE navController.popBackStack()*/
+//TODO !!TO GO BACK TO HOME SCREEN USE navController.popBackStack()
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
