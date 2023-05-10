@@ -311,17 +311,13 @@ fun EmainMainScreen(
                     shape = RoundedCornerShape(30.dp),
                     colors = ButtonDefaults.outlinedButtonColors( containerColor = CancelBtnClr),
                     modifier = Modifier
-                        .height(40.dp)
-                        ,
-                    onClick = {
-                        navController.navigate(route = Screen.Home.route)
-                    }
+                        .height(40.dp),
+                    onClick = {navController.popBackStack()}
                 ) {
                     Text(
                         text = "Cancel",
                         color = TextWhite
                     )
-
                 }
                 //[BUTTON TO SEND EMAIL]
                 Button(

@@ -91,6 +91,15 @@ fun CalendarWidget(
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
+                Box(modifier = Modifier.align(Alignment.TopEnd)){
+                    Icon(
+                        painter = painterResource(id = R.drawable.arrow_right_icon),
+                        contentDescription = "Calendar_icon",
+                        tint = TextWhite,
+                        modifier = Modifier
+                            .size(30.dp),
+                    )
+                }
             }
         }
 
