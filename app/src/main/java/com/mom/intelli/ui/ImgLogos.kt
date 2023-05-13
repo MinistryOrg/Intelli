@@ -108,7 +108,7 @@ fun ImgSmartHomeLogo() {
             painter = painterResource(id = R.drawable.intelli_smart_home_logo), // Replace with your image resource
             contentDescription = "Image",
             modifier = Modifier
-                .width(110.dp)
+                .width(160.dp)
                 .height(100.dp), // Set the desired height of the image
             alignment = Alignment.Center
         )

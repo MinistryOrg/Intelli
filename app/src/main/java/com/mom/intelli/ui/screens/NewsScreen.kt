@@ -7,11 +7,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
@@ -27,14 +32,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgnNewsLogo
+import com.mom.intelli.ui.theme.CustomFont
+import com.mom.intelli.ui.theme.DividerClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
+import com.mom.intelli.ui.theme.MajorNewsBoxClr
+import com.mom.intelli.ui.theme.NewsTitleClr
+import com.mom.intelli.ui.theme.SportsNewsBoxClr
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.ui.theme.TitleForYouNewsClr
+import com.mom.intelli.ui.theme.TitleMajorNewsClr
+import com.mom.intelli.ui.theme.TitleSportsNewsClr
 import com.mom.intelli.util.Screen
 
 @Composable
@@ -79,13 +94,15 @@ fun NewsWidget(
                     Text(
                         text = "News and Sports",
                         color = TextWhite,
+                        fontFamily = CustomFont,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
                 Box(modifier = Modifier.align(Alignment.TopEnd)){
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_right_icon),
-                        contentDescription = "Calendar_icon",
+                        contentDescription = "go_to_app_icon",
                         tint = TextWhite,
                         modifier = Modifier
                             .size(30.dp),
@@ -139,9 +156,8 @@ fun NewsScreen(
                 )
             }
         },
-        content = {
-                paddingValues: PaddingValues ->
-            500.dp
+        content = { paddingValues: PaddingValues ->
+            200.dp
             NewsMainScreen(
                 navController = navController
             )
@@ -158,6 +174,163 @@ fun NewsMainScreen(
             .background(MainBackgroundColor)
             .fillMaxSize()
     ){
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) {
+            //[TITLE]
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 64.dp)
+            ) {
+                Text(
+                    text = "Your Briefing",
+                    color = TextWhite,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            //[MAJOR NEWS SECTION]
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp)
+            ) {
+                Text(
+                    text = "Major News",
+                    color = TitleMajorNewsClr,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .height(410.dp)
+                    .padding(top = 10.dp)
+            ){
+                items(2){
+                    MajorNewsItem()
+                }
+            }
+            //[DIVIDER]
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(10.dp)
+                .padding(vertical = 1.dp)
+                .background(DividerClr)
+            )
+            //[Sports NEWS SECTION]
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp)
+            ) {
+
+                Text(
+                    text = "Sports News",
+                    color = TitleSportsNewsClr,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .height(410.dp)
+                    .padding(top = 10.dp)
+            ){
+                items(2){
+                    MajorNewsItem()
+                }
+            }
+            //[DIVIDER]
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(10.dp)
+                .padding(vertical = 1.dp)
+                .background(DividerClr)
+            )
+            //[Based On Your Preferences NEWS SECTION]
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp, top = 10.dp)
+            ) {
+
+                Text(
+                    text = "News For you",
+                    color = TitleForYouNewsClr,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .height(410.dp)
+                    .padding(top = 10.dp)
+            ){
+                items(2){
+                    MajorNewsItem()
+                }
+            }
+        }
 
     }
+}
+
+
+@Composable
+fun MajorNewsItem() {
+
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 15.dp, vertical = 10.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MajorNewsBoxClr),
+        shape = RoundedCornerShape(12.dp)
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.news_img),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth()
+
+        )
+        Text(
+            text = "Title News",
+            modifier = Modifier.
+                padding(horizontal = 10.dp, vertical = 10.dp),
+            color = NewsTitleClr,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp)
+
+    }
+
+}
+
+
+@Composable
+fun SportsNewsItem() {
+
+    Card(
+        modifier = Modifier
+            .padding(horizontal = 15.dp, vertical = 10.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = SportsNewsBoxClr),
+        shape = RoundedCornerShape(12.dp)
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.news_img),
+            contentDescription = null,
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth()
+
+        )
+        Text(
+            text = "Title News",
+            modifier = Modifier.
+            padding(horizontal = 10.dp, vertical = 10.dp),
+            color = NewsTitleClr,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp)
+
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mom.intelli.ui.HomeScreen
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.screens.CalendarScreen
 import com.mom.intelli.ui.screens.EmailScreen
 import com.mom.intelli.ui.screens.EshopScreen
@@ -14,7 +15,8 @@ import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
 
 fun NavGraphBuilder.homeNavGraph(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ){
     navigation(
         startDestination = Screen.Home.route,
@@ -23,7 +25,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.Home.route
         ){
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.Calendar.route
@@ -33,7 +35,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.Email.route
         ){
-            EmailScreen(navController = navController)
+            EmailScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.News.route

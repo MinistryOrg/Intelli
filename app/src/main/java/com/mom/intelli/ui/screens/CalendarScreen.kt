@@ -1,11 +1,13 @@
 package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
+import android.icu.text.DateFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,15 +30,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgCalendarLogo
+import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
+import java.util.Calendar
 
 //THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
@@ -44,6 +51,10 @@ fun CalendarWidget(
     paddingValues: Dp,
     navController: NavController
 ) {
+
+    val calendar = Calendar.getInstance().time
+    val dateFormat = DateFormat.getDateInstance(DateFormat.FULL).format(calendar)
+    val timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)
     Card(
         modifier = Modifier
             .background(MainBackgroundColor)
@@ -72,11 +83,24 @@ fun CalendarWidget(
                     .padding(5.dp)
 
             ) {
-                Text(
-                    text = "Day,Date,Month,Year",
-                    color = TextWhite,
-                    modifier = Modifier.padding(8.dp)
-                )
+                Column() {
+                    Text(
+                        text = dateFormat,
+                        color = TextWhite,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = CustomFont,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = timeFormat,
+                        color = TextWhite,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 25.sp,
+                        fontFamily = CustomFont,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
                 Box(modifier = Modifier.align(Alignment.BottomStart)) {
                     Icon(
                         painter = painterResource(id = R.drawable.calendar_icon),
@@ -88,13 +112,15 @@ fun CalendarWidget(
                     Text(
                         text = "Calendar",
                         color = TextWhite,
+                        fontFamily = CustomFont,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
                 Box(modifier = Modifier.align(Alignment.TopEnd)){
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_right_icon),
-                        contentDescription = "Calendar_icon",
+                        contentDescription = "go_to_app_icon",
                         tint = TextWhite,
                         modifier = Modifier
                             .size(30.dp),

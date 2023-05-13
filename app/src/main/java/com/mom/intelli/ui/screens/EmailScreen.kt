@@ -39,18 +39,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgEmailLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CancelBtnClr
+import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DecorColor
 import com.mom.intelli.ui.theme.IconsColor
-import com.mom.intelli.ui.theme.IntelliTheme
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SendEmailBtnClr
 import com.mom.intelli.ui.theme.TextColor
@@ -62,7 +62,8 @@ import com.mom.intelli.util.Screen
 @Composable
 fun EmailWidget(
     paddingValues: Dp,
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Card(
         modifier = Modifier
@@ -98,6 +99,8 @@ fun EmailWidget(
                     Text(
                         text = "Email",
                         color = TextWhite,
+                        fontFamily = CustomFont,
+                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
@@ -118,12 +121,12 @@ fun EmailWidget(
                             modifier = Modifier
                                 .height(40.dp)
                                 .width(150.dp),
-                            onClick = { /*TODO*/ }
+                            onClick = { intelliViewModel.showEmail() }
                         ) {
                             Text(
                                 text = "View Emails",
                                 color = TextWhite
-                                )
+                            )
                             Icon(
                                 painter = painterResource(id = R.drawable.mail_icon),
                                 contentDescription = "View emails icon",
@@ -163,20 +166,21 @@ fun EmailWidget(
         }
     }
 }
-@Preview
-@Composable
-fun EmailWidgetPrev() {
-    IntelliTheme() {
-        EmailWidget(paddingValues = 5.dp, navController = rememberNavController())
-    }
-}
+//@Preview
+//@Composable
+//fun EmailWidgetPrev() {
+//    IntelliTheme() {
+//        EmailWidget(paddingValues = 5.dp, navController = rememberNavController(), intelliViewModel = )
+//    }
+//}
 
 //THIS IS THE EMAIL SCREEN
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmailScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -219,7 +223,7 @@ fun EmailScreen(
                 paddingValues: PaddingValues ->
             500.dp
             EmainMainScreen(
-                navController = navController
+                navController = navController,intelliViewModel
             )
         }
     )
@@ -228,79 +232,79 @@ fun EmailScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmainMainScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
+    var emailText by remember{ mutableStateOf (TextFieldValue("") ) }
+    var subjText by remember{ mutableStateOf (TextFieldValue("") ) }
+    var text by remember{ mutableStateOf (TextFieldValue("") ) }
     Box(
         modifier = Modifier
             .background(MainBackgroundColor)
             .fillMaxSize()
     ){
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(vertical = 80.dp)
-            ){
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
-                ) {
-                    var emailText by remember{ mutableStateOf (TextFieldValue("") ) }
-                    var subjText by remember{ mutableStateOf (TextFieldValue("") ) }
-                    var text by remember{ mutableStateOf (TextFieldValue("") ) }
-
-                    //[TEXTFIELD TO ADD THE EMAIL ADDRESS YOU WANT TO SEND]
-                    OutlinedTextField(
-                        value = emailText,
-                        label = { Text(text = "Email Address")},
-                        onValueChange = {emailText = it},
-                        maxLines = 1,
-                        singleLine = true,
-                        shape = RoundedCornerShape(15.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = TextColor,
-                            focusedBorderColor = TextFieldColor,
-                            focusedLabelColor = TextColor,
-                            focusedSupportingTextColor = TextColor,
-                            cursorColor = DecorColor,
-                            unfocusedLabelColor = TextColor
-                        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(vertical = 80.dp)
+        ){
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+                //[TEXTFIELD TO ADD THE EMAIL ADDRESS YOU WANT TO SEND]
+                OutlinedTextField(
+                    value = emailText,
+                    label = { Text(text = "Email Address")},
+                    onValueChange = {emailText = it},
+                    maxLines = 1,
+                    singleLine = true,
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = TextColor,
+                        focusedBorderColor = TextFieldColor,
+                        focusedLabelColor = TextColor,
+                        focusedSupportingTextColor = TextColor,
+                        cursorColor = DecorColor,
+                        unfocusedLabelColor = TextColor
                     )
-                    //[TEXTFIELD TO ADD THE SUBJECT OF THE EMAIL YOU WANT TO SEND]
-                    OutlinedTextField(
-                        value = subjText,
-                        label = { Text(text = "Subject")},
-                        onValueChange = {subjText = it},
-                        maxLines = 1,
-                        singleLine = true,
-                        shape = RoundedCornerShape(15.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = TextColor,
-                            focusedBorderColor = TextFieldColor,
-                            focusedLabelColor = TextColor,
-                            focusedSupportingTextColor = TextColor,
-                            cursorColor = DecorColor,
-                            unfocusedLabelColor = TextColor
-                        )
+                )
+                //[TEXTFIELD TO ADD THE SUBJECT OF THE EMAIL YOU WANT TO SEND]
+                OutlinedTextField(
+                    value = subjText,
+                    label = { Text(text = "Subject")},
+                    onValueChange = {subjText = it},
+                    maxLines = 1,
+                    singleLine = true,
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = TextColor,
+                        focusedBorderColor = TextFieldColor,
+                        focusedLabelColor = TextColor,
+                        focusedSupportingTextColor = TextColor,
+                        cursorColor = DecorColor,
+                        unfocusedLabelColor = TextColor
                     )
-                    //[TEXTFIELD TO ADD THE CONTEXT OF THE EMAIL YOU WANT TO SEND]
-                    OutlinedTextField(
-                        value = text,
-                        label = { Text(text = "Text")},
-                        onValueChange = {text = it},
-                        shape = RoundedCornerShape(15.dp),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            textColor = TextColor,
-                            focusedBorderColor = TextFieldColor,
-                            focusedLabelColor = TextColor,
-                            focusedSupportingTextColor = TextColor,
-                            cursorColor = DecorColor,
-                            unfocusedLabelColor = TextColor
-                        ),
-                        modifier = Modifier
-                            .height(250.dp)
-                            .width(280.dp)
-                    )
-                }
+                )
+                //[TEXTFIELD TO ADD THE CONTEXT OF THE EMAIL YOU WANT TO SEND]
+                OutlinedTextField(
+                    value = text,
+                    label = { Text(text = "Text")},
+                    onValueChange = {text = it},
+                    shape = RoundedCornerShape(15.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        textColor = TextColor,
+                        focusedBorderColor = TextFieldColor,
+                        focusedLabelColor = TextColor,
+                        focusedSupportingTextColor = TextColor,
+                        cursorColor = DecorColor,
+                        unfocusedLabelColor = TextColor
+                    ),
+                    modifier = Modifier
+                        .height(250.dp)
+                        .width(280.dp)
+                )
             }
+        }
         Box(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -325,9 +329,9 @@ fun EmainMainScreen(
                     colors = ButtonDefaults.outlinedButtonColors( containerColor = SendEmailBtnClr),
                     modifier = Modifier
                         .height(40.dp)
-                        ,
+                    ,
                     onClick = {
-                        //TODO ADD ACTION
+                        intelliViewModel.sendEmail(emailAddress = emailText.text, emailSubject = subjText.text, emailBody = text.text )
                     }
                 ) {
                     Text(
@@ -344,16 +348,19 @@ fun EmainMainScreen(
                     )
                 }
             }
-            }
         }
-
-}
-
-
-@Preview
-@Composable
-fun EmailPrev(){
-    IntelliTheme {
-        EmainMainScreen( navController = rememberNavController())
     }
+
 }
+
+
+//@Preview
+//@Composable
+//fun EmailPrev(){
+//    IntelliTheme {
+//        EmainMainScreen(
+//            navController = rememberNavController(),
+//            intelliViewModel = intelliViewModel
+//        )
+//    }
+//}
