@@ -5,7 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -20,10 +23,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.service.IntelliService
 import com.mom.intelli.ui.screens.CalendarWidget
@@ -31,9 +37,11 @@ import com.mom.intelli.ui.screens.EmailWidget
 import com.mom.intelli.ui.screens.EshopWidget
 import com.mom.intelli.ui.screens.MapsWidget
 import com.mom.intelli.ui.screens.NewsWidget
+import com.mom.intelli.ui.screens.OtherAppWidget
 import com.mom.intelli.ui.screens.SmartHomeWidget
 import com.mom.intelli.ui.screens.WeatherWidget
 import com.mom.intelli.ui.theme.CustomFont
+import com.mom.intelli.ui.theme.FooterText
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -120,7 +128,23 @@ fun MainList(
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
             EshopWidget(paddingValues = vrtpadding, navController = navController)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
+            OtherAppWidget(paddingValues = vrtpadding, intelliService)
 
+            Spacer(modifier = Modifier.height(50.dp))
+            Row(modifier = Modifier.padding(horizontal = 50.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Copyright of Ministry Org 2023-2024",
+                    color = FooterText,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
+
+
     }
+
 }

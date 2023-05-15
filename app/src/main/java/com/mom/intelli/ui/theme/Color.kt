@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val MainBackgroundColor = Color(0xFF121212)
 val TextWhite = Color(0xffeeeeee)
 val IconsColor = Color(0xFF9B9B9B)
+val FooterText = Color(0xFF2C2C2C)
 
 //Colors For Home Screen
 
@@ -40,4 +41,6 @@ val BorderClr = Color(0xFF7D7D7D)
 val BoxClr = Color(0xFF121212)
 //Colors For Smart Home
 
-//Colors For Music Player
+//Colors For Other Apps
+val CardClr = Color(0xFF202020)
+val CardBorderClr = Color(0xFFAAAAAA)

@@ -104,7 +104,6 @@ fun CalendarWidget(
                         text = dateFormat,
                         color = TextWhite,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = CustomFont,
                         modifier = Modifier.padding(8.dp)
                     )
                     Spacer(modifier = Modifier.height(10.dp))
@@ -113,7 +112,6 @@ fun CalendarWidget(
                         color = TextWhite,
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp,
-                        fontFamily = CustomFont,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
