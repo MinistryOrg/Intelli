@@ -1,9 +1,7 @@
 package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,12 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,12 +22,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mom.intelli.R
 import com.mom.intelli.service.IntelliService
 import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.screens.EmailWidget
@@ -125,7 +117,7 @@ fun MainList(
             // TODO ADD SEARCH WIDGET
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
-            NewsWidget(paddingValues = vrtpadding, navController= navController)
+            NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
             EshopWidget(paddingValues = vrtpadding, navController = navController)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
 

@@ -40,7 +40,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.News.route
         ){
-            NewsScreen(navController = navController)
+            NewsScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.Eshop.route

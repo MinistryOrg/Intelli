@@ -1,13 +1,13 @@
 package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,6 +29,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -38,7 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.Results
 import com.mom.intelli.ui.ImgnNewsLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DividerClr
 import com.mom.intelli.ui.theme.IconsColor
@@ -55,7 +62,8 @@ import com.mom.intelli.util.Screen
 @Composable
 fun NewsWidget(
     paddingValues: Dp,
-    navController: NavController
+    navController: NavController,
+    intelliViewModel : IntelliViewModel
 ) {
     Card(
         modifier = Modifier
@@ -117,7 +125,8 @@ fun NewsWidget(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun NewsScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -159,7 +168,8 @@ fun NewsScreen(
         content = { paddingValues: PaddingValues ->
             200.dp
             NewsMainScreen(
-                navController = navController
+                navController = navController,
+                intelliViewModel = intelliViewModel
             )
         }
     )
@@ -167,7 +177,8 @@ fun NewsScreen(
 
 @Composable
 fun NewsMainScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Box(
         modifier = Modifier
@@ -207,7 +218,7 @@ fun NewsMainScreen(
                     .padding(top = 10.dp)
             ){
                 items(2){
-                    MajorNewsItem()
+                    MajorNewsItem(intelliViewModel = intelliViewModel)
                 }
             }
             //[DIVIDER]
@@ -236,7 +247,7 @@ fun NewsMainScreen(
                     .padding(top = 10.dp)
             ){
                 items(2){
-                    MajorNewsItem()
+                    MajorNewsItem(intelliViewModel)
                 }
             }
             //[DIVIDER]
@@ -265,7 +276,7 @@ fun NewsMainScreen(
                     .padding(top = 10.dp)
             ){
                 items(2){
-                    MajorNewsItem()
+                    MajorNewsItem(intelliViewModel)
                 }
             }
         }
@@ -274,8 +285,20 @@ fun NewsMainScreen(
 }
 
 
+
+
 @Composable
-fun MajorNewsItem() {
+fun MajorNewsItem(intelliViewModel : IntelliViewModel) {
+    var news by remember { mutableStateOf<List<Results>?>(null) }
+    LaunchedEffect(Unit) {
+        try {
+            val fetchedNews = intelliViewModel.getNews()
+            news = fetchedNews
+            Log.d("Douleuei", news!![0].title)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     Card(
         modifier = Modifier
@@ -293,12 +316,13 @@ fun MajorNewsItem() {
 
         )
         Text(
-            text = "Title News",
+            text = news?.get(0)?.title ?: "sex",
             modifier = Modifier.
                 padding(horizontal = 10.dp, vertical = 10.dp),
             color = NewsTitleClr,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp)
+
 
     }
 
@@ -307,7 +331,6 @@ fun MajorNewsItem() {
 
 @Composable
 fun SportsNewsItem() {
-
     Card(
         modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 10.dp)
@@ -321,7 +344,6 @@ fun SportsNewsItem() {
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxWidth()
-
         )
         Text(
             text = "Title News",

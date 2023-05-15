@@ -62,7 +62,7 @@ fun CalendarWidget(
     var dateFormat by remember { mutableStateOf(DateFormat.getDateInstance(DateFormat.FULL).format(calendar)) }
     var timeFormat by remember { mutableStateOf(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(Unit) { // to change the time in real time
         while (true) {
             delay(1000) // Delay for 1 second
             calendar = Calendar.getInstance().time

@@ -8,12 +8,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.mom.intelli.data.NewsApiResponse
+import com.mom.intelli.repository.NewsApi
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class IntelliService (var context : Context){
-    fun openMaps(){
+class IntelliService(var context: Context) {
+
+    fun openMaps() {
         val activity = context as Activity
         // Default location if the user doesn't access (cyprus hehe)
         var latitude = 35.1264
@@ -62,12 +68,15 @@ class IntelliService (var context : Context){
         if (isIntentSafe) {
             context.startActivity(mapIntent)
         } else {
-            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/maps/place/$latitude,$longitude"))
+            val webIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://www.google.com/maps/place/$latitude,$longitude")
+            )
             context.startActivity(webIntent)
         }
     }
 
-    fun openWeather(){
+    fun openWeather() {
         val packageManager = context.packageManager
         val packageName = "com.google.android.apps.weather"
         val intent = packageManager.getLaunchIntentForPackage(packageName)
@@ -78,7 +87,7 @@ class IntelliService (var context : Context){
         }
     }
 
-    fun showEmail(){
+    fun showEmail() {
         val intent = Intent(Intent.ACTION_MAIN).apply {
             // Add the flags to ensure the email client opens in the email view
             addCategory(Intent.CATEGORY_APP_EMAIL)
@@ -91,7 +100,7 @@ class IntelliService (var context : Context){
         }
     }
 
-    fun sendEmail(emailAddress : String, emailSubject : String, emailBody : String) {
+    fun sendEmail(emailAddress: String, emailSubject: String, emailBody: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress)) // recipients
@@ -104,6 +113,35 @@ class IntelliService (var context : Context){
         } catch (e: ActivityNotFoundException) {
             // Handle the case where no email app is available to handle the intent
         }
+    }
+
+    suspend fun getNews(): NewsApiResponse? {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://newsdata.io/api/1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val newsApiService = retrofit.create(NewsApi::class.java)
+
+        val apikey = "pub_222077c5f72377e7b3b6c33454715d7e4b54e"
+        val query = "anorthosis"
+
+        val response = newsApiService.getNews(apikey, query)
+        val news = response.body()
+        Log.d("Response", response.body().toString())
+        // Access the retrieved data
+        val status = news?.status
+        val results = news?.results
+        val totalResponse = news?.totalResults
+        val title = news?.results?.get(0)!!.title
+        val link = news?.results?.get(0)!!.link
+        val imageUrl = news?.results?.get(0)!!.imageUrl
+        val description = news?.results?.get(0)!!.description
+        val content = news?.results?.get(0)!!.content
+        Log.d("Status", status!!)
+        Log.d("Result", results!!.toString())
+        return NewsApiResponse(status,totalResponse!!, results)
+
     }
 
 }
