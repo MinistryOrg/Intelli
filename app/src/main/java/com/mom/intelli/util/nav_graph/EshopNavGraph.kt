@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.mom.intelli.ui.screens.eshop_screens.CartScreen
+import com.mom.intelli.ui.screens.eshop_screens.CheckOutScreen
 import com.mom.intelli.ui.screens.eshop_screens.FashionScreen
 import com.mom.intelli.ui.screens.eshop_screens.FurnitureScreen
 import com.mom.intelli.ui.screens.eshop_screens.GroceriesScreen
@@ -45,6 +47,16 @@ fun NavGraphBuilder.eshopNavGraph(
             route = Screen.EshopStoreFash.route
         ){
             FashionScreen(navController)
+        }
+        composable(
+            route = Screen.EshopCart.route
+        ){
+            CartScreen(navController)
+        }
+        composable(
+            route = Screen.EshopCheckOut.route
+        ){
+            CheckOutScreen(navController)
         }
     }
 }

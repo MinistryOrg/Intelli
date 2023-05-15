@@ -31,6 +31,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -172,17 +173,17 @@ fun ProductBoxes(
             .background(BoxClr, shape = RoundedCornerShape(10.dp))
             .border(width = 2.dp, color = BorderClr, shape = RoundedCornerShape(10.dp))
             .padding(1.dp)
-            .height(220.dp)
+            .height(250.dp)
             .clickable { /*TODO*/ },
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Column(
             modifier = Modifier
-                .background(TextWhite, shape = RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp))
+                .background(color = Color.White, shape = RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp))
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = productData.imgProduct), contentDescription = "tech_prod", modifier = Modifier.size(130.dp).padding(10.dp))
+            Image(painter = painterResource(id = productData.imgProduct), contentDescription = "tech_prod", modifier = Modifier.size(160.dp).padding(10.dp))
         }
         Column(
             modifier = Modifier.padding(5.dp),

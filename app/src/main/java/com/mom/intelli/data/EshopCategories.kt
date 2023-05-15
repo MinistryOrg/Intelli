@@ -19,4 +19,4 @@ sealed class TechProducts(
     val priceProduct: String
 )
 
-object IphoneProduct: TechProducts(R.drawable.iphone_product,"Iphone 13 Pro Max 5G", "1.500,00€")
+object IphoneProduct: TechProducts(R.drawable.iphone_13_pro_max,"Iphone 13 Pro Max 5G", "1.500,00€")
