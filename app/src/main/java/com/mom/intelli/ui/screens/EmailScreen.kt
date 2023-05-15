@@ -78,7 +78,7 @@ fun EmailWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.email),
+                painter = painterResource(id = R.drawable.email_2),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)
@@ -326,7 +326,7 @@ fun EmainMainScreen(
                 //[BUTTON TO SEND EMAIL]
                 Button(
                     shape = RoundedCornerShape(30.dp),
-                    colors = ButtonDefaults.outlinedButtonColors( containerColor = SendEmailBtnClr),
+                    colors = ButtonDefaults.outlinedButtonColors( containerColor = SendEmailBtnClr), //TODO CHANGE SEND BUTTON COLOR TO SOMETHING BLUE
                     modifier = Modifier
                         .height(40.dp)
                     ,

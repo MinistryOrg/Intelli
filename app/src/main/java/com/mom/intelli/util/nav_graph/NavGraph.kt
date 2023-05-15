@@ -20,5 +20,7 @@ fun SetupNavGraph(
         route = ROOT_GRAPH_ROUTE
     ){
         homeNavGraph(navController = navController, intelliViewModel = intelliViewModel)
+
+        eshopNavGraph(navController = navController)
     }
 }
