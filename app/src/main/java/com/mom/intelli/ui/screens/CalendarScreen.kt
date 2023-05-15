@@ -25,6 +25,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +48,7 @@ import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
+import kotlinx.coroutines.delay
 import java.util.Calendar
 
 //THIS IS THE WIDGET TO THE HOME SCREEN
@@ -52,9 +58,19 @@ fun CalendarWidget(
     navController: NavController
 ) {
 
-    val calendar = Calendar.getInstance().time
-    val dateFormat = DateFormat.getDateInstance(DateFormat.FULL).format(calendar)
-    val timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)
+    var calendar by remember { mutableStateOf(Calendar.getInstance().time) }
+    var dateFormat by remember { mutableStateOf(DateFormat.getDateInstance(DateFormat.FULL).format(calendar)) }
+    var timeFormat by remember { mutableStateOf(DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(1000) // Delay for 1 second
+            calendar = Calendar.getInstance().time
+            dateFormat = DateFormat.getDateInstance(DateFormat.FULL).format(calendar)
+            timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar)
+        }
+    }
+
     Card(
         modifier = Modifier
             .background(MainBackgroundColor)
