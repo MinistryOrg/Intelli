@@ -214,8 +214,9 @@ fun NewsMainScreen(
             }
             LazyColumn(
                 modifier = Modifier
-                    .height(410.dp)
-                    .padding(top = 10.dp)
+                    .height(460.dp)
+                    .padding(top = 10.dp),
+                userScrollEnabled = false
             ){
                 items(2){
                     MajorNewsItem(intelliViewModel = intelliViewModel)
@@ -243,8 +244,9 @@ fun NewsMainScreen(
             }
             LazyColumn(
                 modifier = Modifier
-                    .height(410.dp)
-                    .padding(top = 10.dp)
+                    .height(460.dp)
+                    .padding(top = 10.dp),
+                userScrollEnabled = false
             ){
                 items(2){
                     MajorNewsItem(intelliViewModel)
@@ -272,8 +274,9 @@ fun NewsMainScreen(
             }
             LazyColumn(
                 modifier = Modifier
-                    .height(410.dp)
-                    .padding(top = 10.dp)
+                    .height(460.dp)
+                    .padding(top = 10.dp),
+                userScrollEnabled = false
             ){
                 items(2){
                     MajorNewsItem(intelliViewModel)
@@ -321,37 +324,8 @@ fun MajorNewsItem(intelliViewModel : IntelliViewModel) {
                 padding(horizontal = 10.dp, vertical = 10.dp),
             color = NewsTitleClr,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp)
+            fontSize = 16.sp)
 
-
-    }
-
-}
-
-
-@Composable
-fun SportsNewsItem() {
-    Card(
-        modifier = Modifier
-            .padding(horizontal = 15.dp, vertical = 10.dp)
-            .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = SportsNewsBoxClr),
-        shape = RoundedCornerShape(12.dp)
-    ){
-        Image(
-            painter = painterResource(id = R.drawable.news_img),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
-        )
-        Text(
-            text = "Title News",
-            modifier = Modifier.
-            padding(horizontal = 10.dp, vertical = 10.dp),
-            color = NewsTitleClr,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp)
 
     }
 

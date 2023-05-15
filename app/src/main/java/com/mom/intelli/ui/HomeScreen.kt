@@ -130,7 +130,7 @@ fun MainList(
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
             OtherAppWidget(paddingValues = vrtpadding, intelliService)
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Row(modifier = Modifier.padding(horizontal = 50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
