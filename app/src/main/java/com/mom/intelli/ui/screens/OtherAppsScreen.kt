@@ -4,18 +4,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,25 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mom.intelli.R
-import com.mom.intelli.service.IntelliService
-import com.mom.intelli.ui.theme.BorderClr
-import com.mom.intelli.ui.theme.BoxClr
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CardBorderClr
 import com.mom.intelli.ui.theme.CardClr
 import com.mom.intelli.ui.theme.CustomFont
-import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 
 @Composable
 fun OtherAppWidget(
     paddingValues: Dp,
-    intelliService: IntelliService
+    intelliViewModel: IntelliViewModel
 ) {
     Card(
         modifier = Modifier
@@ -83,21 +76,23 @@ fun OtherAppWidget(
                 userScrollEnabled = false,
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 content = {
-                    item { SettingsApp() }
-                    item { AlarmApp() }
-                    item { MusicApp() }
-                    item { PhoneApp() }
-                    item { MessageApp() }
-                    item { ContactApp() }
+                    item { SettingsApp(intelliViewModel) }
+                    item { AlarmApp(intelliViewModel) }
+                    item { MusicApp(intelliViewModel) }
+                    item { PhoneApp(intelliViewModel) }
+                    item { MessageApp(intelliViewModel) }
+                    item { ContactApp(intelliViewModel) }
                 })
         }
     }
 }
 
 @Composable
-fun SettingsApp() {
+fun SettingsApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable {
+            intelliViewModel.openSettingsApp()
+        },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -115,9 +110,11 @@ fun SettingsApp() {
 }
 
 @Composable
-fun AlarmApp() {
+fun AlarmApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable {
+            intelliViewModel.openAlarm()
+        },
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Image(
@@ -135,9 +132,9 @@ fun AlarmApp() {
 }
 
 @Composable
-fun MusicApp() {
+fun MusicApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable { intelliViewModel.openMusicApp() },
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Image(
@@ -155,9 +152,9 @@ fun MusicApp() {
 }
 
 @Composable
-fun PhoneApp() {
+fun PhoneApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable { intelliViewModel.openPhoneCallsApp() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -175,9 +172,9 @@ fun PhoneApp() {
 }
 
 @Composable
-fun MessageApp() {
+fun MessageApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable { intelliViewModel.openMessageApp() },
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Image(
@@ -195,9 +192,9 @@ fun MessageApp() {
 }
 
 @Composable
-fun ContactApp() {
+fun ContactApp(intelliViewModel: IntelliViewModel) {
     Column(
-        modifier = Modifier.clickable { /*todo*/ },
+        modifier = Modifier.clickable { intelliViewModel.openContactsApp()},
         horizontalAlignment = Alignment.CenterHorizontally
     )  {
         Image(

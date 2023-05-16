@@ -8,8 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
-import android.util.Log
-import android.widget.Toast
+import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.mom.intelli.data.NewsApiResponse
@@ -110,6 +109,47 @@ class IntelliService(var context: Context) {
             // Handle the case where no email app is available to handle the intent
         }
     }
+
+   fun openMusicApp() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_APP_MUSIC)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+  fun openSettingsApp() {
+        val intent = Intent(Settings.ACTION_SETTINGS)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun openPhoneCallsApp() {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+   fun openMessageApp() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_APP_MESSAGING)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun openAlarmApp( ) {
+        val alarmAppPackageName = "com.android.deskclock" // Replace with the actual package name of the Alarm app on the target device
+        val intent = context.packageManager.getLaunchIntentForPackage(alarmAppPackageName)
+        intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+    
+    fun openContactsApp() {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("content://contacts/people")
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
 
     suspend fun getNews(category : String): NewsApiResponse? {
         val retrofit = Retrofit.Builder()

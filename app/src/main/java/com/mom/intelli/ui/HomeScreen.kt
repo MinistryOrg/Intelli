@@ -128,7 +128,7 @@ fun MainList(
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
             EshopWidget(paddingValues = vrtpadding, navController = navController)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
-            OtherAppWidget(paddingValues = vrtpadding, intelliService)
+            OtherAppWidget(paddingValues = vrtpadding, intelliViewModel)
 
             Spacer(modifier = Modifier.height(20.dp))
             Row(modifier = Modifier.padding(horizontal = 50.dp),

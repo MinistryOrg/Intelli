@@ -1,42 +1,67 @@
 package com.mom.intelli.ui
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mom.intelli.data.NewsApiResponse
 import com.mom.intelli.data.Results
 import com.mom.intelli.service.IntelliService
 
-class IntelliViewModel : ViewModel(){
-    private var intelliService : IntelliService ?= null
+class IntelliViewModel : ViewModel() {
+    private var intelliService: IntelliService? = null
 
-    fun init(context: Context){
+    fun init(context: Context) {
         intelliService = IntelliService(context = context)
     }
 
-    fun openMaps(){
+    fun openMaps() {
         intelliService!!.openMaps()
     }
 
-    fun openWeather(){
+    fun openWeather() {
 
     }
 
-    fun showEmail(){
+    fun showEmail() {
         intelliService!!.showEmail()
     }
 
-    fun sendEmail(emailAddress : String, emailSubject : String, emailBody : String) {
-        intelliService!!.sendEmail(emailAddress,emailSubject,emailBody)
+    fun sendEmail(emailAddress: String, emailSubject: String, emailBody: String) {
+        intelliService!!.sendEmail(emailAddress, emailSubject, emailBody)
     }
 
-    fun openNewsLink(link : String){
+    fun openNewsLink(link: String) {
         intelliService!!.openNewsLink(link)
     }
 
-    suspend fun getNews(category : String) : NewsApiResponse? {
-       return intelliService!!.getNews(category)
+    suspend fun getNews(category: String): NewsApiResponse? {
+        return intelliService!!.getNews(category)
     }
 
+
+    fun openMusicApp() {
+        intelliService!!.openMusicApp()
+    }
+
+    fun openSettingsApp() {
+        intelliService!!.openSettingsApp()
+    }
+
+    fun openPhoneCallsApp() {
+        intelliService!!.openPhoneCallsApp()
+    }
+
+    fun openMessageApp() {
+        intelliService!!.openMessageApp()
+    }
+    fun openAlarm(){
+        intelliService!!.openAlarmApp()
+    }
+    fun openContactsApp() {
+        intelliService!!.openContactsApp()
+    }
 
 }
