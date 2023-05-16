@@ -76,16 +76,12 @@ class IntelliService(var context: Context) {
         }
     }
 
-    fun openWeather() {
-        val packageManager = context.packageManager
-        val packageName = "com.google.android.apps.weather"
-        val intent = packageManager.getLaunchIntentForPackage(packageName)
-        if (intent != null) {
-            context.startActivity(intent)
-        } else {
-            Toast.makeText(context, "Weather app not found", Toast.LENGTH_SHORT).show()
-        }
+    fun openNewsLink(link : String){
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        context.startActivity(intent)
     }
+
+
 
     fun showEmail() {
         val intent = Intent(Intent.ACTION_MAIN).apply {

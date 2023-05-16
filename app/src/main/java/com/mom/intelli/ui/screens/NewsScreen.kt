@@ -1,8 +1,6 @@
 package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,7 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.mom.intelli.R
@@ -58,7 +55,6 @@ import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.MajorNewsBoxClr
 import com.mom.intelli.ui.theme.NewsTitleClr
-import com.mom.intelli.ui.theme.SportsNewsBoxClr
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.theme.TitleForYouNewsClr
 import com.mom.intelli.ui.theme.TitleMajorNewsClr
@@ -250,7 +246,7 @@ fun NewsMainScreen(
             ){
                 majorNews?.let { news ->
                     items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it])
+                        MajorNewsItem(news.results[it],intelliViewModel)
                     }
                 }
             }
@@ -282,7 +278,7 @@ fun NewsMainScreen(
             ){
                 sportNews?.let { news ->
                     items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it])
+                        MajorNewsItem(news.results[it],intelliViewModel)
                     }
                 }
             }
@@ -314,7 +310,7 @@ fun NewsMainScreen(
             ){
                 newsForYou?.let { news ->
                     items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it])
+                        MajorNewsItem(news.results[it],intelliViewModel)
                     }
                 }
             }
@@ -324,10 +320,8 @@ fun NewsMainScreen(
 }
 
 
-
-
 @Composable
-fun MajorNewsItem(news : Results) {
+fun MajorNewsItem(news : Results,intelliViewModel: IntelliViewModel) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -350,8 +344,7 @@ fun MajorNewsItem(news : Results) {
             modifier = Modifier.
                 padding(horizontal = 10.dp, vertical = 10.dp)
                 .clickable {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.link))
-                    context.startActivity(intent)
+                    intelliViewModel.openNewsLink(news.link)
                 },
             color = NewsTitleClr,
             fontWeight = FontWeight.Bold,
