@@ -42,7 +42,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.mom.intelli.R
+import com.mom.intelli.data.NewsApiResponse
 import com.mom.intelli.data.Results
 import com.mom.intelli.ui.ImgnNewsLogo
 import com.mom.intelli.ui.IntelliViewModel
@@ -180,6 +182,30 @@ fun NewsMainScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+    var sportNews by remember {
+        mutableStateOf<NewsApiResponse?>(null)
+    }
+    var majorNews by remember {
+        mutableStateOf<NewsApiResponse?>(null)
+    }
+    var newsForYou by remember {
+        mutableStateOf<NewsApiResponse?>(null)
+    }
+
+    LaunchedEffect(Unit) {
+        try {
+            val fetchedSportNews = intelliViewModel.getNews("sports")
+            val fetchedMajorNews = intelliViewModel.getNews("politics")
+            val fetchedNewsForYou = intelliViewModel.getNews("technology")
+            sportNews = fetchedSportNews
+            majorNews = fetchedMajorNews
+            newsForYou = fetchedNewsForYou
+            Log.d("sportNews", sportNews.toString())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     Box(
         modifier = Modifier
             .background(MainBackgroundColor)
@@ -206,7 +232,7 @@ fun NewsMainScreen(
                     .padding(start = 10.dp, top = 10.dp)
             ) {
                 Text(
-                    text = "Major News",
+                    text =  "Major News",
                     color = TitleMajorNewsClr,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp
@@ -218,8 +244,10 @@ fun NewsMainScreen(
                     .padding(top = 10.dp),
                 userScrollEnabled = false
             ){
-                items(2){
-                    MajorNewsItem(intelliViewModel = intelliViewModel)
+                majorNews?.let { news ->
+                    items(news.totalResults - 1) {
+                        MajorNewsItem(news.results[it])
+                    }
                 }
             }
             //[DIVIDER]
@@ -248,8 +276,10 @@ fun NewsMainScreen(
                     .padding(top = 10.dp),
                 userScrollEnabled = false
             ){
-                items(2){
-                    MajorNewsItem(intelliViewModel)
+                sportNews?.let { news ->
+                    items(news.totalResults - 1) {
+                        MajorNewsItem(news.results[it])
+                    }
                 }
             }
             //[DIVIDER]
@@ -278,8 +308,10 @@ fun NewsMainScreen(
                     .padding(top = 10.dp),
                 userScrollEnabled = false
             ){
-                items(2){
-                    MajorNewsItem(intelliViewModel)
+                newsForYou?.let { news ->
+                    items(news.totalResults - 1) {
+                        MajorNewsItem(news.results[it])
+                    }
                 }
             }
         }
@@ -291,18 +323,7 @@ fun NewsMainScreen(
 
 
 @Composable
-fun MajorNewsItem(intelliViewModel : IntelliViewModel) {
-    var news by remember { mutableStateOf<List<Results>?>(null) }
-    LaunchedEffect(Unit) {
-        try {
-            val fetchedNews = intelliViewModel.getNews()
-            news = fetchedNews
-            Log.d("Douleuei", news!![0].title)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
+fun MajorNewsItem(news : Results) {
     Card(
         modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 10.dp)
@@ -310,8 +331,9 @@ fun MajorNewsItem(intelliViewModel : IntelliViewModel) {
         colors = CardDefaults.cardColors(containerColor = MajorNewsBoxClr),
         shape = RoundedCornerShape(12.dp)
     ){
+        val imagePainter = rememberImagePainter(data = news.imageUrl)
         Image(
-            painter = painterResource(id = R.drawable.news_img),
+            painter = imagePainter,
             contentDescription = null,
             modifier = Modifier
                 .padding(5.dp)
@@ -319,7 +341,7 @@ fun MajorNewsItem(intelliViewModel : IntelliViewModel) {
 
         )
         Text(
-            text = news?.get(0)?.title ?: "sex",
+            text = news.title,
             modifier = Modifier.
                 padding(horizontal = 10.dp, vertical = 10.dp),
             color = NewsTitleClr,

@@ -30,8 +30,8 @@ class IntelliViewModel : ViewModel(){
         intelliService!!.sendEmail(emailAddress,emailSubject,emailBody)
     }
 
-    suspend fun getNews() : List<Results> {
-       return intelliService!!.getNews()!!.results
+    suspend fun getNews(category : String) : NewsApiResponse? {
+       return intelliService!!.getNews(category)
     }
 
 }

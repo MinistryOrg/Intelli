@@ -115,7 +115,7 @@ class IntelliService(var context: Context) {
         }
     }
 
-    suspend fun getNews(): NewsApiResponse? {
+    suspend fun getNews(category : String): NewsApiResponse? {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://newsdata.io/api/1/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -124,24 +124,15 @@ class IntelliService(var context: Context) {
         val newsApiService = retrofit.create(NewsApi::class.java)
 
         val apikey = "pub_222077c5f72377e7b3b6c33454715d7e4b54e"
-        val query = "anorthosis"
+        val language = "el"
 
-        val response = newsApiService.getNews(apikey, query)
+        val response = newsApiService.getNews(apikey, language,category)
         val news = response.body()
-        Log.d("Response", response.body().toString())
         // Access the retrieved data
         val status = news?.status
         val results = news?.results
         val totalResponse = news?.totalResults
-        val title = news?.results?.get(0)!!.title
-        val link = news?.results?.get(0)!!.link
-        val imageUrl = news?.results?.get(0)!!.imageUrl
-        val description = news?.results?.get(0)!!.description
-        val content = news?.results?.get(0)!!.content
-        Log.d("Status", status!!)
-        Log.d("Result", results!!.toString())
-        return NewsApiResponse(status,totalResponse!!, results)
-
+        return NewsApiResponse(status!!,totalResponse!!, results!!)
     }
 
 }
