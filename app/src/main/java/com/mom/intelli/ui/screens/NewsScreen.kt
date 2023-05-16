@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.mom.intelli.R
 import com.mom.intelli.data.NewsApiResponse
@@ -330,14 +331,9 @@ fun MajorNewsItem(news : Results,intelliViewModel: IntelliViewModel) {
         colors = CardDefaults.cardColors(containerColor = MajorNewsBoxClr),
         shape = RoundedCornerShape(12.dp)
     ){
-        val imagePainter = rememberImagePainter(data = news.imageUrl)
-        Image(
-            painter = imagePainter,
-            contentDescription = null,
-            modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
-
+        AsyncImage(
+            model = news.imageUrl,
+            contentDescription = news.description
         )
         Text(
             text = news.title,

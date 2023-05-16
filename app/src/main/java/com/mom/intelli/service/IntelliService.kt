@@ -142,7 +142,7 @@ class IntelliService(var context: Context) {
         intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
-    
+
     fun openContactsApp() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("content://contacts/people")
@@ -151,7 +151,7 @@ class IntelliService(var context: Context) {
     }
 
 
-    suspend fun getNews(category : String): NewsApiResponse? {
+    suspend fun getNews(category : String): NewsApiResponse {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://newsdata.io/api/1/")
             .addConverterFactory(GsonConverterFactory.create())
