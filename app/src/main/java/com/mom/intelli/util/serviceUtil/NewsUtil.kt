@@ -3,7 +3,7 @@ package com.mom.intelli.util.serviceUtil
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import com.mom.intelli.data.NewsApiResponse
+import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.repository.NewsApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

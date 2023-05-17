@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.mom.intelli.R
-import com.mom.intelli.data.NewsApiResponse
-import com.mom.intelli.data.Results
+import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.news.Results
 import com.mom.intelli.ui.ImgnNewsLogo
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
@@ -316,8 +316,6 @@ fun NewsMainScreen(
     }
 
 }
-
-
 
 @Composable
 fun NewsBoxItem(news : Results, intelliViewModel: IntelliViewModel) {

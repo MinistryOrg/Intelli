@@ -1,13 +1,9 @@
 package com.mom.intelli.ui
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.mom.intelli.data.NewsApiResponse
-import com.mom.intelli.data.Results
+import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.weather.Main
 import com.mom.intelli.service.IntelliService
 
 class IntelliViewModel : ViewModel() {
@@ -21,8 +17,8 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.openMaps()
     }
 
-    fun openWeather() {
-
+    suspend fun getWeather() : Main {
+        return intelliService!!.getWeather().main
     }
 
     fun showEmail() {
@@ -40,7 +36,6 @@ class IntelliViewModel : ViewModel() {
     suspend fun getNews(category: String): NewsApiResponse? {
         return intelliService!!.getNews(category)
     }
-
 
     fun openMusicApp() {
         intelliService!!.openMusicApp()

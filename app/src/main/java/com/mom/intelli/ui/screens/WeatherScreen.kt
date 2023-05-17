@@ -14,6 +14,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.weather.Main
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -33,12 +39,25 @@ fun WeatherWidget(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+    var weather by remember {
+        mutableStateOf<Main?>(null)
+    }
+
+    LaunchedEffect(Unit) {
+        try {
+            val fetchedWeather = intelliViewModel.getWeather()
+            weather = fetchedWeather
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     Card(
         modifier = Modifier
             .padding(vertical = paddingValues)
             .background(MainBackgroundColor)
             .clickable {
-                intelliViewModel.openWeather()
+                //intelliViewModel.openWeather()
             },
         shape = RoundedCornerShape(15.dp),
         colors = CardDefaults.cardColors(containerColor = MainBackgroundColor)
@@ -84,6 +103,10 @@ fun WeatherWidget(
                         modifier = Modifier
                             .size(30.dp),
                     )
+                    weather?.let { w ->
+                        Text(text = w.temp.toString())
+                    }
+
                 }
             }
         }

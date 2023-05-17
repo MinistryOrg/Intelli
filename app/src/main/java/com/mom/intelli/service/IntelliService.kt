@@ -1,18 +1,18 @@
 package com.mom.intelli.service
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import com.mom.intelli.data.NewsApiResponse
+import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.util.serviceUtil.EmailUtil
 import com.mom.intelli.util.serviceUtil.IntentAppsUtil
 import com.mom.intelli.util.serviceUtil.NewsUtil
+import com.mom.intelli.util.serviceUtil.WeatherUtil
 
 class IntelliService(var context: Context) {
     private val intentAppsUtil : IntentAppsUtil = IntentAppsUtil()
     private val newsUtil : NewsUtil = NewsUtil()
     private val emailUtil : EmailUtil = EmailUtil()
+    private val weatherUtil : WeatherUtil = WeatherUtil(context)
 
     fun showEmail() {
         emailUtil.showEmail(context)
@@ -56,6 +56,10 @@ class IntelliService(var context: Context) {
 
     suspend fun getNews(category: String): NewsApiResponse {
         return newsUtil.getNews(category,context)
+    }
+
+    suspend fun getWeather() : WeatherApiResponse {
+        return weatherUtil.getWeather()
     }
 
 }

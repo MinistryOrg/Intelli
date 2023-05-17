@@ -1,4 +1,4 @@
-package com.mom.intelli.data
+package com.mom.intelli.data.news
 
 data class Results (
     val title : String,

@@ -1,7 +1,6 @@
 package com.mom.intelli.repository
 
-import com.mom.intelli.data.NewsApiResponse
-import retrofit2.Call
+import com.mom.intelli.data.news.NewsApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
