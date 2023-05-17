@@ -1,7 +1,6 @@
 package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,7 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import com.mom.intelli.R
 import com.mom.intelli.data.NewsApiResponse
 import com.mom.intelli.data.Results
@@ -201,7 +199,6 @@ fun NewsMainScreen(
             sportNews = fetchedSportNews
             majorNews = fetchedMajorNews
             newsForYou = fetchedNewsForYou
-            Log.d("sportNews", sportNews.toString())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -332,7 +329,7 @@ fun MajorNewsItem(news : Results,intelliViewModel: IntelliViewModel) {
         shape = RoundedCornerShape(12.dp)
     ){
         AsyncImage(
-            model = news.imageUrl,
+            model = news.image_url,
             contentDescription = news.description
         )
         Text(

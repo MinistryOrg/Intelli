@@ -1,174 +1,61 @@
 package com.mom.intelli.service
 
-import android.Manifest
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.net.Uri
-import android.provider.Settings
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.mom.intelli.data.NewsApiResponse
-import com.mom.intelli.repository.NewsApi
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.mom.intelli.util.serviceUtil.EmailUtil
+import com.mom.intelli.util.serviceUtil.IntentAppsUtil
+import com.mom.intelli.util.serviceUtil.NewsUtil
 
 class IntelliService(var context: Context) {
-
-    fun openMaps() {
-        val activity = context as Activity
-        // Default location if the user doesn't access (cyprus hehe)
-        var latitude = 35.1264
-        var longitude = 33.4299
-        // can be anything is a code to request so yes
-        val PERMISSIONS_REQUEST_LOCATION = 100
-        // Request location permission if not already granted
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_LOCATION
-            )
-        }
-
-        // Get the location manager
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        // Check if location is enabled
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // Get the last known location
-            val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
-            if (location != null) {
-                // add the location to the values
-                latitude = location.latitude
-                longitude = location.longitude
-            }
-
-        }
-
-        // Create an intent with the Google Maps app and the location data
-        val intentUri = Uri.parse("geo:$latitude,$longitude")
-        val mapIntent = Intent(Intent.ACTION_VIEW, intentUri)
-        mapIntent.setPackage("com.google.android.apps.maps")
-
-        // Check if the Google Maps app is installed
-        val packageManager = context.packageManager
-        val isIntentSafe = mapIntent.resolveActivity(packageManager) != null
-
-        // Start the Google Maps app if it is installed, otherwise open the website
-        if (isIntentSafe) {
-            context.startActivity(mapIntent)
-        } else {
-            val webIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://www.google.com/maps/place/$latitude,$longitude")
-            )
-            context.startActivity(webIntent)
-        }
-    }
-
-    fun openNewsLink(link : String){
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-        context.startActivity(intent)
-    }
-
-
+    private val intentAppsUtil : IntentAppsUtil = IntentAppsUtil()
+    private val newsUtil : NewsUtil = NewsUtil()
+    private val emailUtil : EmailUtil = EmailUtil()
 
     fun showEmail() {
-        val intent = Intent(Intent.ACTION_MAIN).apply {
-            // Add the flags to ensure the email client opens in the email view
-            addCategory(Intent.CATEGORY_APP_EMAIL)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-        try {
-            context.startActivity(Intent.createChooser(intent, "Send Email"))
-        } catch (e: ActivityNotFoundException) {
-            // Handle the case where no email app is available to handle the intent
-        }
+        emailUtil.showEmail(context)
     }
 
     fun sendEmail(emailAddress: String, emailSubject: String, emailBody: String) {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress)) // recipients
-            putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-            putExtra(Intent.EXTRA_TEXT, emailBody)
-        }
-
-        try {
-            context.startActivity(Intent.createChooser(intent, "Send Email"))
-        } catch (e: ActivityNotFoundException) {
-            // Handle the case where no email app is available to handle the intent
-        }
+        emailUtil.sendEmail(context,emailAddress,emailSubject, emailBody)
     }
 
-   fun openMusicApp() {
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_APP_MUSIC)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    fun openMaps() {
+        intentAppsUtil.openMaps(context)
     }
 
-  fun openSettingsApp() {
-        val intent = Intent(Settings.ACTION_SETTINGS)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    fun openMusicApp() {
+        intentAppsUtil.openIntent(context, "music")
+    }
+
+    fun openSettingsApp() {
+        intentAppsUtil.openIntent(context, "settings")
     }
 
     fun openPhoneCallsApp() {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        intentAppsUtil.openIntent(context, "phoneCalls")
     }
 
-   fun openMessageApp() {
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_APP_MESSAGING)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    fun openMessageApp() {
+        intentAppsUtil.openIntent(context, "message")
     }
 
-    fun openAlarmApp( ) {
-        val alarmAppPackageName = "com.android.deskclock" // Replace with the actual package name of the Alarm app on the target device
-        val intent = context.packageManager.getLaunchIntentForPackage(alarmAppPackageName)
-        intent?.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+    fun openAlarmApp() {
+        intentAppsUtil.openIntent(context, "alarm")
     }
 
     fun openContactsApp() {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("content://contacts/people")
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        intentAppsUtil.openIntent(context, "contact")
     }
 
+    fun openNewsLink(link: String) {
+        newsUtil.openNewsLink(link,context)
+    }
 
-    suspend fun getNews(category : String): NewsApiResponse {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://newsdata.io/api/1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val newsApiService = retrofit.create(NewsApi::class.java)
-
-        val apikey = "pub_222077c5f72377e7b3b6c33454715d7e4b54e"
-        val language = "el"
-
-        val response = newsApiService.getNews(apikey, language,category)
-        val news = response.body()
-        // Access the retrieved data
-        val status = news?.status
-        val results = news?.results
-        val totalResponse = news?.totalResults
-        return NewsApiResponse(status!!,totalResponse!!, results!!)
+    suspend fun getNews(category: String): NewsApiResponse {
+        return newsUtil.getNews(category,context)
     }
 
 }
