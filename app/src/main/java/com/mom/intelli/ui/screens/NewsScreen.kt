@@ -240,11 +240,11 @@ fun NewsMainScreen(
                 modifier = Modifier
                     .height(460.dp)
                     .padding(top = 10.dp),
-                userScrollEnabled = false
+                userScrollEnabled = true
             ){
                 majorNews?.let { news ->
-                    items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it],intelliViewModel)
+                    items(5) {
+                        NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
             }
@@ -272,11 +272,11 @@ fun NewsMainScreen(
                 modifier = Modifier
                     .height(460.dp)
                     .padding(top = 10.dp),
-                userScrollEnabled = false
+                userScrollEnabled = true
             ){
                 sportNews?.let { news ->
-                    items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it],intelliViewModel)
+                    items(5) {
+                        NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
             }
@@ -304,22 +304,23 @@ fun NewsMainScreen(
                 modifier = Modifier
                     .height(460.dp)
                     .padding(top = 10.dp),
-                userScrollEnabled = false
+                userScrollEnabled = true
             ){
                 newsForYou?.let { news ->
-                    items(news.totalResults - 1) {
-                        MajorNewsItem(news.results[it],intelliViewModel)
+                    items(5) {
+                        NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
             }
         }
-
     }
+
 }
 
 
+
 @Composable
-fun MajorNewsItem(news : Results,intelliViewModel: IntelliViewModel) {
+fun NewsBoxItem(news : Results, intelliViewModel: IntelliViewModel) {
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -328,22 +329,21 @@ fun MajorNewsItem(news : Results,intelliViewModel: IntelliViewModel) {
         colors = CardDefaults.cardColors(containerColor = MajorNewsBoxClr),
         shape = RoundedCornerShape(12.dp)
     ){
+//        Log.d("key", news.imageUrl)
         AsyncImage(
             model = news.image_url,
             contentDescription = news.description
         )
         Text(
             text = news.title,
-            modifier = Modifier.
-                padding(horizontal = 10.dp, vertical = 10.dp)
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 10.dp)
                 .clickable {
                     intelliViewModel.openNewsLink(news.link)
                 },
             color = NewsTitleClr,
             fontWeight = FontWeight.Bold,
-            fontSize = 16.sp)
-
-
+            fontSize = 16.sp
+        )
     }
-
 }
