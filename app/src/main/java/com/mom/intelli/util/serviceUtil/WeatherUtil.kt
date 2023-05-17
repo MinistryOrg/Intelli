@@ -6,12 +6,8 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.util.Log
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.mom.intelli.data.weather.Coord
-import com.mom.intelli.data.weather.Main
-import com.mom.intelli.data.weather.Weather
 import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.repository.WeatherApi
 import retrofit2.Retrofit
@@ -46,7 +42,7 @@ class WeatherUtil(private val context: Context) {
 
     }
 
-    private fun getUserLocation() : List <Double>{
+    fun getUserLocation() : List <Double>{
         var latitude = 35.1264
         var longitude = 33.4299
         val activity = context as Activity
@@ -76,7 +72,6 @@ class WeatherUtil(private val context: Context) {
                 longitude = location.longitude
             }
         }
-
             return arrayListOf(latitude,longitude)
     }
 }

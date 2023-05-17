@@ -20,3 +20,11 @@ sealed class TechProducts(
 )
 
 object IphoneProduct: TechProducts(R.drawable.iphone_13_pro_max,"Iphone 13 Pro Max 5G", "1.500,00€")
+
+sealed class ProductDetails(
+    val imgPrev: Int,
+    val titleProduct: String,
+    val priceProduct: String,
+    val colorProduct: String,
+
+)

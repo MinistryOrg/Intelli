@@ -48,6 +48,7 @@ import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.theme.UnSelectTabTxtClr
+import com.mom.intelli.util.Screen
 
 val productData = listOf(
     IphoneProduct
@@ -102,7 +103,7 @@ fun TechScreen(
                 modifier = Modifier
                     .background(FloatingCartClr, shape = RoundedCornerShape(30.dp))
                     .padding(10.dp)
-                    .clickable {/*TODO ADD NAV ACTION*/ }
+                    .clickable {navController.navigate(route = Screen.EshopCart.route) }
             ){
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,
@@ -174,16 +175,21 @@ fun ProductBoxes(
             .border(width = 2.dp, color = BorderClr, shape = RoundedCornerShape(10.dp))
             .padding(1.dp)
             .height(250.dp)
-            .clickable { /*TODO*/ },
+            .clickable { navController.navigate(route = Screen.EshopProductPrev.route) },
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Column(
             modifier = Modifier
-                .background(color = Color.White, shape = RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp))
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(10.dp, 10.dp, 0.dp, 0.dp)
+                )
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = productData.imgProduct), contentDescription = "tech_prod", modifier = Modifier.size(160.dp).padding(10.dp))
+            Image(painter = painterResource(id = productData.imgProduct), contentDescription = "tech_prod", modifier = Modifier
+                .size(160.dp)
+                .padding(10.dp))
         }
         Column(
             modifier = Modifier.padding(5.dp),

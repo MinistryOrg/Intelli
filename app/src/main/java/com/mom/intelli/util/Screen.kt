@@ -33,6 +33,7 @@ sealed class Screen (val route : String) {
     object EshopCart: Screen("eshop_cart_screen")
 
     object EshopCheckOut: Screen("eshop_checkout_screen")
+    object EshopProductPrev: Screen("eshop_product_preview_screen")
 
     //SMART HOME SCREENS
     object SmartHome: Screen("smart_home_screen")

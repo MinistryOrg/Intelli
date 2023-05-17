@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -79,11 +80,18 @@ fun CategoryBoxes(
             .clickable { navController.navigate(getCategoryRoute(categData)) },
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Image(painter = painterResource(id = categData.imageResource), contentDescription = "tech", modifier = Modifier.size(120.dp))
+        Image(
+            painter = painterResource(id = categData.imageResource),
+            contentDescription = "tech",
+            modifier = Modifier
+                .size(130.dp)
+                .padding(vertical = 20.dp)
+        )
         Column(
-            modifier = Modifier.padding(top=10.dp),
+            modifier = Modifier.padding(top=1.dp),
             verticalArrangement = Arrangement.Bottom
         ) {
+            Spacer(modifier = Modifier.height(10.dp))
             Text(text = categData.text, color = UnSelectTabTxtClr, fontWeight = FontWeight.Bold)
         }
     }

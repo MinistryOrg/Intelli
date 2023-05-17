@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.TextWhite
 
 @Composable
-fun OrdersScreen() {
+fun OrdersScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .padding(top = 20.dp)
