@@ -131,8 +131,7 @@ fun MainList(
             OtherAppWidget(paddingValues = vrtpadding, intelliViewModel)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Row(modifier = Modifier.padding(horizontal = 50.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Column(modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = "Copyright of Ministry Org 2023-2024",

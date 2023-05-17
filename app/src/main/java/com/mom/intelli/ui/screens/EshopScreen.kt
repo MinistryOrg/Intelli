@@ -166,7 +166,7 @@ fun EshopScreen(
                 modifier = Modifier
                     .background(FloatingCartClr, shape = RoundedCornerShape(30.dp))
                     .padding(10.dp)
-                    .clickable {/*TODO ADD NAV ACTION*/ }
+                    .clickable {navController.navigate(route = Screen.EshopCart.route) }
             ){
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,

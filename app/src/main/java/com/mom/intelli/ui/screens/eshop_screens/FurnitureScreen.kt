@@ -29,6 +29,7 @@ import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -79,7 +80,7 @@ fun FurnitureScreen(
                 modifier = Modifier
                     .background(FloatingCartClr, shape = RoundedCornerShape(30.dp))
                     .padding(10.dp)
-                    .clickable {/*TODO ADD NAV ACTION*/ }
+                    .clickable {navController.navigate(route = Screen.EshopCart.route) }
             ){
                 Icon(
                     imageVector = Icons.Default.ShoppingCart,

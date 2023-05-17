@@ -70,7 +70,7 @@ fun OtherAppWidget(
             }
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
-                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 50.dp),
+                contentPadding = PaddingValues(horizontal = 10.dp, vertical = 55.dp),
                 modifier = Modifier
                     .height(250.dp),
                 userScrollEnabled = false,
