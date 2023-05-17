@@ -9,10 +9,10 @@ import com.mom.intelli.ui.screens.eshop_screens.CheckOutScreen
 import com.mom.intelli.ui.screens.eshop_screens.FashionScreen
 import com.mom.intelli.ui.screens.eshop_screens.FurnitureScreen
 import com.mom.intelli.ui.screens.eshop_screens.GroceriesScreen
+import com.mom.intelli.ui.screens.eshop_screens.ProductPreviewScreen
 import com.mom.intelli.ui.screens.eshop_screens.SportsScreen
 import com.mom.intelli.ui.screens.eshop_screens.TechScreen
 import com.mom.intelli.util.ESHOP_GRAPH_ROUTE
-import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
 
 fun NavGraphBuilder.eshopNavGraph(
@@ -57,6 +57,11 @@ fun NavGraphBuilder.eshopNavGraph(
             route = Screen.EshopCheckOut.route
         ){
             CheckOutScreen(navController)
+        }
+        composable(
+            route = Screen.EshopProductPrev.route
+        ){
+            ProductPreviewScreen(navController)
         }
     }
 }
