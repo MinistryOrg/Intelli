@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +51,7 @@ import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -158,7 +160,7 @@ fun MainCartScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = {
-                    /*TODO add function*/
+                    navController.navigate(route = Screen.EshopCheckOut.route)
                 }
             ) {
                 Text(
@@ -189,9 +191,8 @@ fun CartItems(device : Device) {
                 painter = painterResource(id =device.image.toInt()),
                 contentDescription = null,
                 modifier = Modifier
-                    .background(Color.White, shape = RoundedCornerShape(10.dp))
-                    .fillMaxWidth()
-                    .height(200.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .height(50.dp)
             )
         }
 

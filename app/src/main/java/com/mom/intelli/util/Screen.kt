@@ -4,6 +4,7 @@ package com.mom.intelli.util
 const val ROOT_GRAPH_ROUTE = "root"
 const val HOME_GRAPH_ROUTE = "home"
 const val ESHOP_GRAPH_ROUTE = "eshop"
+const val SMART_HOME_GRAPH_ROUTE = "smarthome"
 
 sealed class Screen (val route : String) {
     object Home : Screen("home_screen")
@@ -37,5 +38,6 @@ sealed class Screen (val route : String) {
 
     //SMART HOME SCREENS
     object SmartHome: Screen("smart_home_screen")
+    object SmartHomeAddDevice: Screen("smart_home_add_device_screen")
 
 }
