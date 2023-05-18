@@ -1,22 +1,18 @@
 package com.mom.intelli.ui.screens.eshop_screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,32 +29,31 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.ui.ImgEshopLogo
-import com.mom.intelli.ui.theme.BorderClr
-import com.mom.intelli.ui.theme.DividerClr
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
-import com.mom.intelli.ui.theme.IntelliTheme
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SelectTabTxtClr
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProductPreviewScreen(navController: NavController) {
+fun ProductPreviewScreen(navController: NavController,intelliViewModel : IntelliViewModel) {
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -119,7 +114,7 @@ fun ProductPreviewScreen(navController: NavController) {
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                MainProductPreview(navController)
+                MainProductPreview(navController,intelliViewModel)
             }
         }
     )
@@ -128,9 +123,10 @@ fun ProductPreviewScreen(navController: NavController) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainProductPreview(navController: NavController) {
+fun MainProductPreview(navController: NavController, intelliViewModel: IntelliViewModel) {
     val pageCount = 4
     val pagerState = rememberPagerState()
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -150,7 +146,7 @@ fun MainProductPreview(navController: NavController) {
                             .background(Color.White, shape = RoundedCornerShape(10.dp))
                             .fillMaxWidth()
                             .height(200.dp)
-                            
+
                     )
                 }
                 1->{
@@ -228,7 +224,10 @@ fun MainProductPreview(navController: NavController) {
                 modifier = Modifier
                     .height(60.dp),
                 onClick = {
-                    /*TODO add function*/
+                    coroutineScope.launch {
+                        intelliViewModel.insertToDatabase(Device(2,"Iphone", R.drawable.iphone_13_pro_max.toInt()))
+                    }
+
                 }
             ) {
                 Text(
@@ -253,10 +252,10 @@ fun MainProductPreview(navController: NavController) {
 }
 
 
-@Preview
-@Composable
-fun MainScreen() {
-    IntelliTheme() {
-        ProductPreviewScreen(navController = rememberNavController())
-    }
-}
+//@Preview
+//@Composable
+//fun MainScreen() {
+//    IntelliTheme() {
+//        ProductPreviewScreen(navController = rememberNavController())
+//    }
+//}

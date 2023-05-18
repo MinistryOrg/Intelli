@@ -2,6 +2,7 @@ package com.mom.intelli.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.weather.Main
 import com.mom.intelli.service.IntelliService
@@ -35,6 +36,14 @@ class IntelliViewModel : ViewModel() {
 
     suspend fun getNews(category: String): NewsApiResponse? {
         return intelliService!!.getNews(category)
+    }
+
+    suspend fun insertToDatabase(device: Device){
+        intelliService!!.insertToDatabase(device)
+    }
+
+    suspend fun getCartDevices() : List<Device> {
+        return intelliService!!.getCartDevices()
     }
 
     fun openMusicApp() {

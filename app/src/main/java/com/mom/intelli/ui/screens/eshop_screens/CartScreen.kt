@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.screens.eshop_screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,15 +28,23 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
@@ -46,7 +55,8 @@ import com.mom.intelli.ui.theme.TextWhite
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CartScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -92,7 +102,7 @@ fun CartScreen(
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                MainCartScreen(navController)
+                MainCartScreen(navController,intelliViewModel)
             }
         }
     )
@@ -100,8 +110,17 @@ fun CartScreen(
 
 @Composable
 fun MainCartScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
+    var devices by remember {
+        mutableStateOf<List<Device>?>(null)
+    }
+    LaunchedEffect(Unit) {
+        val fetchedDevices = intelliViewModel.getCartDevices()
+        devices = fetchedDevices
+        // Handle the completion of the database operation if needed
+    }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -123,17 +142,11 @@ fun MainCartScreen(
         LazyColumn(
             modifier = Modifier.padding(15.dp),
             content = {
-
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-                item { CartItems() }
-
+                devices?.let { value ->
+                    value.forEach { device ->
+                        item { CartItems(device) }
+                    }
+                }
         })
 
         Box(
@@ -161,7 +174,7 @@ fun MainCartScreen(
 
 
 @Composable
-fun CartItems() {
+fun CartItems(device : Device) {
     Row(
         modifier = Modifier
             .padding(5.dp)
@@ -170,9 +183,19 @@ fun CartItems() {
             .padding(5.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Text(text = "id.", color = TextWhite, fontWeight = FontWeight.Bold)
-        Text(text = "Image", color = TextWhite, fontWeight = FontWeight.Bold)
-        Text(text = "Title of product", color = TextWhite, fontWeight = FontWeight.Bold)
+        Text(text = device.uid.toString(), color = TextWhite, fontWeight = FontWeight.Bold)
+        if (device.image!! != 0){
+            Image(
+                painter = painterResource(id =device.image.toInt()),
+                contentDescription = null,
+                modifier = Modifier
+                    .background(Color.White, shape = RoundedCornerShape(10.dp))
+                    .fillMaxWidth()
+                    .height(200.dp)
+            )
+        }
+
+        Text(text = device.name.toString(), color = TextWhite, fontWeight = FontWeight.Bold)
 
     }
 }

@@ -21,6 +21,6 @@ fun SetupNavGraph(
     ){
         homeNavGraph(navController = navController, intelliViewModel = intelliViewModel)
 
-        eshopNavGraph(navController = navController)
+        eshopNavGraph(navController = navController, intelliViewModel = intelliViewModel)
     }
 }

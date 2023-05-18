@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.screens.eshop_screens.CartScreen
 import com.mom.intelli.ui.screens.eshop_screens.CheckOutScreen
 import com.mom.intelli.ui.screens.eshop_screens.FashionScreen
@@ -16,7 +17,8 @@ import com.mom.intelli.util.ESHOP_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
 
 fun NavGraphBuilder.eshopNavGraph(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel : IntelliViewModel
 ){
     navigation(
         startDestination = Screen.Eshop.route,
@@ -51,7 +53,7 @@ fun NavGraphBuilder.eshopNavGraph(
         composable(
             route = Screen.EshopCart.route
         ){
-            CartScreen(navController)
+            CartScreen(navController,intelliViewModel)
         }
         composable(
             route = Screen.EshopCheckOut.route
@@ -61,7 +63,7 @@ fun NavGraphBuilder.eshopNavGraph(
         composable(
             route = Screen.EshopProductPrev.route
         ){
-            ProductPreviewScreen(navController)
+            ProductPreviewScreen(navController, intelliViewModel)
         }
     }
 }
