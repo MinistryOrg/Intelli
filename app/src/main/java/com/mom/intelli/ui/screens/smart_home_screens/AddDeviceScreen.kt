@@ -1,5 +1,7 @@
 package com.mom.intelli.ui.screens.smart_home_screens
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,6 +58,7 @@ import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.R.drawable.light_bulb_on as light_bulb_on1
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddDeviceScreen(navController: NavController) {
@@ -133,22 +136,23 @@ fun MainAddDeviceScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected})
+                    Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected}, page)
                 }
                 1 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected})
+                    Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected}, page)
                 }
                 2 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected})
+                    Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected}, page)
                 }
                 3 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected})
+                    Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected}, page)
                 }
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
 
         var nameText by remember{ mutableStateOf (TextFieldValue("") ) }
+
 
         OutlinedTextField(
             value = nameText,
@@ -201,8 +205,10 @@ fun MainAddDeviceScreen(
 fun Cardslider(
     painter: Painter,
     title : String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    page: Int
 ) {
+
     Card(
         modifier = Modifier
             .background(DeviceItemClr, shape = RoundedCornerShape(10.dp))
@@ -218,7 +224,13 @@ fun Cardslider(
             contentAlignment = Alignment.TopEnd,
             modifier = Modifier.fillMaxWidth()
         ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {
+                /*todo
+                   testarw na dw an mporoume me vash to page count na paroume to id ths kathe suskeuhs kai na ekmetaleutoume analoga.
+                   Dokimasa twra otan patas to tik an pairnei to page count kai einai komple
+                   */
+                Log.d("page count", page.toString())
+            }) {
                 Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null,)
             }
         }
@@ -230,6 +242,7 @@ fun Cardslider(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(text = title, fontWeight = FontWeight.Bold, color = TextWhite)
+//            Log.d("page count", page.toString())
         }
     }
 }
