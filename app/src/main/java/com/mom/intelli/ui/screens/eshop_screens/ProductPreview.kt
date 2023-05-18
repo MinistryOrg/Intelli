@@ -225,7 +225,7 @@ fun MainProductPreview(navController: NavController, intelliViewModel: IntelliVi
                     .height(60.dp),
                 onClick = {
                     coroutineScope.launch {
-                        intelliViewModel.insertToDatabase(Device(2,"Iphone", R.drawable.iphone_13_pro_max.toInt()))
+                        intelliViewModel.insertToDatabase(Device(0,"Iphone", R.drawable.iphone_13_pro_max.toInt()))
                     }
 
                 }

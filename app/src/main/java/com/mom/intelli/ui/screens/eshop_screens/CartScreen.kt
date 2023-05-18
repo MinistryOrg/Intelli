@@ -183,7 +183,7 @@ fun CartItems(device : Device) {
             .padding(5.dp),
         horizontalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Text(text = device.uid.toString(), color = TextWhite, fontWeight = FontWeight.Bold)
+        Text(text = device.id.toString(), color = TextWhite, fontWeight = FontWeight.Bold)
         if (device.image!! != 0){
             Image(
                 painter = painterResource(id =device.image.toInt()),
