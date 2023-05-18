@@ -240,7 +240,9 @@ fun MainSmartHomeScreen(
 
 
 @Composable
-fun DeviceItems() {
+fun DeviceItems(
+    /*todo edw logika tha mpei ws parametros h eikona kai to onoma ths suskeuhs tha epilexei o xrhsths*/
+) {
     val checked = remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -257,6 +259,7 @@ fun DeviceItems() {
             Image(painter = painterResource(id = R.drawable.light_bulb_off), contentDescription = "light_off", modifier = Modifier.height(100.dp))
             Text(text = "Light 1", fontWeight = FontWeight.Bold, color = TextWhite)
 
+            /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
             Switch(
                 modifier = Modifier.semantics { contentDescription = "Demo" },
                 checked = checked.value,
