@@ -9,6 +9,7 @@ interface NewsApi {
     @GET("news?")
     suspend fun getNews(
         @Query("apikey") apikey: String,
+        @Query("country") country: String,
         @Query("language") language: String,
         @Query("category") category : String
     ): Response <NewsApiResponse>
