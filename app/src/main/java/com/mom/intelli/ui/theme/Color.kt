@@ -39,6 +39,7 @@ val UnSelectTabTxtClr = Color(0xFF979090)
 val FloatingCartClr = Color(0xFF5B44EA)
 val BorderClr = Color(0xFF7D7D7D)
 val BoxClr = Color(0xFF121212)
+val TextFieldClr = Color(0xFF202020)
 //Colors For Smart Home
 
 //Colors For Other Apps

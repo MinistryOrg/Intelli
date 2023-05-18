@@ -50,6 +50,7 @@ import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -158,7 +159,7 @@ fun MainCartScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = {
-                    /*TODO add function*/
+                    navController.navigate(route = Screen.EshopCheckOut.route)
                 }
             ) {
                 Text(
