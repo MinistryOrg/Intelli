@@ -14,6 +14,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,13 +27,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
+import com.mom.intelli.data.smarthome.Smarthome
+import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.screens.DeviceItems
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.TextWhite
 
 @Composable
-fun OrdersScreen(navController: NavController) {
+fun OrdersScreen(navController: NavController, intelliViewModel: IntelliViewModel) {
+    var checkOut by remember {
+        mutableStateOf<List<CheckOut>?>(null)
+    }
+    LaunchedEffect(Unit) {
+        val fetchedCheckOut = intelliViewModel.getCheckOut()
+        checkOut  = fetchedCheckOut
+        // Handle the completion of the database operation if needed
+    }
     Column(
         modifier = Modifier
             .padding(top = 20.dp)
@@ -37,7 +54,11 @@ fun OrdersScreen(navController: NavController) {
         LazyColumn(
             modifier = Modifier.padding(15.dp),
             content = {
-               item { OrderItems( ) }
+                checkOut?.let { value ->
+                    value.forEach { checkOut ->
+                        item { OrderItems(checkOut) }
+                    }
+                }
             })
 
     }
@@ -46,7 +67,7 @@ fun OrdersScreen(navController: NavController) {
 
 
 @Composable
-fun OrderItems() {
+fun OrderItems(checkOut: CheckOut) {
     Row(
         modifier = Modifier
             .padding(5.dp)
@@ -66,8 +87,14 @@ fun OrderItems() {
             )
 //        }
         Column() {
-            Text(text ="title of product", color = TextWhite, fontWeight = FontWeight.Bold)
-            Text(text ="Status: Shipping", color = TextWhite, fontWeight = FontWeight.Bold)
+            Text(text = checkOut.fullname!!, color = TextWhite, fontWeight = FontWeight.Bold)
+            checkOut.device?.let { value ->
+                value.forEach { device ->
+                    Text(text = device.name!!, color = TextWhite, fontWeight = FontWeight.Bold)
+                    Text(text ="Status: Shipping", color = TextWhite, fontWeight = FontWeight.Bold)
+                }
+            }
+
         }
     }
 }

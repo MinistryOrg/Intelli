@@ -254,7 +254,7 @@ fun EshopMainScreen(
                         StoreScreen( navController)
                     }
                     1->{
-                        OrdersScreen(navController)
+                        OrdersScreen(navController,intelliViewModel)
                     }
                 }
             }
