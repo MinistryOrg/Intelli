@@ -35,6 +35,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -253,7 +256,7 @@ fun NewsMainScreen(
                 .fillMaxWidth()
                 .height(10.dp)
                 .padding(vertical = 1.dp)
-                .background(DividerClr)
+                .background(TitleSportsNewsClr)
             )
             //[Sports NEWS SECTION]
             Box(
@@ -285,7 +288,7 @@ fun NewsMainScreen(
                 .fillMaxWidth()
                 .height(10.dp)
                 .padding(vertical = 1.dp)
-                .background(DividerClr)
+                .background(TitleForYouNewsClr)
             )
             //[Based On Your Preferences NEWS SECTION]
             Box(
@@ -329,13 +332,20 @@ fun NewsBoxItem(news : Results, intelliViewModel: IntelliViewModel) {
     ){
 //        Log.d("key", news.imageUrl)
         AsyncImage(
+            modifier =Modifier
+                .padding(10.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .fillMaxWidth()
+                .height(200.dp),
+            alignment = Alignment.Center,
+            contentScale = ContentScale.FillWidth,
             model = news.image_url,
             contentDescription = news.description
         )
         Text(
             text = news.title,
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 10.dp)
+                .padding(horizontal = 10.dp, vertical = 5.dp)
                 .clickable {
                     intelliViewModel.openNewsLink(news.link)
                 },
