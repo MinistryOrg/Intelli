@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,8 +31,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.ui.ImgEmailLogo
-import com.mom.intelli.ui.ImgEshopLogo
 import com.mom.intelli.ui.ImgSmartHomeLogo
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.IconsColor
@@ -157,3 +154,4 @@ fun SmartHomeScreen(
         }
     )
 }
+
