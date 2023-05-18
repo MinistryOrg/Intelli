@@ -28,7 +28,6 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -50,18 +49,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.Device
+import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.DeviceItemClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
-import com.mom.intelli.R.drawable.light_bulb_on as light_bulb_on1
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddDeviceScreen(navController: NavController) {
+fun AddDeviceScreen(
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
+) {
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -106,7 +111,7 @@ fun AddDeviceScreen(navController: NavController) {
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                MainAddDeviceScreen(navController)
+                MainAddDeviceScreen(navController,intelliViewModel)
             }
         }
     )
@@ -117,7 +122,8 @@ fun AddDeviceScreen(navController: NavController) {
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainAddDeviceScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     val pageCount = 4
     val pagerState = rememberPagerState()
@@ -136,23 +142,21 @@ fun MainAddDeviceScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected}, page)
+                    Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected}, page, intelliViewModel)
                 }
                 1 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected}, page)
+                    Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected}, page, intelliViewModel)
                 }
                 2 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected}, page)
+                    Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected}, page,intelliViewModel)
                 }
                 3 -> {
-                    Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected}, page)
+                    Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected}, page,intelliViewModel)
                 }
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
-
         var nameText by remember{ mutableStateOf (TextFieldValue("") ) }
-
 
         OutlinedTextField(
             value = nameText,
@@ -185,6 +189,10 @@ fun MainAddDeviceScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = {
+                    // prepei na pairno tin eikona poy exei tin xroniki stigmi ara to add device edo einai lathos
+                    coroutineScope.launch {
+                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text, R.drawable.light_bulb_on))
+                    }
                     /*todo*/
                 }
             ) {
@@ -206,9 +214,9 @@ fun Cardslider(
     painter: Painter,
     title : String,
     onClick: () -> Unit,
-    page: Int
+    page: Int,
+    intelliViewModel: IntelliViewModel
 ) {
-
     Card(
         modifier = Modifier
             .background(DeviceItemClr, shape = RoundedCornerShape(10.dp))
@@ -225,10 +233,10 @@ fun Cardslider(
             modifier = Modifier.fillMaxWidth()
         ) {
             IconButton(onClick = {
-                /*todo
-                   testarw na dw an mporoume me vash to page count na paroume to id ths kathe suskeuhs kai na ekmetaleutoume analoga.
-                   Dokimasa twra otan patas to tik an pairnei to page count kai einai komple
-                   */
+                    /*todo
+                       testarw na dw an mporoume me vash to page count na paroume to id ths kathe suskeuhs kai na ekmetaleutoume analoga.
+                       Dokimasa twra otan patas to tik an pairnei to page count kai einai komple
+                       */
                 Log.d("page count", page.toString())
             }) {
                 Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null,)
@@ -242,7 +250,6 @@ fun Cardslider(
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(text = title, fontWeight = FontWeight.Bold, color = TextWhite)
-//            Log.d("page count", page.toString())
         }
     }
 }

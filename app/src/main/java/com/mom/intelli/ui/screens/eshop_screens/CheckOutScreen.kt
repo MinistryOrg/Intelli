@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.screens.eshop_screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,13 +20,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -38,6 +37,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,30 +46,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.DecorColor
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
-import com.mom.intelli.ui.theme.IntelliTheme
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SelectTabTxtClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextFieldColor
 import com.mom.intelli.ui.theme.TextWhite
-import com.mom.intelli.util.Screen
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CheckOutScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -115,7 +115,7 @@ fun CheckOutScreen(
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                MainCheckoutScreen(navController)
+                MainCheckoutScreen(navController,intelliViewModel)
             }
         }
     )
@@ -124,7 +124,8 @@ fun CheckOutScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainCheckoutScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel : IntelliViewModel
 ) {
     var nameText by remember{ mutableStateOf (TextFieldValue("") ) }
     var emailText by remember{ mutableStateOf (TextFieldValue("") ) }
@@ -134,7 +135,7 @@ fun MainCheckoutScreen(
     val radioOptions = listOf("Credit Card", "Debit Card", "Paypal")
     var (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
 
-    
+    val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -282,7 +283,11 @@ fun MainCheckoutScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = {
-                    /*todo*/
+                    coroutineScope.launch {
+                        // PWS THA PARW TO PAYMENT METHOD RE LAKAMA
+                        intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,"HOW RE MALAKA",intelliViewModel.getCartDevices()))
+                        Log.d("CheckOut sex", intelliViewModel.getCheckOut().toString())
+                    }
                 }
             ) {
                 Text(
@@ -297,10 +302,10 @@ fun MainCheckoutScreen(
 }
 
 
-@Preview
-@Composable
-fun CheckOutPrev() {
-    IntelliTheme() {
-        MainCheckoutScreen(navController = rememberNavController())
-    }
-}
+//@Preview
+//@Composable
+//fun CheckOutPrev() {
+//    IntelliTheme() {
+//        MainCheckoutScreen(navController = rememberNavController())
+//    }
+//}

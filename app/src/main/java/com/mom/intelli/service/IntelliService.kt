@@ -2,10 +2,13 @@ package com.mom.intelli.service
 
 import android.content.Context
 import androidx.room.Room
+import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.database.AppDatabase
+import com.mom.intelli.database.CheckOutDao
 import com.mom.intelli.util.serviceUtil.EmailUtil
 import com.mom.intelli.util.serviceUtil.IntentAppsUtil
 import com.mom.intelli.util.serviceUtil.NewsUtil
@@ -26,6 +29,8 @@ class IntelliService(var context: Context) {
 
 
     private val deviceDao = db.deviceDao()
+    private val smarthomeDao  = db.smarthomeDao()
+    private val checkOutDao = db.checkOutDao()
 
     fun showEmail() {
         emailUtil.showEmail(context)
@@ -67,7 +72,7 @@ class IntelliService(var context: Context) {
         newsUtil.openNewsLink(link,context)
     }
 
-    suspend fun insertToDatabase(device: Device){
+    suspend fun insertDeviceToDatabase(device: Device){
         return withContext(Dispatchers.IO) {
             deviceDao.insertAll(device)
         }
@@ -76,6 +81,30 @@ class IntelliService(var context: Context) {
     suspend fun getCartDevices() : List<Device>{
         return withContext(Dispatchers.IO) {
             deviceDao.getAll()
+        }
+    }
+
+    suspend fun insertSmarthomeToDatabase(smarthome: Smarthome){
+        return withContext(Dispatchers.IO) {
+            smarthomeDao.insertAll(smarthome)
+        }
+    }
+
+    suspend fun getSmarthome() : List<Smarthome>{
+        return withContext(Dispatchers.IO) {
+            smarthomeDao.getAll()
+        }
+    }
+
+    suspend fun insertCheckOut(checkOut : CheckOut){
+        return withContext(Dispatchers.IO) {
+            checkOutDao.insertAll(checkOut)
+        }
+    }
+
+    suspend fun getCheckOut() : List<CheckOut>{
+        return withContext(Dispatchers.IO) {
+            checkOutDao.getAll()
         }
     }
 

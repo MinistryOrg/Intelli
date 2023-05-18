@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -29,11 +27,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,13 +47,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.CircleToggleClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DeviceItemClr
 import com.mom.intelli.ui.theme.FloatingAddDeviceClr
-import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -129,7 +128,8 @@ fun SmartHomeWidget(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SmartHomeScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -192,7 +192,7 @@ fun SmartHomeScreen(
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                MainSmartHomeScreen(navController)
+                MainSmartHomeScreen(navController, intelliViewModel)
             }
         }
     )
@@ -201,8 +201,17 @@ fun SmartHomeScreen(
 
 @Composable
 fun MainSmartHomeScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
+    var smarthome by remember {
+        mutableStateOf<List<Smarthome>?>(null)
+    }
+    LaunchedEffect(Unit) {
+        val fetchedSmarthomes = intelliViewModel.getSmarthome()
+        smarthome = fetchedSmarthomes
+        // Handle the completion of the database operation if needed
+    }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -225,14 +234,17 @@ fun MainSmartHomeScreen(
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.padding(top=20.dp).padding(horizontal = 10.dp),
+            modifier = Modifier
+                .padding(top = 20.dp)
+                .padding(horizontal = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             content = {
-                item { DeviceItems() }
-                item { DeviceItems() }
-                item { DeviceItems() }
-                item { DeviceItems() }
+                smarthome?.let { value ->
+                    value.forEach { smarthome ->
+                        item { DeviceItems(smarthome = smarthome) }
+                    }
+                }
             })
 
     }
@@ -241,7 +253,7 @@ fun MainSmartHomeScreen(
 
 @Composable
 fun DeviceItems(
-    /*todo edw logika tha mpei ws parametros h eikona kai to onoma ths suskeuhs tha epilexei o xrhsths*/
+   smarthome: Smarthome
 ) {
     val checked = remember { mutableStateOf(false) }
     Card(
@@ -256,8 +268,8 @@ fun DeviceItems(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = R.drawable.light_bulb_off), contentDescription = "light_off", modifier = Modifier.height(100.dp))
-            Text(text = "Light 1", fontWeight = FontWeight.Bold, color = TextWhite)
+            Image(painter = painterResource(id = smarthome.image!!.toInt()), contentDescription = "light_off", modifier = Modifier.height(100.dp))
+            Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
 
             /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
             Switch(

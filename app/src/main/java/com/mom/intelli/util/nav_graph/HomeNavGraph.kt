@@ -45,12 +45,12 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.Eshop.route
         ){
-            EshopScreen(navController = navController)
+            EshopScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.SmartHome.route
         ){
-            SmartHomeScreen(navController = navController)
+            SmartHomeScreen(navController = navController,intelliViewModel)
         }
     }
 }

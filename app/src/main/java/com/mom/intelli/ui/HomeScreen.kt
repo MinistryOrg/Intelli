@@ -126,7 +126,7 @@ fun MainList(
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
-            EshopWidget(paddingValues = vrtpadding, navController = navController)
+            EshopWidget(paddingValues = vrtpadding, navController = navController,intelliViewModel)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
             OtherAppWidget(paddingValues = vrtpadding, intelliViewModel)
 

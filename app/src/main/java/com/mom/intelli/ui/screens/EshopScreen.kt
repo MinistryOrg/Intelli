@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.screens.eshop_screens.OrdersScreen
 import com.mom.intelli.ui.screens.eshop_screens.StoreScreen
 import com.mom.intelli.ui.theme.CustomFont
@@ -56,7 +57,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun EshopWidget(
     paddingValues: Dp,
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
     Card(
         modifier = Modifier
@@ -121,7 +123,8 @@ fun EshopWidget(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EshopScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel : IntelliViewModel
 ) {
     Scaffold(
         modifier = Modifier,
@@ -183,7 +186,7 @@ fun EshopScreen(
                     .fillMaxSize()
                     .padding(top = 70.dp)
             ){
-                EshopMainScreen(navController)
+                EshopMainScreen(navController, intelliViewModel)
             }
         }
     )
@@ -192,7 +195,8 @@ fun EshopScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EshopMainScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
 
         val tabData = listOf(
@@ -219,7 +223,7 @@ fun EshopMainScreen(
                     )
                 }
             ) {
-                tabData.forEachIndexed { index, pair ->
+                tabData.forEachIndexed { index, _ ->
                     Tab(
                         selected = tabIndex == index,
                         onClick = {

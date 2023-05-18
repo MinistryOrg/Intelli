@@ -58,7 +58,7 @@ fun NavGraphBuilder.eshopNavGraph(
         composable(
             route = Screen.EshopCheckOut.route
         ){
-            CheckOutScreen(navController)
+            CheckOutScreen(navController,intelliViewModel)
         }
         composable(
             route = Screen.EshopProductPrev.route

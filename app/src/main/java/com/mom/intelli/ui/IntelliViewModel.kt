@@ -2,10 +2,14 @@ package com.mom.intelli.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.Main
 import com.mom.intelli.service.IntelliService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class IntelliViewModel : ViewModel() {
     private var intelliService: IntelliService? = null
@@ -34,16 +38,32 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.openNewsLink(link)
     }
 
-    suspend fun getNews(category: String): NewsApiResponse? {
+    suspend fun getNews(category: String): NewsApiResponse {
         return intelliService!!.getNews(category)
     }
 
-    suspend fun insertToDatabase(device: Device){
-        intelliService!!.insertToDatabase(device)
+    suspend fun insertDeviceToDatabase(device: Device){
+        intelliService!!.insertDeviceToDatabase(device)
     }
 
     suspend fun getCartDevices() : List<Device> {
         return intelliService!!.getCartDevices()
+    }
+
+    suspend fun insertCheckOut(checkOut : CheckOut){
+        intelliService!!.insertCheckOut(checkOut)
+    }
+
+    suspend fun getCheckOut() : List<CheckOut>{
+       return intelliService!!.getCheckOut()
+    }
+
+    suspend fun insertSmarthomeToDatabase(smarthome: Smarthome){
+        intelliService!!.insertSmarthomeToDatabase(smarthome)
+    }
+
+    suspend fun getSmarthome() : List<Smarthome>{
+        return intelliService!!.getSmarthome()
     }
 
     fun openMusicApp() {

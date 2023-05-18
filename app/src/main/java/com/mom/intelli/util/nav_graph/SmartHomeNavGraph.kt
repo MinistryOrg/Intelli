@@ -21,7 +21,7 @@ fun NavGraphBuilder.smarthomeNavGraph(
         composable(
             route = Screen.SmartHomeAddDevice.route
         ){
-            AddDeviceScreen(navController)
+            AddDeviceScreen(navController,intelliViewModel)
         }
     }
 }
