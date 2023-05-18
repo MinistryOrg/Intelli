@@ -22,5 +22,7 @@ fun SetupNavGraph(
         homeNavGraph(navController = navController, intelliViewModel = intelliViewModel)
 
         eshopNavGraph(navController = navController, intelliViewModel = intelliViewModel)
+
+        smarthomeNavGraph(navController = navController,intelliViewModel = intelliViewModel)
     }
 }
