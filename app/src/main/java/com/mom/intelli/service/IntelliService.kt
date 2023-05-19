@@ -8,7 +8,6 @@ import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.database.AppDatabase
-import com.mom.intelli.database.CheckOutDao
 import com.mom.intelli.util.serviceUtil.EmailUtil
 import com.mom.intelli.util.serviceUtil.IntentAppsUtil
 import com.mom.intelli.util.serviceUtil.NewsUtil
@@ -78,6 +77,15 @@ class IntelliService(var context: Context) {
         }
     }
 
+    suspend fun deleteDevice(devices: List<Device>) {
+        return withContext(Dispatchers.IO) {
+            devices.forEach{ value ->
+                deviceDao.delete(value)
+            }
+        }
+
+    }
+
     suspend fun getCartDevices() : List<Device>{
         return withContext(Dispatchers.IO) {
             deviceDao.getAll()
@@ -115,5 +123,7 @@ class IntelliService(var context: Context) {
     suspend fun getWeather() : WeatherApiResponse {
         return weatherUtil.getWeather()
     }
+
+
 
 }

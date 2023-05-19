@@ -66,6 +66,10 @@ class IntelliViewModel : ViewModel() {
         return intelliService!!.getSmarthome()
     }
 
+    suspend fun deleteDevice(devices : List<Device>){
+        return intelliService!!.deleteDevice(devices)
+    }
+
     fun openMusicApp() {
         intelliService!!.openMusicApp()
     }

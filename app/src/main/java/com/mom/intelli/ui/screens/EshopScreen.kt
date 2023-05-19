@@ -198,7 +198,6 @@ fun EshopMainScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
-
         val tabData = listOf(
             "Store" ,
             "Orders"

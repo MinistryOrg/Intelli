@@ -44,7 +44,6 @@ fun OrdersScreen(navController: NavController, intelliViewModel: IntelliViewMode
     LaunchedEffect(Unit) {
         val fetchedCheckOut = intelliViewModel.getCheckOut()
         checkOut  = fetchedCheckOut
-        // Handle the completion of the database operation if needed
     }
     Column(
         modifier = Modifier
@@ -88,7 +87,7 @@ fun OrderItems(checkOut: CheckOut) {
 //        }
         Column() {
             Text(text = checkOut.fullname!!, color = TextWhite, fontWeight = FontWeight.Bold)
-            checkOut.device?.let { value ->
+            checkOut.device.let { value ->
                 value.forEach { device ->
                     Text(text = device.name!!, color = TextWhite, fontWeight = FontWeight.Bold)
                     Text(text ="Status: Shipping", color = TextWhite, fontWeight = FontWeight.Bold)

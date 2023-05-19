@@ -284,9 +284,8 @@ fun MainCheckoutScreen(
                     .height(60.dp),
                 onClick = {
                     coroutineScope.launch {
-                        // PWS THA PARW TO PAYMENT METHOD RE LAKAMA
-                        intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,"HOW RE MALAKA",intelliViewModel.getCartDevices()))
-                        Log.d("CheckOut sex", intelliViewModel.getCheckOut().toString())
+                        intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,selectedOption.toString(),intelliViewModel.getCartDevices()))
+                        intelliViewModel.deleteDevice(intelliViewModel.getCartDevices())
                     }
                 }
             ) {

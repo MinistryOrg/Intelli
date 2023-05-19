@@ -49,7 +49,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
 import com.mom.intelli.ui.IntelliViewModel
@@ -130,6 +129,7 @@ fun MainAddDeviceScreen(
     val coroutineScope = rememberCoroutineScope()
 
     var selected by remember{ mutableStateOf(false)} //todo gia selected device
+    var selectedImage by remember{ mutableStateOf(R.drawable.light_bulb_on)}
     Column(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -142,15 +142,26 @@ fun MainAddDeviceScreen(
         ) { page ->
             when (page) {
                 0 -> {
+                    Log.d("Selected", "light")
+                    Log.d("Selected page", page.toString())
+                    selectedImage = R.drawable.light_bulb_on
                     Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected}, page, intelliViewModel)
                 }
                 1 -> {
+                    Log.d("Selected","tv")
+                    Log.d("Selected page", page.toString())
                     Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected}, page, intelliViewModel)
                 }
                 2 -> {
+                    Log.d("Selected", "speaker")
+                    Log.d("Selected page", page.toString())
+                    selectedImage = R.drawable.speaker_on
                     Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected}, page,intelliViewModel)
                 }
                 3 -> {
+                    Log.d("Selected", "web")
+                    Log.d("Selected page", page.toString())
+                    selectedImage = R.drawable.web_camera_on
                     Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected}, page,intelliViewModel)
                 }
             }
@@ -188,10 +199,9 @@ fun MainAddDeviceScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = DeviceItemClr),
                 modifier = Modifier
                     .height(60.dp),
-                onClick = {
-                    // prepei na pairno tin eikona poy exei tin xroniki stigmi ara to add device edo einai lathos
+                onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
                     coroutineScope.launch {
-                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text, R.drawable.light_bulb_on))
+                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedImage))
                     }
                     /*todo*/
                 }
@@ -237,7 +247,7 @@ fun Cardslider(
                        testarw na dw an mporoume me vash to page count na paroume to id ths kathe suskeuhs kai na ekmetaleutoume analoga.
                        Dokimasa twra otan patas to tik an pairnei to page count kai einai komple
                        */
-                Log.d("page count", page.toString())
+                Log.d("Title", title.toString())
             }) {
                 Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null,)
             }
