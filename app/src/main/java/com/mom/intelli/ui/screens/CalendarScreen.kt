@@ -5,15 +5,25 @@ import android.icu.text.DateFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,14 +42,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.calendar.CalendarDay
+import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.ui.ImgCalendarLogo
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.IconsColor
@@ -47,7 +61,13 @@ import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
+import java.time.format.DateTimeFormatter
+import kotlinx.datetime.toJavaLocalTime
+import java.time.Month
+import java.time.YearMonth
+import java.time.format.TextStyle
 import java.util.Calendar
+import java.util.Locale
 
 //THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
@@ -195,11 +215,160 @@ fun CalendarScreen(
                 modifier = Modifier
                     .background(MainBackgroundColor)
                     .fillMaxSize()
-            ){
+                    .padding(top = 150.dp)
 
+            ){
+                MainCalendarScreen()
             }
         }
     )
-    
 }
 
+
+/*
+###########################################################################################################################################################################################
+#TODO DEN EXW IDEA TI ME EVALE NA GRAPSW TO BOTAKI ALLA DOULEUEI. TWRA APO EDW KAI PERA KANE OTI THES METAKINHSE SE ALLO ARXEIO OTI THES DEN KSERW KANE OTI THES. EGW THA FTIAXW TO DESIGN#
+###########################################################################################################################################################################################
+*/
+@Composable
+fun ReminderList(reminders: List<Reminder>) {
+    LazyColumn {
+        items(reminders) { reminder ->
+            ReminderItem(reminder)
+        }
+    }
+}
+@Composable
+fun ReminderItem(reminder: Reminder) {
+    val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(
+            text = reminder.time.toJavaLocalTime().format(timeFormatter),
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = reminder.title,
+            modifier = Modifier.weight(3f)
+        )
+    }
+}
+
+
+@Composable
+fun Calendar(days: List<java.time.LocalDate>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(7),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        items(days.size) { index ->
+            val day = days[index]
+            val isCurrentMonth = day.monthValue == java.time.LocalDate.now().monthValue
+            val textColor = if (isCurrentMonth) Color.Blue else Color.Red
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+                    .padding(2.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = day.dayOfMonth.toString(),
+                    color = textColor
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CalendarDayItem(day: CalendarDay, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .background(
+                color = when {
+                    day.isSelected -> Color.Blue
+                    day.isToday -> Color.Yellow
+                    day.isDisabled -> Color.Gray
+                    else -> Color.White
+                }
+            )
+            .clickable(onClick = onClick)
+            .size(48.dp)
+    ) {
+        Text(
+            text = day.date.dayOfMonth.toString(),
+            color = when {
+                day.isSelected -> Color.White
+                day.isDisabled -> Color.LightGray
+                else -> Color.Black
+            },
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+fun generateCalendarDays(monthYear: YearMonth): List<java.time.LocalDate> {
+    val firstDayOfMonth = monthYear.atDay(1)
+    val firstDayOfGrid = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek.value.toLong() - 1)
+    val lastDayOfMonth = monthYear.atEndOfMonth()
+    val lastDayOfGrid = lastDayOfMonth.plusDays(7 - lastDayOfMonth.dayOfWeek.value.toLong())
+
+    return generateSequence(firstDayOfGrid) { it.plusDays(1) }
+        .takeWhile { it.isBefore(lastDayOfGrid) }
+        .toList()
+}
+
+
+@Composable
+fun CalendarHeader(month: Int, year: Int, onPreviousMonth: () -> Unit, onNextMonth: () -> Unit) {
+    val monthName = Month.of(month).getDisplayName(TextStyle.FULL, Locale.getDefault())
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = onPreviousMonth) {
+            Icon(Icons.Filled.ArrowBack, contentDescription = "Previous Month", tint = TextWhite)
+        }
+
+        Text(text = "$monthName $year", color = TextWhite)
+
+        IconButton(onClick = onNextMonth) {
+            Icon(Icons.Filled.ArrowForward, contentDescription = "Next Month", tint = TextWhite)
+        }
+    }
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun MainCalendarScreen() {
+    val currentMonthYear = remember { mutableStateOf(YearMonth.now()) }
+
+    Column {
+        CalendarHeader(
+            month = currentMonthYear.value.monthValue,
+            year = currentMonthYear.value.year,
+            onPreviousMonth = {
+                currentMonthYear.value = currentMonthYear.value.minusMonths(1)
+            },
+            onNextMonth = {
+                currentMonthYear.value = currentMonthYear.value.plusMonths(1)
+            }
+        )
+
+        val days = generateCalendarDays(currentMonthYear.value)
+        Calendar(days)
+    }
+
+}

@@ -26,6 +26,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -260,8 +261,9 @@ fun EmainMainScreen(
                     maxLines = 1,
                     singleLine = false,
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = TextColor,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextColor,
+                        unfocusedTextColor = TextColor,
                         focusedBorderColor = TextFieldColor,
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,
@@ -277,8 +279,9 @@ fun EmainMainScreen(
                     maxLines = 1,
                     singleLine = false,
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = TextColor,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextColor,
+                        unfocusedTextColor = TextColor,
                         focusedBorderColor = TextFieldColor,
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,
@@ -292,8 +295,9 @@ fun EmainMainScreen(
                     label = { Text(text = "Text")},
                     onValueChange = {text = it},
                     shape = RoundedCornerShape(15.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        textColor = TextColor,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = TextColor,
+                        unfocusedTextColor = TextColor,
                         focusedBorderColor = TextFieldColor,
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,

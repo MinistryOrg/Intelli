@@ -53,9 +53,11 @@ fun SearchInternetWidget(
         ) },
         singleLine = false ,
         maxLines = 1,
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = SearchBckgClr,
-            textColor = Color.Black,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = SearchBckgClr,
+            unfocusedContainerColor = SearchBckgClr,
+            focusedTextColor = Color.Black,
+            unfocusedTextColor = Color.Black,
             cursorColor = SearchIconClr,
             focusedIndicatorColor = SearchBckgClr,
             unfocusedIndicatorColor = SearchBckgClr

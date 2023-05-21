@@ -29,6 +29,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -176,8 +177,9 @@ fun MainAddDeviceScreen(
             maxLines = 1,
             singleLine = false,
             shape = RoundedCornerShape(15.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = TextColor,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = TextColor,
+                unfocusedTextColor = TextColor,
                 focusedBorderColor = DeviceItemClr,
                 focusedLabelColor = TextColor,
                 focusedSupportingTextColor = TextColor,

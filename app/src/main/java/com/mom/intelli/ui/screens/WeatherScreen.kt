@@ -3,7 +3,9 @@ package com.mom.intelli.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.weather.Main
+import com.mom.intelli.data.weather.Weather
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -79,6 +82,15 @@ fun WeatherWidget(
                     .padding(5.dp)
 
             ) {
+               Box(modifier = Modifier.align(Alignment.CenterStart)) {
+                    weather?.let { w ->
+                        Text(
+                            text = w.temp.toString(),
+                            color = TextWhite,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
                 Box(modifier = Modifier.align(Alignment.TopStart)) {
                     Icon(
                         painter = painterResource(id = R.drawable.weather_icon),
@@ -103,9 +115,7 @@ fun WeatherWidget(
                         modifier = Modifier
                             .size(30.dp),
                     )
-                    weather?.let { w ->
-                        Text(text = w.temp.toString())
-                    }
+
 
                 }
             }

@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
@@ -168,8 +169,9 @@ fun MainCheckoutScreen(
                 maxLines = 1,
                 singleLine = false,
                 shape = RoundedCornerShape(15.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = TextColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = TextColor,
+                    unfocusedTextColor = TextColor,
                     focusedBorderColor = TextFieldColor,
                     focusedLabelColor = TextColor,
                     focusedSupportingTextColor = TextColor,
@@ -185,8 +187,9 @@ fun MainCheckoutScreen(
                 maxLines = 1,
                 singleLine = false,
                 shape = RoundedCornerShape(15.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = TextColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = TextColor,
+                    unfocusedTextColor = TextColor,
                     focusedBorderColor = TextFieldColor,
                     focusedLabelColor = TextColor,
                     focusedSupportingTextColor = TextColor,
@@ -202,8 +205,9 @@ fun MainCheckoutScreen(
                 maxLines = 1,
                 singleLine = false,
                 shape = RoundedCornerShape(15.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = TextColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = TextColor,
+                    unfocusedTextColor = TextColor,
                     focusedBorderColor = TextFieldColor,
                     focusedLabelColor = TextColor,
                     focusedSupportingTextColor = TextColor,
@@ -219,8 +223,9 @@ fun MainCheckoutScreen(
                 maxLines = 1,
                 singleLine = false,
                 shape = RoundedCornerShape(15.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    textColor = TextColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = TextColor,
+                    unfocusedTextColor = TextColor,
                     focusedBorderColor = TextFieldColor,
                     focusedLabelColor = TextColor,
                     focusedSupportingTextColor = TextColor,
