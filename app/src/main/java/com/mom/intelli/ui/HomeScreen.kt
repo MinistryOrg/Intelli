@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -38,6 +37,7 @@ import com.mom.intelli.ui.screens.EshopWidget
 import com.mom.intelli.ui.screens.MapsWidget
 import com.mom.intelli.ui.screens.NewsWidget
 import com.mom.intelli.ui.screens.OtherAppWidget
+import com.mom.intelli.ui.screens.SearchInternetWidget
 import com.mom.intelli.ui.screens.SmartHomeWidget
 import com.mom.intelli.ui.screens.WeatherWidget
 import com.mom.intelli.ui.theme.CustomFont
@@ -122,7 +122,7 @@ fun MainList(
 
             CalendarWidget(paddingValues = vrtpadding, navController = navController)
             WeatherWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
-            // TODO ADD SEARCH WIDGET
+            SearchInternetWidget(paddingValues = vrtpadding)
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)

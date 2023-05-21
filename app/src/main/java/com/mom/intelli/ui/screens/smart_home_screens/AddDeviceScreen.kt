@@ -174,7 +174,7 @@ fun MainAddDeviceScreen(
             label = { Text(text = "Name Device") },
             onValueChange = { nameText = it },
             maxLines = 1,
-            singleLine = true,
+            singleLine = false,
             shape = RoundedCornerShape(15.dp),
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 textColor = TextColor,

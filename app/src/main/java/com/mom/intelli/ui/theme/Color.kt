@@ -14,6 +14,9 @@ val FooterText = Color(0xFF2C2C2C)
 //Colors For Weather
 
 //Colors For Search
+val PlaceHolderTxtCLr = Color(0xFF838383)
+val SearchIconClr = Color(0xFF5585FF)
+val SearchBckgClr = Color(0xFFF9F9F9)
 
 //Colors For Email
 val TextFieldColor = Color(0xFFDEDBE2)

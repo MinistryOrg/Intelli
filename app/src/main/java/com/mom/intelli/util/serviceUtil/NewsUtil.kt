@@ -18,8 +18,8 @@ class NewsUtil {
         val newsApiService = retrofit.create(NewsApi::class.java)
 
         val apikey = "pub_222077c5f72377e7b3b6c33454715d7e4b54e"
-        val language = "en"
-        val country = "us"
+        val language = "el"
+        val country = "gr"
 
         val response = newsApiService.getNews(apikey, country ,language, category)
         val news = response.body()

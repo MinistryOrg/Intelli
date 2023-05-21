@@ -166,7 +166,7 @@ fun MainCheckoutScreen(
                 label = { Text(text = "Full Name") },
                 onValueChange = { nameText = it },
                 maxLines = 1,
-                singleLine = true,
+                singleLine = false,
                 shape = RoundedCornerShape(15.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = TextColor,
@@ -183,7 +183,7 @@ fun MainCheckoutScreen(
                 label = { Text(text = "Email Address") },
                 onValueChange = { emailText = it },
                 maxLines = 1,
-                singleLine = true,
+                singleLine = false,
                 shape = RoundedCornerShape(15.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = TextColor,
@@ -200,7 +200,7 @@ fun MainCheckoutScreen(
                 label = { Text(text = "Address") },
                 onValueChange = { addressText = it },
                 maxLines = 1,
-                singleLine = true,
+                singleLine = false,
                 shape = RoundedCornerShape(15.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = TextColor,
@@ -217,7 +217,7 @@ fun MainCheckoutScreen(
                 label = { Text(text = "Country") },
                 onValueChange = { countryText = it },
                 maxLines = 1,
-                singleLine = true,
+                singleLine = false,
                 shape = RoundedCornerShape(15.dp),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = TextColor,

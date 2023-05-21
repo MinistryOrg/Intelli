@@ -336,7 +336,8 @@ fun NewsBoxItem(news : Results, intelliViewModel: IntelliViewModel) {
                 .padding(10.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(200.dp)
+                .clip(RoundedCornerShape(10.dp)),
             alignment = Alignment.Center,
             contentScale = ContentScale.FillWidth,
             model = news.image_url,

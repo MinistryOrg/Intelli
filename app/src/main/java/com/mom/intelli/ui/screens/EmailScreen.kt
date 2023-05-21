@@ -249,7 +249,8 @@ fun EmainMainScreen(
                 .padding(vertical = 80.dp)
         ){
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp)
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                modifier = Modifier.padding(horizontal = 40.dp)
             ) {
                 //[TEXTFIELD TO ADD THE EMAIL ADDRESS YOU WANT TO SEND]
                 OutlinedTextField(
@@ -257,7 +258,7 @@ fun EmainMainScreen(
                     label = { Text(text = "Email Address")},
                     onValueChange = {emailText = it},
                     maxLines = 1,
-                    singleLine = true,
+                    singleLine = false,
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         textColor = TextColor,
@@ -274,7 +275,7 @@ fun EmainMainScreen(
                     label = { Text(text = "Subject")},
                     onValueChange = {subjText = it},
                     maxLines = 1,
-                    singleLine = true,
+                    singleLine = false,
                     shape = RoundedCornerShape(15.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         textColor = TextColor,
@@ -299,9 +300,9 @@ fun EmainMainScreen(
                         cursorColor = DecorColor,
                         unfocusedLabelColor = TextColor
                     ),
+                    singleLine = false,
                     modifier = Modifier
                         .height(250.dp)
-                        .width(280.dp)
                 )
             }
         }
