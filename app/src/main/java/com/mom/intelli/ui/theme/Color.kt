@@ -10,6 +10,10 @@ val FooterText = Color(0xFF2C2C2C)
 //Colors For Home Screen
 
 //Colors For Calendar
+val CalendarBoxClr = Color(0xFF271A47)
+val CurrentMonthTxtClr = Color(0xFFeeeeee)
+val OtherMonthTxtClr = Color(0xFF707070)
+val DaysClr = Color(0xFFDAB2FF)
 
 //Colors For Weather
 

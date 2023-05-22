@@ -42,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -55,9 +56,13 @@ import com.mom.intelli.R
 import com.mom.intelli.data.calendar.CalendarDay
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.ui.ImgCalendarLogo
+import com.mom.intelli.ui.theme.CalendarBoxClr
+import com.mom.intelli.ui.theme.CurrentMonthTxtClr
 import com.mom.intelli.ui.theme.CustomFont
+import com.mom.intelli.ui.theme.DaysClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
+import com.mom.intelli.ui.theme.OtherMonthTxtClr
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
@@ -68,6 +73,10 @@ import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
+
+val listOfDays = listOf(
+    "M","T","W","T","F","S","S"
+)
 
 //THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
@@ -215,7 +224,7 @@ fun CalendarScreen(
                 modifier = Modifier
                     .background(MainBackgroundColor)
                     .fillMaxSize()
-                    .padding(top = 150.dp)
+                    .padding(top = 80.dp)
 
             ){
                 MainCalendarScreen()
@@ -263,12 +272,17 @@ fun ReminderItem(reminder: Reminder) {
 fun Calendar(days: List<java.time.LocalDate>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(7),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .clip(RoundedCornerShape(0, 0, 8, 8))
+            .fillMaxWidth()
+            .background(CalendarBoxClr)
+
     ) {
         items(days.size) { index ->
             val day = days[index]
             val isCurrentMonth = day.monthValue == java.time.LocalDate.now().monthValue
-            val textColor = if (isCurrentMonth) Color.Blue else Color.Red
+            val textColor = if (isCurrentMonth) CurrentMonthTxtClr else OtherMonthTxtClr
 
             Box(
                 modifier = Modifier
@@ -333,20 +347,40 @@ fun CalendarHeader(month: Int, year: Int, onPreviousMonth: () -> Unit, onNextMon
 
     Row(
         modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .clip(RoundedCornerShape(20, 20, 0, 0))
             .fillMaxWidth()
+            .background(CalendarBoxClr)
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onPreviousMonth) {
-            Icon(Icons.Filled.ArrowBack, contentDescription = "Previous Month", tint = TextWhite)
+            Icon(painter = painterResource(id = R.drawable.navigate_before_icon), contentDescription = "Previous Month", tint = DaysClr)
         }
 
         Text(text = "$monthName $year", color = TextWhite)
 
         IconButton(onClick = onNextMonth) {
-            Icon(Icons.Filled.ArrowForward, contentDescription = "Next Month", tint = TextWhite)
+            Icon(painter = painterResource(id = R.drawable.navigate_next_icon), contentDescription = "Next Month", tint = DaysClr)
         }
+    }
+    Row(
+        modifier = Modifier
+            .padding(horizontal = 5.dp)
+            .fillMaxWidth()
+            .background(CalendarBoxClr)
+            .padding(horizontal = 18.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(text = "M", color = DaysClr)
+        Text(text = "T", color = DaysClr)
+        Text(text = "W", color = DaysClr)
+        Text(text = "T", color = DaysClr)
+        Text(text = "F", color = DaysClr)
+        Text(text = "S", color = DaysClr)
+        Text(text = "S", color = DaysClr)
     }
 }
 
