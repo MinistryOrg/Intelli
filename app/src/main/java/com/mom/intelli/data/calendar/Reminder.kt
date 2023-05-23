@@ -1,9 +1,11 @@
 package com.mom.intelli.data.calendar
 
-import kotlinx.datetime.LocalTime
+import java.time.LocalDate
+import java.time.LocalTime
+
 
 data class Reminder(
-    val id: Int,
+    val date: LocalDate,
     val title: String,
-    val time: LocalTime
+    val description: String
 )
