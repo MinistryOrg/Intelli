@@ -1,5 +1,6 @@
 package com.mom.intelli.ui.theme
 
+import android.app.Dialog
 import androidx.compose.ui.graphics.Color
 //Main Color
 val MainBackgroundColor = Color(0xFF121212)
@@ -10,10 +11,15 @@ val FooterText = Color(0xFF2C2C2C)
 //Colors For Home Screen
 
 //Colors For Calendar
-val CalendarBoxClr = Color(0xFF271A47)
+//val CalendarBoxClr = Color(0xFF271A47)
+val CalendarBoxClr = Color(0xFF1C1724)
+val CalendarReminderBoxClr = Color(0xFF271E3C)
 val CurrentMonthTxtClr = Color(0xFFeeeeee)
 val OtherMonthTxtClr = Color(0xFF707070)
 val DaysClr = Color(0xFFDAB2FF)
+val SelectedDayClr = Color(0xFFB777F4)
+val DialogBoxClr = Color(0xFF6248A2)
+val CalTextFieldBorderClr = Color(0xFF271A47)
 
 //Colors For Weather
 

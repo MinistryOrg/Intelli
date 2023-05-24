@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.weather.Main
 import com.mom.intelli.data.weather.Weather
+import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -43,7 +45,7 @@ fun WeatherWidget(
     intelliViewModel: IntelliViewModel
 ) {
     var weather by remember {
-        mutableStateOf<Main?>(null)
+        mutableStateOf<WeatherApiResponse?>(null)
     }
 
     LaunchedEffect(Unit) {
@@ -85,11 +87,15 @@ fun WeatherWidget(
                Box(modifier = Modifier.align(Alignment.CenterStart)) {
                     weather?.let { w ->
                         Text(
-                            text = w.temp.toString(),
+                            text = w.main.temp.toString(),
                             color = TextWhite,
                             fontWeight = FontWeight.Bold
                         )
+                        Spacer(modifier = Modifier.height(50.dp))
+
                     }
+
+                    
                 }
                 Box(modifier = Modifier.align(Alignment.TopStart)) {
                     Icon(

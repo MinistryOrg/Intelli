@@ -16,24 +16,30 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,28 +51,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.data.calendar.CalendarDay
 import com.mom.intelli.data.calendar.Reminder
+import com.mom.intelli.ui.CalendarViewModel
 import com.mom.intelli.ui.ImgCalendarLogo
+import com.mom.intelli.ui.theme.CalTextFieldBorderClr
 import com.mom.intelli.ui.theme.CalendarBoxClr
-import com.mom.intelli.ui.theme.CurrentMonthTxtClr
+import com.mom.intelli.ui.theme.CalendarReminderBoxClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DaysClr
+import com.mom.intelli.ui.theme.DialogBoxClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
-import com.mom.intelli.ui.theme.OtherMonthTxtClr
+import com.mom.intelli.ui.theme.SelectedDayClr
+import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
-import java.time.Month
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
+import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
@@ -179,6 +186,7 @@ fun CalendarWidget(
 fun CalendarScreen(
     navController: NavController
 ) {
+    var calendarViewModel: CalendarViewModel = CalendarViewModel()
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -224,73 +232,112 @@ fun CalendarScreen(
                     .padding(top = 80.dp)
 
             ){
-                MainCalendarScreen()
+                CalendarScreen(calendarViewModel, navController)
             }
         }
     )
 }
 
-
-/*
-###########################################################################################################################################################################################
-#TODO DEN EXW IDEA TI ME EVALE NA GRAPSW TO BOTAKI ALLA DOULEUEI. TWRA APO EDW KAI PERA KANE OTI THES METAKINHSE SE ALLO ARXEIO OTI THES DEN KSERW KANE OTI THES. EGW THA FTIAXW TO DESIGN#
-###########################################################################################################################################################################################
-*/
 @Composable
-fun ReminderList(reminders: List<Reminder>) {
-    LazyColumn {
-        items(reminders) { reminder ->
-            ReminderItem(reminder)
+fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController) {
+    val currentMonth by viewModel.currentMonth.collectAsState()
+    val selectedDate by viewModel.selectedDate.collectAsState()
+    val reminders by viewModel.reminders.collectAsState()
+    var showAddReminderDialog by remember { mutableStateOf(false) }
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    var calendar by remember { mutableStateOf(Calendar.getInstance().time) }
+    var dateFormat by remember { mutableStateOf(DateFormat.getDateInstance(DateFormat.FULL).format(calendar)) }
+
+    LaunchedEffect(Unit) { // to change the time in real time
+        while (true) {
+            delay(1000) // Delay for 1 second
+            calendar = Calendar.getInstance().time
+            dateFormat = DateFormat.getDateInstance(DateFormat.FULL).format(calendar)
         }
     }
-}
-@Composable
-fun ReminderItem(reminder: Reminder) {
-    val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Text(
-            text = reminder.time.toJavaLocalTime().format(timeFormatter),
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = reminder.title,
-            modifier = Modifier.weight(3f)
-        )
-    }
-}
-
-
-@Composable
-fun Calendar(days: List<java.time.LocalDate>) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(7),
+    Column(
         modifier = Modifier
             .padding(horizontal = 5.dp)
-            .clip(RoundedCornerShape(0, 0, 8, 8))
-            .fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
             .background(CalendarBoxClr)
-
+            .fillMaxWidth()
     ) {
-        items(days.size) { index ->
-            val day = days[index]
-            val isCurrentMonth = day.monthValue == java.time.LocalDate.now().monthValue
-            val textColor = if (isCurrentMonth) CurrentMonthTxtClr else OtherMonthTxtClr
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(15.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Text(
+                text = dateFormat,
+                color = DaysClr,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp
+            )
+        }
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .height(4.dp)
+            .padding(vertical = 1.dp, horizontal = 5.dp)
+            .background(DaysClr)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = { viewModel.navigateMonth(-1) }) {
+                Icon(painter = painterResource(id = R.drawable.navigate_before_icon), contentDescription = "Previous Month", tint = DaysClr)
+            }
+            Text(
+                text = "${currentMonth.month.getDisplayName(TextStyle.FULL, Locale.getDefault())} ${currentMonth.year}",
+                modifier = Modifier.align(Alignment.CenterVertically),
+                color = TextWhite,
+                fontWeight = FontWeight.Bold
+            )
+            IconButton(onClick = { viewModel.navigateMonth(1) }) {
+                Icon(painter = painterResource(id = R.drawable.navigate_next_icon), contentDescription = "Previous Month", tint = DaysClr)
+            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .padding(2.dp),
-                contentAlignment = Alignment.Center
+        }
+
+        CalendarGrid(currentMonth, selectedDate, viewModel::selectDate)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(
+                onClick = { showAddReminderDialog = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = SelectedDayClr
+                )
             ) {
-                Text(
-                    text = day.dayOfMonth.toString(),
-                    color = textColor
+                Icon(painter = painterResource(id = R.drawable.calendar_add_icon), contentDescription = null, tint = TextWhite, modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.width(10.dp))
+                Text("Add Reminder")
+            }
+        }
+
+        if (selectedDate != null) {
+            val dateReminders = reminders.filter { it.date == selectedDate }
+            ReminderList(dateReminders)
+        }
+
+        if (showAddReminderDialog) {
+            Dialog(onDismissRequest = { showAddReminderDialog = false }) {
+                AddReminderScreen(
+                    viewModel = viewModel,
+                    navController
                 )
             }
         }
@@ -298,108 +345,184 @@ fun Calendar(days: List<java.time.LocalDate>) {
 }
 
 @Composable
-fun CalendarDayItem(day: CalendarDay, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(4.dp)
-            .background(
-                color = when {
-                    day.isSelected -> Color.Blue
-                    day.isToday -> Color.Yellow
-                    day.isDisabled -> Color.Gray
-                    else -> Color.White
+fun CalendarGrid(
+    currentMonth: LocalDate,
+    selectedDate: LocalDate?,
+    onDateSelected: (LocalDate) -> Unit
+) {
+    val dates = remember(currentMonth) { generateDatesForMonth(currentMonth) }
+    LazyVerticalGrid(columns = GridCells.Fixed(7)) {
+        items(dates) { date ->
+            Box(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .aspectRatio(1f)
+                    .clickable { onDateSelected(date) },
+                contentAlignment = Alignment.Center
+            ) {
+                if (date == selectedDate) {
+                    // Highlight the selected date
+                    // Customize the appearance as needed
+                    Text(
+                        text = date.dayOfMonth.toString(),
+                        color = Color.White,
+                        modifier = Modifier
+                            .background(SelectedDayClr, shape = CircleShape)
+                            .padding(8.dp)
+                    )
+                } else {
+                    Text(
+                        text = date.dayOfMonth.toString(),
+                        color = TextWhite
+                    )
                 }
+            }
+        }
+    }
+}
+
+fun generateDatesForMonth(month: LocalDate): List<LocalDate> {
+    val firstDayOfMonth = month.withDayOfMonth(1)
+    val firstDayOfWeek = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek.value.toLong() % 7)
+    val dates = mutableListOf<LocalDate>()
+
+    val firstDayOfNextMonth = month.plusMonths(1).withDayOfMonth(1)
+    var currentDate = firstDayOfWeek
+    while (currentDate.isBefore(firstDayOfNextMonth)) {
+        dates.add(currentDate)
+        currentDate = currentDate.plusDays(1)
+    }
+
+    return dates
+}
+@Composable
+fun ReminderList(reminders: List<Reminder>) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(10.dp))
+            .background(CalendarReminderBoxClr)
+            .padding(10.dp)
+    ) {
+        Box(
+            modifier = Modifier
+            .padding(vertical = 5.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(50.dp))
+            .height(7.dp)
+            .padding(vertical = 1.dp, horizontal = 140.dp)
+            .background(DaysClr, shape = RoundedCornerShape(50.dp))
+        )
+        reminders.forEach { reminder ->
+
+            Text(
+                text = reminder.title,
+                color = TextWhite,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
             )
-            .clickable(onClick = onClick)
-            .size(48.dp)
+
+            Text(
+                text = reminder.description,
+                color = TextWhite,
+                fontSize = 15.sp
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(50.dp))
+                .height(3.dp)
+                .padding(vertical = 1.dp)
+                .background(DaysClr, shape = RoundedCornerShape(50.dp))
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+}
+
+
+
+@Composable
+fun AddReminderScreen(viewModel: CalendarViewModel, navController: NavController) {
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .background(CalTextFieldBorderClr)
+            .fillMaxWidth()
+            .padding(vertical = 25.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = day.date.dayOfMonth.toString(),
-            color = when {
-                day.isSelected -> Color.White
-                day.isDisabled -> Color.LightGray
-                else -> Color.Black
-            },
-            textAlign = TextAlign.Center,
-            modifier = Modifier.align(Alignment.Center)
+            text = "Add New Reminder",
+            color = TextWhite,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
         )
-    }
-}
+        Spacer(modifier = Modifier.height(8.dp))
 
-fun generateCalendarDays(monthYear: YearMonth): List<java.time.LocalDate> {
-    val firstDayOfMonth = monthYear.atDay(1)
-    val firstDayOfGrid = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek.value.toLong() - 1)
-    val lastDayOfMonth = monthYear.atEndOfMonth()
-    val lastDayOfGrid = lastDayOfMonth.plusDays(7 - lastDayOfMonth.dayOfWeek.value.toLong())
-
-    return generateSequence(firstDayOfGrid) { it.plusDays(1) }
-        .takeWhile { it.isBefore(lastDayOfGrid) }
-        .toList()
-}
-
-
-@Composable
-fun CalendarHeader(month: Int, year: Int, onPreviousMonth: () -> Unit, onNextMonth: () -> Unit) {
-    val monthName = Month.of(month).getDisplayName(TextStyle.FULL, Locale.getDefault())
-
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .clip(RoundedCornerShape(20, 20, 0, 0))
-            .fillMaxWidth()
-            .background(CalendarBoxClr)
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = onPreviousMonth) {
-            Icon(painter = painterResource(id = R.drawable.navigate_before_icon), contentDescription = "Previous Month", tint = DaysClr)
-        }
-
-        Text(text = "$monthName $year", color = TextWhite)
-
-        IconButton(onClick = onNextMonth) {
-            Icon(painter = painterResource(id = R.drawable.navigate_next_icon), contentDescription = "Next Month", tint = DaysClr)
-        }
-    }
-    Row(
-        modifier = Modifier
-            .padding(horizontal = 5.dp)
-            .fillMaxWidth()
-            .background(CalendarBoxClr)
-            .padding(horizontal = 18.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(text = "M", color = DaysClr)
-        Text(text = "T", color = DaysClr)
-        Text(text = "W", color = DaysClr)
-        Text(text = "T", color = DaysClr)
-        Text(text = "F", color = DaysClr)
-        Text(text = "S", color = DaysClr)
-        Text(text = "S", color = DaysClr)
-    }
-}
-
-@SuppressLint("UnrememberedMutableState")
-@Composable
-fun MainCalendarScreen() {
-    val currentMonthYear = remember { mutableStateOf(YearMonth.now()) }
-
-    Column {
-        CalendarHeader(
-            month = currentMonthYear.value.monthValue,
-            year = currentMonthYear.value.year,
-            onPreviousMonth = {
-                currentMonthYear.value = currentMonthYear.value.minusMonths(1)
-            },
-            onNextMonth = {
-                currentMonthYear.value = currentMonthYear.value.plusMonths(1)
-            }
+        OutlinedTextField(
+            value = title,
+            onValueChange = { title = it },
+            label = { Text("Title") },
+            shape = RoundedCornerShape(15.dp),
+            modifier = Modifier.clip(RoundedCornerShape(15.dp)),
+            singleLine = false ,
+            maxLines = 1,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = TextColor,
+                unfocusedTextColor = TextColor,
+                focusedBorderColor = DialogBoxClr,
+                focusedLabelColor = TextColor,
+                focusedSupportingTextColor = TextColor,
+                cursorColor = DialogBoxClr,
+                unfocusedLabelColor = TextColor,
+                unfocusedBorderColor = DialogBoxClr
+            )
         )
 
-        val days = generateCalendarDays(currentMonthYear.value)
-        Calendar(days)
-    }
+        Spacer(modifier = Modifier.height(15.dp))
 
+        OutlinedTextField(
+            value = description,
+            onValueChange = { description = it },
+            label = { Text("Description") },
+            shape = RoundedCornerShape(15.dp),
+            modifier = Modifier.clip(RoundedCornerShape(15.dp)),
+            singleLine = false ,
+            maxLines = 1,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = TextColor,
+                unfocusedTextColor = TextColor,
+                focusedBorderColor = DialogBoxClr,
+                focusedLabelColor = TextColor,
+                focusedSupportingTextColor = TextColor,
+                cursorColor = DialogBoxClr,
+                unfocusedLabelColor = TextColor,
+                unfocusedBorderColor = DialogBoxClr
+            )
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = {
+            val reminder = Reminder(viewModel.selectedDate.value!!, title, description)
+            viewModel.addReminder(reminder)
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = SelectedDayClr
+            )
+        ) {
+            Icon(painter = painterResource(id = R.drawable.calendar_add_icon), contentDescription = null, tint = TextWhite, modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Text("Add Reminder")
+        }
+    }
 }
