@@ -7,6 +7,7 @@ import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.Main
+import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.service.IntelliService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,8 +23,8 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.openMaps()
     }
 
-    suspend fun getWeather() : Main {
-        return intelliService!!.getWeather().main
+    suspend fun getWeather() : WeatherApiResponse {
+        return intelliService!!.getWeather()
     }
 
     fun showEmail() {

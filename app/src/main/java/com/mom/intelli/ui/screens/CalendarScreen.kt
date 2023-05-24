@@ -22,8 +22,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -66,10 +64,9 @@ import com.mom.intelli.ui.theme.OtherMonthTxtClr
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
-import java.time.format.DateTimeFormatter
-import kotlinx.datetime.toJavaLocalTime
 import java.time.Month
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
