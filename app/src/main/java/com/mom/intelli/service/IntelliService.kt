@@ -2,6 +2,7 @@ package com.mom.intelli.service
 
 import android.content.Context
 import androidx.room.Room
+import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
@@ -14,6 +15,7 @@ import com.mom.intelli.util.serviceUtil.NewsUtil
 import com.mom.intelli.util.serviceUtil.WeatherUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 class IntelliService(var context: Context) {
     private val intentAppsUtil : IntentAppsUtil = IntentAppsUtil()
@@ -30,6 +32,7 @@ class IntelliService(var context: Context) {
     private val deviceDao = db.deviceDao()
     private val smarthomeDao  = db.smarthomeDao()
     private val checkOutDao = db.checkOutDao()
+    private val reminderDao  = db.reminderDao()
 
     fun showEmail() {
         emailUtil.showEmail(context)
@@ -113,6 +116,30 @@ class IntelliService(var context: Context) {
     suspend fun getCheckOut() : List<CheckOut>{
         return withContext(Dispatchers.IO) {
             checkOutDao.getAll()
+        }
+    }
+
+    suspend fun insertReminder(reminder: Reminder){
+        return withContext(Dispatchers.IO) {
+            reminderDao.insertAll(reminder)
+        }
+    }
+
+    suspend fun deleteReminder(reminder: Reminder){
+        return withContext(Dispatchers.IO) {
+            reminderDao.delete(reminder)
+        }
+    }
+
+    suspend fun getReminders() : List<Reminder>{
+        return withContext(Dispatchers.IO) {
+            reminderDao.getAll()
+        }
+    }
+
+    suspend fun getRemindersByDate(date : LocalDate) : List<Reminder>{
+        return withContext(Dispatchers.IO) {
+            reminderDao.getByDate(date)
         }
     }
 

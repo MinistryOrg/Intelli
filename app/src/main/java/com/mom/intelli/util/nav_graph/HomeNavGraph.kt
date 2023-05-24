@@ -30,7 +30,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.Calendar.route
         ){
-            CalendarScreen(navController = navController)
+            CalendarScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.Email.route

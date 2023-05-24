@@ -2,15 +2,14 @@ package com.mom.intelli.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
-import com.mom.intelli.data.weather.Main
 import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.service.IntelliService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import java.time.LocalDate
 
 class IntelliViewModel : ViewModel() {
     private var intelliService: IntelliService? = null
@@ -69,6 +68,23 @@ class IntelliViewModel : ViewModel() {
 
     suspend fun deleteDevice(devices : List<Device>){
         return intelliService!!.deleteDevice(devices)
+    }
+
+    suspend fun insertReminderToDatabase(reminder: Reminder){
+        intelliService!!.insertReminder(reminder)
+    }
+
+    suspend fun getReminders() : List<Reminder> {
+        return intelliService!!.getReminders()
+    }
+
+    suspend fun getRemindersByDate (date: LocalDate) : List<Reminder> {
+        return intelliService!!.getRemindersByDate(date)
+    }
+
+
+    suspend fun deleteReminder(reminder: Reminder){
+        intelliService!!.deleteReminder(reminder)
     }
 
     fun openMusicApp() {
