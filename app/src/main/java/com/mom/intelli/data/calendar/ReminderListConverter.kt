@@ -11,7 +11,6 @@ class ReminderListConverter {
     fun fromDate(date: LocalDate): String {
         return date.toString()
     }
-
     @TypeConverter
     fun toDate(dateString: String): LocalDate {
         return LocalDate.parse(dateString)

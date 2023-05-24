@@ -60,6 +60,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -271,6 +272,7 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
     val currentMonth by viewModel.currentMonth.collectAsState()
     val selectedDate by viewModel.selectedDate.collectAsState()
     var showAddReminderDialog by remember { mutableStateOf(false) }
+    val daysOfWeek = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
     var calendar by remember { mutableStateOf(Calendar.getInstance().time) }
     var dateFormat by remember { mutableStateOf(DateFormat.getDateInstance(DateFormat.FULL).format(calendar)) }
@@ -284,7 +286,6 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             dateFormat = DateFormat.getDateInstance(DateFormat.FULL).format(calendar)
         }
     }
-
     Column(
         modifier = Modifier
             .padding(horizontal = 5.dp)
@@ -292,12 +293,14 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             .background(CalendarBoxClr)
             .fillMaxWidth()
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp),
             horizontalArrangement = Arrangement.Start
         ) {
+
             Text(
                 text = dateFormat,
                 color = DaysClr,
@@ -305,18 +308,21 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
                 fontSize = 20.sp
             )
         }
+
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(4.dp)
             .padding(vertical = 1.dp, horizontal = 5.dp)
             .background(DaysClr)
         )
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+
             IconButton(onClick = { viewModel.navigateMonth(-1) }) {
                 Icon(painter = painterResource(id = R.drawable.navigate_before_icon), contentDescription = "Previous Month", tint = DaysClr)
             }
@@ -331,7 +337,19 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             }
 
         }
-        Row(modifier=Modifier.fillMaxWidth()){ listOfDays[0] }
+        Row(Modifier.fillMaxWidth()) {
+            for (dayOfWeek in daysOfWeek) {
+                Text(
+                    text = dayOfWeek,
+                    modifier = Modifier.weight(1f),
+                    color = DaysClr,
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                )
+            }
+        }
+
         CalendarGrid(currentMonth, selectedDate, viewModel::selectDate)
         Spacer(modifier = Modifier.height(16.dp))
 
