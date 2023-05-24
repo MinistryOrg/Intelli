@@ -34,8 +34,8 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.sendEmail(emailAddress, emailSubject, emailBody)
     }
 
-    fun openNewsLink(link: String) {
-        intelliService!!.openNewsLink(link)
+    fun openNewsLink(link: String, action : String) {
+        intelliService!!.openNewsLink(link, action)
     }
 
     suspend fun getNews(category: String): NewsApiResponse {

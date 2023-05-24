@@ -348,7 +348,7 @@ fun NewsBoxItem(news : Results, intelliViewModel: IntelliViewModel) {
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
                 .clickable {
-                    intelliViewModel.openNewsLink(news.link)
+                    intelliViewModel.openNewsLink(news.link,"link")
                 },
             color = NewsTitleClr,
             fontWeight = FontWeight.Bold,

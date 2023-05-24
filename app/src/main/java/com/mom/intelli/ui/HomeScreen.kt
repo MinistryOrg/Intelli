@@ -122,7 +122,7 @@ fun MainList(
 
             CalendarWidget(paddingValues = vrtpadding, navController = navController)
             WeatherWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
-            SearchInternetWidget(paddingValues = vrtpadding)
+            SearchInternetWidget(paddingValues = vrtpadding, intelliViewModel)
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)

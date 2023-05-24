@@ -70,8 +70,8 @@ class IntelliService(var context: Context) {
         intentAppsUtil.openIntent(context, "contact")
     }
 
-    fun openNewsLink(link: String) {
-        newsUtil.openNewsLink(link,context)
+    fun openNewsLink(link: String, action: String) {
+        newsUtil.openNewsLink(link,context, action)
     }
 
     suspend fun insertDeviceToDatabase(device: Device){
@@ -142,7 +142,6 @@ class IntelliService(var context: Context) {
             reminderDao.getByDate(date)
         }
     }
-
     suspend fun getNews(category: String): NewsApiResponse {
         return newsUtil.getNews(category,context)
     }

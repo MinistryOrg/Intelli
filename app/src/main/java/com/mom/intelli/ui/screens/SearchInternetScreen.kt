@@ -1,11 +1,14 @@
 package com.mom.intelli.ui.screens
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -24,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.PlaceHolderTxtCLr
 import com.mom.intelli.ui.theme.SearchBckgClr
 import com.mom.intelli.ui.theme.SearchIconClr
@@ -31,7 +35,8 @@ import com.mom.intelli.ui.theme.SearchIconClr
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchInternetWidget(
-    paddingValues: Dp
+    paddingValues: Dp,
+    intelliViewModel: IntelliViewModel
 ) {
     var searchText by remember { mutableStateOf("") }
     TextField(
@@ -49,7 +54,9 @@ fun SearchInternetWidget(
                 contentDescription = "search_icon",
                 tint = SearchIconClr,
             modifier = Modifier
-                .size(35.dp)
+                .size(35.dp).clickable {
+                    intelliViewModel.openNewsLink(searchText,"search")
+                }
         ) },
         singleLine = false ,
         maxLines = 1,
@@ -63,4 +70,5 @@ fun SearchInternetWidget(
             unfocusedIndicatorColor = SearchBckgClr
         )
     )
+
 }

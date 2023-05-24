@@ -30,8 +30,15 @@ class NewsUtil {
 
         return NewsApiResponse(status!!, totalResponse!!, results!!)
     }
-    fun openNewsLink(link: String, context: Context) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+    fun openNewsLink(link: String, context: Context, action : String) {
+        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        when(action){
+            "search" -> {
+                intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("https://www.google.com/search?q=${Uri.encode(link)}")
+                }
+            }
+        }
         context.startActivity(intent)
     }
 
