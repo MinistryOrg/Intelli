@@ -1,11 +1,12 @@
 package com.mom.intelli.ui.screens
 
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -25,19 +26,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.res.TypedArrayUtils.getResourceId
 import androidx.navigation.NavController
+ 
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.mom.intelli.R
-import com.mom.intelli.data.weather.Main
-import com.mom.intelli.data.weather.Weather
 import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+
 
 @Composable
 fun WeatherWidget(
@@ -49,13 +54,7 @@ fun WeatherWidget(
         mutableStateOf<WeatherData?>(null)
     }
 
-    //  Το εικονίδια που είπαμε θα αλλάζουν με το id , την θερμοκρασία, it feels like και την περιοχή /πόλη θέλω μόν
-    //      weather!!.temp
-    //      weather!!.feelsLike
-    //      weather!!.location
-    // για να πάρεις την εικόνα.. για παράδειγμα αν η εικόνα που θες να επιστρέψεις είναι 04d και το όνομα στο αρχείο είναι d04d για να το δεχθεί
-    //      val icon = "R.drawable.d" + weather!!.iconID.toInt()
-    //      painter = painterResource(id = icon)
+
 
     LaunchedEffect(Unit) {
         try {
@@ -65,6 +64,22 @@ fun WeatherWidget(
             e.printStackTrace()
         }
     }
+
+    //  Το εικονίδια που είπαμε θα αλλάζουν με το id , την θερμοκρασία, it feels like και την περιοχή /πόλη θέλω μόν
+    //      weather!!.temp
+    //      weather!!.feelsLike
+    //      weather!!.location
+    // για να πάρεις την εικόνα.. για παράδειγμα αν η εικόνα που θες να επιστρέψεις είναι 04d και το όνομα στο αρχείο είναι d04d για να το δεχθεί
+    var icon = R.drawable.d01d
+    weather?.let {
+        when(weather!!.iconID){
+            "03d" -> {
+                icon = R.drawable.d03d
+            }
+        }
+    }
+
+   
 
     Card(
         modifier = Modifier
@@ -111,7 +126,8 @@ fun WeatherWidget(
                 }
                 Box(modifier = Modifier.align(Alignment.TopStart)) {
                     Icon(
-                        painter = painterResource(id = R.drawable.weather_icon),
+
+                        painter = painterResource(id = icon),
                         contentDescription = "Weather_icon",
                         tint = TextWhite,
                         modifier = Modifier

@@ -41,7 +41,7 @@ class WeatherUtil(private val context: Context) {
         var location = getUserCity(locationData[0], locationData[1])
         val city = location.split(",")
         location = city[3] + ", " + city[5]
-        Log.d("Location : ", location)
+
         return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location)
     }
 
