@@ -8,6 +8,7 @@ import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.WeatherApiResponse
+import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.database.AppDatabase
 import com.mom.intelli.util.serviceUtil.EmailUtil
 import com.mom.intelli.util.serviceUtil.IntentAppsUtil
@@ -146,7 +147,7 @@ class IntelliService(var context: Context) {
         return newsUtil.getNews(category,context)
     }
 
-    suspend fun getWeather() : WeatherApiResponse {
+    suspend fun getWeather() : WeatherData {
         return weatherUtil.getWeather()
     }
 

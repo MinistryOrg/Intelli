@@ -8,6 +8,7 @@ import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.weather.WeatherApiResponse
+import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.service.IntelliService
 import java.time.LocalDate
 
@@ -22,7 +23,7 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.openMaps()
     }
 
-    suspend fun getWeather() : WeatherApiResponse {
+    suspend fun getWeather() : WeatherData {
         return intelliService!!.getWeather()
     }
 
@@ -81,7 +82,6 @@ class IntelliViewModel : ViewModel() {
     suspend fun getRemindersByDate (date: LocalDate) : List<Reminder> {
         return intelliService!!.getRemindersByDate(date)
     }
-
 
     suspend fun deleteReminder(reminder: Reminder){
         intelliService!!.deleteReminder(reminder)

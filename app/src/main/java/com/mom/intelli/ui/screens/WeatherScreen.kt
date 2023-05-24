@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,7 +33,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.weather.Main
 import com.mom.intelli.data.weather.Weather
-import com.mom.intelli.data.weather.WeatherApiResponse
+import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.ui.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -45,8 +46,16 @@ fun WeatherWidget(
     intelliViewModel: IntelliViewModel
 ) {
     var weather by remember {
-        mutableStateOf<WeatherApiResponse?>(null)
+        mutableStateOf<WeatherData?>(null)
     }
+
+    //  Το εικονίδια που είπαμε θα αλλάζουν με το id , την θερμοκρασία, it feels like και την περιοχή /πόλη θέλω μόν
+    //      weather!!.temp
+    //      weather!!.feelsLike
+    //      weather!!.location
+    // για να πάρεις την εικόνα.. για παράδειγμα αν η εικόνα που θες να επιστρέψεις είναι 04d και το όνομα στο αρχείο είναι d04d για να το δεχθεί
+    //      val icon = "R.drawable.d" + weather!!.iconID.toInt()
+    //      painter = painterResource(id = icon)
 
     LaunchedEffect(Unit) {
         try {
@@ -87,15 +96,18 @@ fun WeatherWidget(
                Box(modifier = Modifier.align(Alignment.CenterStart)) {
                     weather?.let { w ->
                         Text(
-                            text = w.main.temp.toString(),
+                            text = w.temp.toString(),
+                            color = TextWhite,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.width(50.dp))
+                        Text(
+                            text = w.location,
                             color = TextWhite,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(modifier = Modifier.height(50.dp))
-
                     }
-
-                    
                 }
                 Box(modifier = Modifier.align(Alignment.TopStart)) {
                     Icon(
@@ -121,8 +133,6 @@ fun WeatherWidget(
                         modifier = Modifier
                             .size(30.dp),
                     )
-
-
                 }
             }
         }

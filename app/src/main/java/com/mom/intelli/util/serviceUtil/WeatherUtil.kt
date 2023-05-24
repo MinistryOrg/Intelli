@@ -8,15 +8,18 @@ import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.mom.intelli.data.weather.WeatherApiResponse
+import com.mom.intelli.data.news.NewsApiResponse
+import com.mom.intelli.data.weather.WeatherData
+import com.mom.intelli.repository.LocationApi
+import com.mom.intelli.repository.NewsApi
 import com.mom.intelli.repository.WeatherApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class WeatherUtil(private val context: Context) {
     private val weatherApiKey : String = "846df6c82e04eac5b4a6f45a9f680baf"
-
-    suspend fun getWeather() : WeatherApiResponse {
+    suspend fun getWeather() : WeatherData {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -32,15 +35,41 @@ class WeatherUtil(private val context: Context) {
         val weather = weatherBody.weather
         val base = weatherBody.base
         val main = weatherBody.main
-        val tempCels = main.temp - 273.15
-        Log.d("Temp", tempCels.toString())
 
-        return WeatherApiResponse(coord,weather,base,main)
+        val temp = (main.temp - 273.15).toInt()
+        val feelsLike = (main.feelsLike - 273.15).toInt()
+        var location = getUserCity(locationData[0], locationData[1])
+        val city = location.split(",")
+        location = city[3] + ", " + city[5]
+        Log.d("Location : ", location)
+        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location)
     }
 
-    fun getTraffic(){
+    private suspend fun getUserCity(latitude: Double, longitude: Double): String {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://nominatim.openstreetmap.org/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
+        val locationApiService = retrofit.create(LocationApi::class.java)
+        try {
+            val response = locationApiService.getLocation("json", latitude, longitude)
+            if (response.isSuccessful) {
+                val responseBody = response.body()?.display_name
+                responseBody?.let {
+                    Log.d("Response", it)
+                    return it
+                }
+            } else {
+                Log.e("API Error", response.errorBody()?.string() ?: "Unknown error")
+            }
+        } catch (e: Exception) {
+            Log.e("API Error", e.toString())
+        }
+
+        return "" // Return a default value or handle error cases accordingly
     }
+
 
     fun getUserLocation() : List <Double>{
         var latitude = 35.1264
