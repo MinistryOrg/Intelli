@@ -5,12 +5,15 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.mom.intelli.data.eshop.CheckOut
+import com.mom.intelli.data.user.User
 
 @Dao
 interface CheckOutDao {
     @Query("SELECT * FROM checkout")
     fun getAll(): List<CheckOut>
 
+//     @Query("SELECT * FROM checkout WHERE user = :user")
+//     fun getByUser(user: User): List<CheckOut>
     @Insert
     fun insertAll(vararg checkOut: CheckOut)
 

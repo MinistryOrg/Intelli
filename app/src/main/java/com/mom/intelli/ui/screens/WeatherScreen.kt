@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.TypedArrayUtils.getResourceId
 import androidx.navigation.NavController
- 
+
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.mom.intelli.R
 import com.mom.intelli.data.weather.WeatherData
@@ -104,7 +104,7 @@ fun WeatherWidget(
                     .padding(5.dp)
 
             ) {
-               Box(modifier = Modifier.align(Alignment.CenterStart)) {
+                Box(modifier = Modifier.align(Alignment.CenterStart)) {
                     weather?.let { w ->
                         Text(
                             text = w.temp.toString(),
