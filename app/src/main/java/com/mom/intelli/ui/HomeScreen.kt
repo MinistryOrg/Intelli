@@ -98,9 +98,8 @@ fun MainList(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
-    val context = LocalContext.current
-    val intelliService = IntelliService(context)
     val vrtpadding = 5.dp
+
     Box(
         modifier = Modifier
             .background(MainBackgroundColor)
@@ -142,8 +141,5 @@ fun MainList(
                 )
             }
         }
-
-
     }
-
 }

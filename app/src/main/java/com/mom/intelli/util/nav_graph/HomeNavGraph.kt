@@ -1,5 +1,11 @@
 package com.mom.intelli.util.nav_graph
 
+import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,11 +19,17 @@ import com.mom.intelli.ui.screens.NewsScreen
 import com.mom.intelli.ui.screens.SmartHomeScreen
 import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
+import com.mom.intelli.util.TextToSpeechHelper
 
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
-    intelliViewModel: IntelliViewModel
+    intelliViewModel: IntelliViewModel,
+    context: Context
 ){
+    var clickCount = 0
+    val selectedRoute = HOME_GRAPH_ROUTE
+    val ttsHelper = TextToSpeechHelper(context)
+
     navigation(
         startDestination = Screen.Home.route,
         route = HOME_GRAPH_ROUTE
@@ -25,6 +37,7 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.Home.route
         ){
+            ttsHelper.speak("Home Screen")
             HomeScreen(navController = navController,intelliViewModel)
         }
         composable(
@@ -40,16 +53,19 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.News.route
         ){
+            ttsHelper.speak("News")
             NewsScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.Eshop.route
         ){
+            ttsHelper.speak("Eshop")
             EshopScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.SmartHome.route
         ){
+            ttsHelper.speak("Smart home")
             SmartHomeScreen(navController = navController,intelliViewModel)
         }
     }

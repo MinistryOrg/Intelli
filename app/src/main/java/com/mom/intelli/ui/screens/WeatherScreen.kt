@@ -54,8 +54,6 @@ fun WeatherWidget(
         mutableStateOf<WeatherData?>(null)
     }
 
-
-
     LaunchedEffect(Unit) {
         try {
             val fetchedWeather = intelliViewModel.getWeather()
@@ -78,8 +76,6 @@ fun WeatherWidget(
             }
         }
     }
-
-   
 
     Card(
         modifier = Modifier

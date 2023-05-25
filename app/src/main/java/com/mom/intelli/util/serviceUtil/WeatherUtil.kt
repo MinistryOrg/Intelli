@@ -42,7 +42,7 @@ class WeatherUtil(private val context: Context) {
         val city = location.split(",")
         location = city[3] + ", " + city[5]
 
-        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location)
+        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, weather[0].description)
     }
 
     private suspend fun getUserCity(latitude: Double, longitude: Double): String {

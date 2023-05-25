@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IntelliTheme {
                 navController = rememberNavController()
-                SetupNavGraph(navController = navController, intelliViewModel)
+                SetupNavGraph(navController = navController, intelliViewModel,this)
 
             }
         }
