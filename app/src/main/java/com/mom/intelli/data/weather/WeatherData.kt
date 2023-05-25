@@ -6,5 +6,9 @@ data class WeatherData(
     val temp: Int,
     val feelsLike: Int,
     val location: String,
+<<<<<<< Updated upstream
     val description : String
+=======
+    val description: String
+>>>>>>> Stashed changes
 )

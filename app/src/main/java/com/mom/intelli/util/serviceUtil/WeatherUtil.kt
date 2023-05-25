@@ -35,14 +35,19 @@ class WeatherUtil(private val context: Context) {
         val weather = weatherBody.weather
         val base = weatherBody.base
         val main = weatherBody.main
-
+        val description = weather[0].description
         val temp = (main.temp - 273.15).toInt()
         val feelsLike = (main.feelsLike - 273.15).toInt()
         var location = getUserCity(locationData[0], locationData[1])
-        val city = location.split(",")
-        location = city[3] + ", " + city[5]
+        Log.d("Kairos", location)
+        val city = location.split(", ")
+        location = city[4] + ", " + city[city.size-1]
 
+<<<<<<< Updated upstream
         return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, weather[0].description)
+=======
+        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, description = description)
+>>>>>>> Stashed changes
     }
 
     private suspend fun getUserCity(latitude: Double, longitude: Double): String {
@@ -72,8 +77,8 @@ class WeatherUtil(private val context: Context) {
 
 
     fun getUserLocation() : List <Double>{
-        var latitude = 35.1264
-        var longitude = 33.4299
+        var latitude = 37.975443
+        var longitude = 23.735431
         val activity = context as Activity
         // Get the location manager
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
