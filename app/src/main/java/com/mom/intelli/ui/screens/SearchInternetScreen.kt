@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -49,7 +50,7 @@ fun SearchInternetWidget(
             .padding(vertical = paddingValues)
             .fillMaxWidth()
             .clip(RoundedCornerShape(15.dp)),
-        placeholder = { Text(text = "Search", color = PlaceHolderTxtCLr, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)},
+        placeholder = { Text(text = "Search the internet...", color = PlaceHolderTxtCLr, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)},
         textStyle = TextStyle(fontWeight = FontWeight.Bold, textAlign = TextAlign.Start),
         leadingIcon = {
             Icon(
@@ -71,7 +72,9 @@ fun SearchInternetWidget(
             unfocusedTextColor = Color.Black,
             cursorColor = SearchIconClr,
             focusedIndicatorColor = SearchBckgClr,
-            unfocusedIndicatorColor = SearchBckgClr
+            unfocusedIndicatorColor = SearchBckgClr,
+            selectionColors = TextSelectionColors(SearchIconClr, SearchIconClr)
+
         )
     )
 

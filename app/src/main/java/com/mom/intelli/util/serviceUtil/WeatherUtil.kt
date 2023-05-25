@@ -41,13 +41,9 @@ class WeatherUtil(private val context: Context) {
         var location = getUserCity(locationData[0], locationData[1])
         Log.d("Kairos", location)
         val city = location.split(", ")
-        location = city[4] + ", " + city[city.size-1]
-
-<<<<<<< Updated upstream
-        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, weather[0].description)
-=======
+        location = city[3] + ", " + city[city.size-1]
         return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, description = description)
->>>>>>> Stashed changes
+
     }
 
     private suspend fun getUserCity(latitude: Double, longitude: Double): String {

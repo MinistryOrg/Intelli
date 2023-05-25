@@ -1,6 +1,8 @@
 package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
+import android.icu.text.DateFormat
+import android.icu.util.Calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +24,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +52,13 @@ import com.mom.intelli.ui.theme.FooterText
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import kotlinx.coroutines.delay
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
+import kotlinx.datetime.toLocalDateTime
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,6 +106,7 @@ fun HomeScreen(
 
 
 
+@SuppressLint("RememberReturnType")
 @Composable
 fun MainList(
     paddingValues: PaddingValues,
@@ -99,6 +114,11 @@ fun MainList(
     intelliViewModel: IntelliViewModel
 ) {
     val vrtpadding = 5.dp
+    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    val startMorningTime = currentTime.date.atTime(5, 0)
+    val endMorningTime = currentTime.date.atTime(12, 0)
+    val startAfternoonTime = currentTime.date.atTime(12,0)
+    val endAfternoonTime = currentTime.date.atTime(6,0)
 
     Box(
         modifier = Modifier
@@ -112,10 +132,15 @@ fun MainList(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Good Evening, Name",
+                text = if(currentTime > startMorningTime && currentTime < endMorningTime )
+                        { "Good morning, Name"}
+                        else if(currentTime > startAfternoonTime && currentTime < endAfternoonTime)
+                        {"Good afternoon, Name"}
+                        else
+                        {"Good evening, Name"},
                 color = TextWhite,
                 fontFamily = CustomFont,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier.padding(12.dp)
             )
 

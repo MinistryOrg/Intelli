@@ -8,7 +8,7 @@ import com.mom.intelli.data.user.User
 import com.mom.intelli.data.user.UserConverter
 
 @Entity
-@TypeConverters(DeviceListConverter::class, UserConverter::class)
+@TypeConverters(DeviceListConverter::class)
 data class CheckOut(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,

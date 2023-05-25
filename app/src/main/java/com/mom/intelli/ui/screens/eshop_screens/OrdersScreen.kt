@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -73,23 +74,24 @@ fun OrderItems(checkOut: CheckOut) {
             .fillMaxWidth()
             .border(width = 1.dp, color = BorderClr, shape = RoundedCornerShape(10.dp))
             .padding(5.dp),
-        horizontalArrangement = Arrangement.spacedBy(30.dp)
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "id", color = TextWhite, fontWeight = FontWeight.Bold)
+        Text(text = checkOut.id.toString()+".", color = TextWhite, fontWeight = FontWeight.Bold)
 //        if (device.image!! != 0){
             Image(
                 painter = painterResource(id = R.drawable.iphone_13_pro_max),
                 contentDescription = null,
                 modifier = Modifier
                     .clip(RoundedCornerShape(5.dp))
-                    .height(50.dp)
+                    .height(70.dp)
             )
 //        }
         Column() {
-            Text(text = checkOut.fullname!!, color = TextWhite, fontWeight = FontWeight.Bold)
+            Text(text = "Name: "+ checkOut.fullname!!, color = TextWhite, fontWeight = FontWeight.Bold)
             checkOut.device.let { value ->
                 value.forEach { device ->
-                    Text(text = device.name!!, color = TextWhite, fontWeight = FontWeight.Bold)
+                    Text(text =device.name!!, color = TextWhite, fontWeight = FontWeight.Bold)
                     Text(text ="Status: Shipping", color = TextWhite, fontWeight = FontWeight.Bold)
                 }
             }
