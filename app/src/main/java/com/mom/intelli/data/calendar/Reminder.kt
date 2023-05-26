@@ -19,6 +19,6 @@ data class Reminder(
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name="date") val date: LocalDate,
     @ColumnInfo(name="title") val title: String,
-    //    @ColumnInfo(name = "user") val user : User
+    //@ColumnInfo(name = "user") val user : User
     @ColumnInfo(name = "description") val description: String
 )

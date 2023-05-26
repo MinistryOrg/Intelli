@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -22,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -46,7 +50,7 @@ fun SearchInternetWidget(
             .padding(vertical = paddingValues)
             .fillMaxWidth()
             .clip(RoundedCornerShape(15.dp)),
-        placeholder = { Text(text = "Search", color = PlaceHolderTxtCLr, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)},
+        placeholder = { Text(text = "Search the internet...", color = PlaceHolderTxtCLr, fontWeight = FontWeight.Bold, textAlign = TextAlign.Start)},
         textStyle = TextStyle(fontWeight = FontWeight.Bold, textAlign = TextAlign.Start),
         leadingIcon = {
             Icon(
@@ -58,6 +62,7 @@ fun SearchInternetWidget(
                     intelliViewModel.openNewsLink(searchText,"search")
                 }
         ) },
+        keyboardOptions = KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Search),
         singleLine = false ,
         maxLines = 1,
         colors = TextFieldDefaults.colors(
@@ -67,7 +72,9 @@ fun SearchInternetWidget(
             unfocusedTextColor = Color.Black,
             cursorColor = SearchIconClr,
             focusedIndicatorColor = SearchBckgClr,
-            unfocusedIndicatorColor = SearchBckgClr
+            unfocusedIndicatorColor = SearchBckgClr,
+            selectionColors = TextSelectionColors(SearchIconClr, SearchIconClr)
+
         )
     )
 

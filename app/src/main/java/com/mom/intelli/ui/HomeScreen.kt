@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.mom.intelli.service.IntelliService
 import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.screens.EmailWidget
 import com.mom.intelli.ui.screens.EshopWidget
@@ -45,6 +44,10 @@ import com.mom.intelli.ui.theme.FooterText
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
+import kotlinx.datetime.toLocalDateTime
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,6 +95,7 @@ fun HomeScreen(
 
 
 
+@SuppressLint("RememberReturnType")
 @Composable
 fun MainList(
     paddingValues: PaddingValues,
@@ -99,6 +103,11 @@ fun MainList(
     intelliViewModel: IntelliViewModel
 ) {
     val vrtpadding = 5.dp
+    val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    val startMorningTime = currentTime.date.atTime(5, 0)
+    val endMorningTime = currentTime.date.atTime(12, 0)
+    val startAfternoonTime = currentTime.date.atTime(12,0)
+    val endAfternoonTime = currentTime.date.atTime(18,0)
 
     Box(
         modifier = Modifier
@@ -112,10 +121,15 @@ fun MainList(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Good Evening, Name",
+                text = if(currentTime > startMorningTime && currentTime < endMorningTime )
+                        { "Good morning, Name"}
+                        else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
+                        {"Good afternoon, Name"}
+                        else
+                        {"Good evening, Name"},
                 color = TextWhite,
                 fontFamily = CustomFont,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.ExtraBold,
                 modifier = Modifier.padding(12.dp)
             )
 

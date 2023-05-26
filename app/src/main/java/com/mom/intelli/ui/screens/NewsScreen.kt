@@ -85,7 +85,7 @@ fun NewsWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.news_and_sports),
+                painter = painterResource(id = R.drawable.news_and_sports_1),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)

@@ -9,5 +9,6 @@ data class Device(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "name") val name : String?,
-    @ColumnInfo(name = "image") val image: Int?
+    @ColumnInfo(name = "image") val image: Int?,
+    // category
 )

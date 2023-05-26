@@ -2,9 +2,6 @@ package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
 import android.icu.text.DateFormat
-import android.provider.CalendarContract
-import android.provider.CalendarContract.Reminders
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,16 +17,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -43,8 +36,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,10 +48,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -68,48 +57,31 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.calendar.Reminder
-import com.mom.intelli.data.eshop.CheckOut
-import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.ui.CalendarViewModel
 import com.mom.intelli.ui.ImgCalendarLogo
 import com.mom.intelli.ui.IntelliViewModel
-import com.mom.intelli.ui.screens.eshop_screens.OrderItems
 import com.mom.intelli.ui.theme.CalTextFieldBorderClr
 import com.mom.intelli.ui.theme.CalendarBoxClr
 import com.mom.intelli.ui.theme.CalendarReminderBoxClr
-import com.mom.intelli.ui.theme.CurrentMonthTxtClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DaysClr
-import com.mom.intelli.ui.theme.DeviceItemClr
 import com.mom.intelli.ui.theme.DialogBoxClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
-import com.mom.intelli.ui.theme.OtherMonthTxtClr
-import com.mom.intelli.ui.theme.SearchBckgClr
-import com.mom.intelli.ui.theme.SearchIconClr
 import com.mom.intelli.ui.theme.SelectedDayClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
-import com.mom.intelli.ui.theme.TitleSportsNewsClr
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
-import kotlinx.datetime.toJavaLocalTime
 import java.time.LocalDate
-import java.time.LocalTime
-import java.time.Month
-import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
-
-val listOfDays = listOf(
-    "M","T","W","T","F","S","S"
-)
 
 //THIS IS THE WIDGET TO THE HOME SCREEN
 @Composable
@@ -383,11 +355,18 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
         }
 
         if (showAddReminderDialog) {
-            Dialog(onDismissRequest = { showAddReminderDialog = false }) {
+            Dialog(
+                onDismissRequest = {
+                    showAddReminderDialog = false
+                },
+                properties = DialogProperties(dismissOnClickOutside = false)
+            ) {
                 AddReminderScreen(
                     viewModel = viewModel,
                     navController,
-                    intelliViewModel
+                    intelliViewModel,
+                    showAddReminderDialog,
+                    onCloseWindow = { showAddReminderDialog = false }
                 )
             }
         }
@@ -502,7 +481,9 @@ fun ReminderList(reminders : List<Reminder>) {
     fun AddReminderScreen(
         viewModel: CalendarViewModel,
         navController: NavController,
-        intelliViewModel: IntelliViewModel
+        intelliViewModel: IntelliViewModel,
+        showAddReminderDialog: Boolean,
+        onCloseWindow: () -> Unit // Callback function to close the window
     ) {
         var title by remember { mutableStateOf("") }
         var description by remember { mutableStateOf("") }
@@ -575,7 +556,11 @@ fun ReminderList(reminders : List<Reminder>) {
                         val reminder =
                             Reminder(0, viewModel.selectedDate.value!!, title, description)
                         intelliViewModel.insertReminderToDatabase(reminder)
+                        onCloseWindow() // Close the window
+
                     }
+
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SelectedDayClr

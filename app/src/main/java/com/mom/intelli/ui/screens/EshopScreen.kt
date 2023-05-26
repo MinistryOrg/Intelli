@@ -76,7 +76,7 @@ fun EshopWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.eshop),
+                painter = painterResource(id = R.drawable.eshop_1),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)

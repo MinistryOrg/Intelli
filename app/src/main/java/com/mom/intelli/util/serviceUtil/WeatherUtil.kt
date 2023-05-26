@@ -8,10 +8,8 @@ import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.repository.LocationApi
-import com.mom.intelli.repository.NewsApi
 import com.mom.intelli.repository.WeatherApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,14 +33,15 @@ class WeatherUtil(private val context: Context) {
         val weather = weatherBody.weather
         val base = weatherBody.base
         val main = weatherBody.main
-
+        val description = weather[0].description
         val temp = (main.temp - 273.15).toInt()
         val feelsLike = (main.feelsLike - 273.15).toInt()
         var location = getUserCity(locationData[0], locationData[1])
-        val city = location.split(",")
-        location = city[3] + ", " + city[5]
+        Log.d("Kairos", location)
+        val city = location.split(", ")
+        location = city[2] + ", " + city[city.size-1]
+        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, description = description)
 
-        return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, weather[0].description)
     }
 
     private suspend fun getUserCity(latitude: Double, longitude: Double): String {
@@ -72,8 +71,8 @@ class WeatherUtil(private val context: Context) {
 
 
     fun getUserLocation() : List <Double>{
-        var latitude = 35.1264
-        var longitude = 33.4299
+        var latitude = 37.977097
+        var longitude = 23.650385
         val activity = context as Activity
         // Get the location manager
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
