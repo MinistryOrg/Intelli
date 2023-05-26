@@ -1,5 +1,6 @@
 package com.mom.intelli.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -69,6 +70,7 @@ fun WeatherWidget(
     var paddIcon = 15.dp
     weather?.let {
         when(weather!!.iconID){
+
             "01d" -> {
                 icon = R.drawable.d01d
                 size = 100.dp
@@ -256,6 +258,7 @@ fun WeatherWidget(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp
                             )
+                            Log.d("Eikonidio", w.iconID)
 
                         }
                     }

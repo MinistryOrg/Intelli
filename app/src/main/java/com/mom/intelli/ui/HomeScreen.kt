@@ -118,7 +118,7 @@ fun MainList(
     val startMorningTime = currentTime.date.atTime(5, 0)
     val endMorningTime = currentTime.date.atTime(12, 0)
     val startAfternoonTime = currentTime.date.atTime(12,0)
-    val endAfternoonTime = currentTime.date.atTime(6,0)
+    val endAfternoonTime = currentTime.date.atTime(18,0)
 
     Box(
         modifier = Modifier
@@ -134,7 +134,7 @@ fun MainList(
             Text(
                 text = if(currentTime > startMorningTime && currentTime < endMorningTime )
                         { "Good morning, Name"}
-                        else if(currentTime > startAfternoonTime && currentTime < endAfternoonTime)
+                        else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
                         {"Good afternoon, Name"}
                         else
                         {"Good evening, Name"},

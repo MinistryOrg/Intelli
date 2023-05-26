@@ -41,7 +41,7 @@ class WeatherUtil(private val context: Context) {
         var location = getUserCity(locationData[0], locationData[1])
         Log.d("Kairos", location)
         val city = location.split(", ")
-        location = city[3] + ", " + city[city.size-1]
+        location = city[2] + ", " + city[city.size-1]
         return WeatherData(iconID = weather[0].icon, temp = temp, feelsLike = feelsLike , location = location, description = description)
 
     }
@@ -73,8 +73,8 @@ class WeatherUtil(private val context: Context) {
 
 
     fun getUserLocation() : List <Double>{
-        var latitude = 37.975443
-        var longitude = 23.735431
+        var latitude = 37.977097
+        var longitude = 23.650385
         val activity = context as Activity
         // Get the location manager
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
