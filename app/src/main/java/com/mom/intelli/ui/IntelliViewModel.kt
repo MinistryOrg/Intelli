@@ -7,6 +7,7 @@ import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
+import com.mom.intelli.data.user.User
 import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.service.IntelliService
@@ -14,7 +15,7 @@ import java.time.LocalDate
 
 class IntelliViewModel : ViewModel() {
     private var intelliService: IntelliService? = null
-
+    private var user : User ?= null
     fun init(context: Context) {
         intelliService = IntelliService(context = context)
     }
@@ -107,6 +108,15 @@ class IntelliViewModel : ViewModel() {
     }
     fun openContactsApp() {
         intelliService!!.openContactsApp()
+    }
+
+    suspend fun signUp (user : User) : Boolean {
+       return intelliService!!.signUp(user)
+    }
+
+    suspend fun signIn (user: User) : Boolean{
+        this.user = user
+        return intelliService!!.signIn(user)
     }
 
 }

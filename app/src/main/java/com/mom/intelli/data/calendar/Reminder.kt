@@ -11,8 +11,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 
+//UserConverter::class
 @Entity
-@TypeConverters(ReminderListConverter::class, UserConverter::class)
+@TypeConverters(ReminderListConverter::class)
 data class Reminder(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,

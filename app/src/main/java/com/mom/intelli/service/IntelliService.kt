@@ -7,7 +7,7 @@ import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
-import com.mom.intelli.data.weather.WeatherApiResponse
+import com.mom.intelli.data.user.User
 import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.database.AppDatabase
 import com.mom.intelli.util.serviceUtil.EmailUtil
@@ -16,7 +16,12 @@ import com.mom.intelli.util.serviceUtil.NewsUtil
 import com.mom.intelli.util.serviceUtil.WeatherUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.security.MessageDigest
+import java.security.SecureRandom
 import java.time.LocalDate
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
+
 
 class IntelliService(var context: Context) {
     private val intentAppsUtil : IntentAppsUtil = IntentAppsUtil()
@@ -34,6 +39,7 @@ class IntelliService(var context: Context) {
     private val smarthomeDao  = db.smarthomeDao()
     private val checkOutDao = db.checkOutDao()
     private val reminderDao  = db.reminderDao()
+    private val userDao = db.userDao()
 
     fun showEmail() {
         emailUtil.showEmail(context)
@@ -151,6 +157,56 @@ class IntelliService(var context: Context) {
         return weatherUtil.getWeather()
     }
 
+    suspend fun signUp (user : User) : Boolean {
+        val userList = userDao.getAll()
+        for (i in userList) { // check  if the user already exist
+            if(user.email == i.email || user.username == i.username) {
+                return false
+            }
+        }
+        val hash = hashPassword(user.password!!)
+        user.password = hash[0]
+        user.salt = hash[1]
+        userDao.insertAll(user)
+        return true
+    }
 
+    suspend fun signIn (user: User) : Boolean{
+        val userList = userDao.getAll()
+        for (i in userList) { // if the user exist log in
+            val correctPassword  = checkPassword(user.password!!,  user.salt!!, i.password!!)
+            if(user.username == i.username && correctPassword){
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun hashPassword(password: String): List<String> {
+        // random value used for hashing
+        val salt = ByteArray(16).also { SecureRandom().nextBytes(it) }
+        // Set up the key specifications for password-based encryption
+        val iterations = 10000
+        val keyLength = 256
+        val spec = PBEKeySpec(password.toCharArray(), salt, iterations, keyLength)
+        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
+        // Generate the encrypted password
+        return listOf(secretKeyFactory.generateSecret(spec).encoded.toString(), salt.toString()) // idk if works with string
+    }
+
+    private fun checkPassword(password: String, salt : String, hashedPassword: String): Boolean {
+        // Set up the key specifications for password-based encryption
+        val iterations = 10000
+        val keyLength = 256
+        val spec = PBEKeySpec(password.toCharArray(), salt.toByteArray(), iterations, keyLength)
+        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
+        // Generate the encrypted password using the entered password and retrieved salt
+        val hashedEnteredPassword = secretKeyFactory.generateSecret(spec).encoded
+
+        return MessageDigest.isEqual( // compare the password
+            hashedEnteredPassword,
+            hashedPassword.toByteArray()
+        ) // and returns true or false
+    }
 
 }

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.mom.intelli.data.user.User
 import com.mom.intelli.data.user.UserConverter
-
+// , UserConverter::class
 @Entity
-@TypeConverters(DeviceListConverter::class, UserConverter::class)
+@TypeConverters(DeviceListConverter::class)
 data class CheckOut(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0,
