@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -32,7 +33,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -131,6 +131,12 @@ fun MainAddDeviceScreen(
 
     var selected by remember{ mutableStateOf(false)} //todo gia selected device
     var selectedImage by remember{ mutableStateOf(R.drawable.light_bulb_on)}
+
+    var lightSelected by remember { mutableStateOf(true) }
+    var tvSelected by remember { mutableStateOf(false) }
+    var speakerSelected by remember { mutableStateOf(false) }
+    var webCameraSelected by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -143,27 +149,63 @@ fun MainAddDeviceScreen(
         ) { page ->
             when (page) {
                 0 -> {
-                    Log.d("Selected", "light")
-                    Log.d("Selected page", page.toString())
-                    selectedImage = R.drawable.light_bulb_on
-                    Cardslider(painter = painterResource(id = R.drawable.light_bulb_on), title = "Light", onClick = {selected != selected}, page, intelliViewModel)
+                    Cardslider(
+                        painter = painterResource(id = R.drawable.light_bulb_on),
+                        title = "Light",
+                        onClick = {
+                            lightSelected = true
+                            tvSelected = false
+                            speakerSelected = false
+                            webCameraSelected = false
+                        },
+                        intelliViewModel = intelliViewModel,
+                        selected = lightSelected
+                    )
                 }
                 1 -> {
-                    Log.d("Selected","tv")
-                    Log.d("Selected page", page.toString())
-                    Cardslider(painter = painterResource(id = R.drawable.tv_on), title = "TV", onClick = {selected != selected}, page, intelliViewModel)
+                    Cardslider(
+                        painter = painterResource(id = R.drawable.tv_on),
+                        title = "Tv",
+                        onClick = {
+                            lightSelected = false
+                            tvSelected = true
+                            speakerSelected = false
+                            webCameraSelected = false
+                        },
+                        intelliViewModel = intelliViewModel,
+                        selected = tvSelected
+                    )
+
                 }
                 2 -> {
-                    Log.d("Selected", "speaker")
-                    Log.d("Selected page", page.toString())
-                    selectedImage = R.drawable.speaker_on
-                    Cardslider(painter = painterResource(id = R.drawable.speaker_on), title = "Speaker", onClick = {selected != selected}, page,intelliViewModel)
+                    Cardslider(
+                        painter = painterResource(id = R.drawable.speaker_on),
+                        title = "Speaker",
+                        onClick = {
+                            lightSelected = false
+                            tvSelected = false
+                            speakerSelected = true
+                            webCameraSelected = false
+                        },
+                        intelliViewModel = intelliViewModel,
+                        selected = speakerSelected
+                    )
                 }
                 3 -> {
-                    Log.d("Selected", "web")
-                    Log.d("Selected page", page.toString())
-                    selectedImage = R.drawable.web_camera_on
-                    Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selected != selected}, page,intelliViewModel)
+                    //Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selectedImage = R.drawable.web_camera_on}, page,intelliViewModel)
+                    //selectedImage = R.drawable.web_camera_on
+                    Cardslider(
+                        painter = painterResource(id = R.drawable.web_camera_on),
+                        title = "Web camee",
+                        onClick = {
+                            lightSelected = false
+                            tvSelected = false
+                            speakerSelected = false
+                            webCameraSelected = true
+                        },
+                        intelliViewModel = intelliViewModel,
+                        selected = webCameraSelected
+                    )
                 }
             }
         }
@@ -202,6 +244,14 @@ fun MainAddDeviceScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
+                    val selectedImage = when {
+                        lightSelected -> R.drawable.light_bulb_on
+                        tvSelected -> R.drawable.tv_on
+                        speakerSelected -> R.drawable.speaker_on
+                        webCameraSelected -> R.drawable.web_camera_on
+                        else -> R.drawable.light_bulb_on
+                    }
+
                     coroutineScope.launch {
                         intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedImage))
                     }
@@ -224,10 +274,10 @@ fun MainAddDeviceScreen(
 @Composable
 fun Cardslider(
     painter: Painter,
-    title : String,
+    title: String,
     onClick: () -> Unit,
-    page: Int,
-    intelliViewModel: IntelliViewModel
+    intelliViewModel: IntelliViewModel,
+    selected: Boolean
 ) {
     Card(
         modifier = Modifier
@@ -237,21 +287,19 @@ fun Cardslider(
         colors = CardDefaults.cardColors(
             containerColor = DeviceItemClr
         ),
-        onClick = onClick
-
     ) {
         Box(
             contentAlignment = Alignment.TopEnd,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             IconButton(onClick = {
-                    /*todo
-                       testarw na dw an mporoume me vash to page count na paroume to id ths kathe suskeuhs kai na ekmetaleutoume analoga.
-                       Dokimasa twra otan patas to tik an pairnei to page count kai einai komple
-                       */
-                Log.d("Title", title.toString())
+                onClick()
             }) {
-                Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null,)
+                if (selected) {
+                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+                } else { // den vrika eikona p na kanei otan vreis nai na ginete prasion
+                   // Icon(imageVector = Icons.Default.Circle, contentDescription = null)
+                }
             }
         }
         Column(

@@ -255,6 +255,7 @@ fun MainSmartHomeScreen(
 fun DeviceItems(
    smarthome: Smarthome
 ) {
+    var lampOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -264,25 +265,49 @@ fun DeviceItems(
             containerColor = DeviceItemClr
         )
     ) {
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            Image(painter = painterResource(id = smarthome.image!!.toInt()), contentDescription = "light_on", modifier = Modifier.height(100.dp))
+//            Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
+//
+//            /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
+//            Switch(
+//                modifier = Modifier.semantics { contentDescription = "Demo" },
+//                checked = checked.value,
+//                onCheckedChange = { checked.value = it },
+//                colors = SwitchDefaults.colors(
+//                    checkedThumbColor = CircleToggleClr,
+//                    uncheckedThumbColor = CircleToggleClr,
+//                    uncheckedBorderColor = ToggleOffClr,
+//                    checkedTrackColor = ToggleOnClr,
+//                    uncheckedTrackColor = ToggleOffClr,
+//
+//                )
+//            )
+//        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(painter = painterResource(id = smarthome.image!!.toInt()), contentDescription = "light_off", modifier = Modifier.height(100.dp))
+            Image(
+                painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else R.drawable.light_bulb_off),
+                contentDescription = if (lampOn) "light_on" else "light_off",
+                modifier = Modifier.height(100.dp)
+            )
             Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
 
-            /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
             Switch(
                 modifier = Modifier.semantics { contentDescription = "Demo" },
-                checked = checked.value,
-                onCheckedChange = { checked.value = it },
+                checked = lampOn,
+                onCheckedChange = { lampOn = it },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = CircleToggleClr,
                     uncheckedThumbColor = CircleToggleClr,
                     uncheckedBorderColor = ToggleOffClr,
                     checkedTrackColor = ToggleOnClr,
-                    uncheckedTrackColor = ToggleOffClr,
-
+                    uncheckedTrackColor = ToggleOffClr
                 )
             )
         }

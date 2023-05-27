@@ -14,5 +14,5 @@ data class User(
     @ColumnInfo(name = "username") val username : String?,
     @ColumnInfo(name = "password") var password : String?,
     @ColumnInfo(name = "salt")     var salt     : String?,
-    @ColumnInfo(name="first_time") val firstTime : Boolean
+    @ColumnInfo(name="first_time") val firstTime : Boolean = true
 )

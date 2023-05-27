@@ -29,10 +29,11 @@ fun NavGraphBuilder.homeNavGraph(
         startDestination = Screen.Home.route,
         route = HOME_GRAPH_ROUTE
     ) {
+
         composable(
             route = Screen.Home.route
         ){
-            ttsHelper.speak("Home Screen")
+            //ttsHelper.speak("Home Screen")
             HomeScreen(navController = navController,intelliViewModel)
         }
         composable(
@@ -48,19 +49,19 @@ fun NavGraphBuilder.homeNavGraph(
         composable(
             route = Screen.News.route
         ){
-            ttsHelper.speak("News")
+            //ttsHelper.speak("News")
             NewsScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.Eshop.route
         ){
-            ttsHelper.speak("Eshop")
+            //ttsHelper.speak("Eshop")
             EshopScreen(navController = navController,intelliViewModel)
         }
         composable(
             route = Screen.SmartHome.route
         ){
-            ttsHelper.speak("Smart home")
+            //ttsHelper.speak("Smart home")
             SmartHomeScreen(navController = navController,intelliViewModel)
         }
     }

@@ -130,7 +130,7 @@ fun CalendarWidget(
                     .padding(5.dp)
 
             ) {
-                Column() {
+                Column {
                     Text(
                         text = dateFormat,
                         color = TextWhite,
@@ -187,7 +187,7 @@ fun CalendarScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
-    var calendarViewModel: CalendarViewModel = CalendarViewModel()
+    val calendarViewModel: CalendarViewModel = CalendarViewModel()
     Scaffold(
         modifier = Modifier,
         topBar = {
