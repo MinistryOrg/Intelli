@@ -62,7 +62,8 @@ fun SearchInternetWidget(
                     intelliViewModel.openNewsLink(searchText,"search")
                 }
         ) },
-        keyboardOptions = KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Search),
+        keyboardOptions = KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Go),
+        keyboardActions = KeyboardActions( onGo = {intelliViewModel.openNewsLink(searchText,"search")}),
         singleLine = false ,
         maxLines = 1,
         colors = TextFieldDefaults.colors(
