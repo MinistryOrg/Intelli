@@ -12,5 +12,6 @@ data class Smarthome(
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "name") val name : String?,
     @ColumnInfo(name = "image") val image: Int?,
+    @ColumnInfo(name = "offImage") val offImage : Int?
 //    @ColumnInfo(name = "user") val user : User
 )

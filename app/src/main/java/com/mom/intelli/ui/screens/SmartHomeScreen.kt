@@ -292,7 +292,7 @@ fun DeviceItems(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else R.drawable.light_bulb_off),
+                painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else smarthome.offImage!!.toInt()),
                 contentDescription = if (lampOn) "light_on" else "light_off",
                 modifier = Modifier.height(100.dp)
             )

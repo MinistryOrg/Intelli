@@ -244,7 +244,7 @@ fun MainAddDeviceScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
-                    val selectedImage = when {
+                    val selectedOnImage = when {
                         lightSelected -> R.drawable.light_bulb_on
                         tvSelected -> R.drawable.tv_on
                         speakerSelected -> R.drawable.speaker_on
@@ -252,8 +252,16 @@ fun MainAddDeviceScreen(
                         else -> R.drawable.light_bulb_on
                     }
 
+                    val selectedOffImage = when {
+                        lightSelected -> R.drawable.light_bulb_off
+                        tvSelected -> R.drawable.tv_off
+                        speakerSelected -> R.drawable.speaker_off
+                        webCameraSelected -> R.drawable.web_camera_off
+                        else -> R.drawable.light_bulb_off
+                    }
+
                     coroutineScope.launch {
-                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedImage))
+                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedOnImage, selectedOffImage))
                     }
                     /*todo*/
                 }
