@@ -34,12 +34,12 @@ fun SetupNavGraph(
         composable(
             route = Screen.SignIn.route
         ){
-            SignInScreen(navController = navController)
+            SignInScreen(navController = navController, intelliViewModel = intelliViewModel)
         }
         composable(
             route = Screen.SignUp.route
         ){
-            SignUpScreen(navController = navController)
+            SignUpScreen(navController = navController, intelliViewModel =  intelliViewModel)
         }
 
         homeNavGraph(navController = navController, intelliViewModel = intelliViewModel,context)
