@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.ImgEshopLogo
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.screens.eshop_screens.OrdersScreen
 import com.mom.intelli.ui.screens.eshop_screens.StoreScreen
 import com.mom.intelli.ui.theme.CustomFont

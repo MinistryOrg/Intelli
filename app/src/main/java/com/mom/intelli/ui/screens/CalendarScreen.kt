@@ -61,9 +61,9 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.calendar.Reminder
-import com.mom.intelli.ui.CalendarViewModel
+import com.mom.intelli.ui.viewmodels.CalendarViewModel
 import com.mom.intelli.ui.ImgCalendarLogo
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CalTextFieldBorderClr
 import com.mom.intelli.ui.theme.CalendarBoxClr
 import com.mom.intelli.ui.theme.CalendarReminderBoxClr

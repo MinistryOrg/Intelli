@@ -49,7 +49,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.CircleToggleClr
 import com.mom.intelli.ui.theme.CustomFont

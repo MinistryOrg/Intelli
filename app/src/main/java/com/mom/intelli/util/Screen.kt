@@ -7,6 +7,13 @@ const val ESHOP_GRAPH_ROUTE = "eshop"
 const val SMART_HOME_GRAPH_ROUTE = "smarthome"
 
 sealed class Screen (val route : String) {
+
+    object OnBoarding : Screen("onboarding_screen")
+
+    object SignIn : Screen("signin_screen")
+
+    object SignUp : Screen("signup_screen")
+
     object Home : Screen("home_screen")
 
     //CALENDAR SCREEN

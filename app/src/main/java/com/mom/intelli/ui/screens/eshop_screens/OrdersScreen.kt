@@ -1,7 +1,6 @@
 package com.mom.intelli.ui.screens.eshop_screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,19 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.eshop.CheckOut
-import com.mom.intelli.data.eshop.Device
-import com.mom.intelli.data.smarthome.Smarthome
-import com.mom.intelli.ui.IntelliViewModel
-import com.mom.intelli.ui.screens.DeviceItems
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
-import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.TextWhite
 
 @Composable

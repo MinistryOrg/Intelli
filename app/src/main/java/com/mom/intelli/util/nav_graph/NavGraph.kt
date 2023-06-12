@@ -2,12 +2,15 @@ package com.mom.intelli.util.nav_graph
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.mom.intelli.ui.IntelliViewModel
-import com.mom.intelli.util.HOME_GRAPH_ROUTE
+import androidx.navigation.compose.composable
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
+import com.mom.intelli.ui.OnBoardingScreen
+import com.mom.intelli.ui.SignInScreen
+import com.mom.intelli.ui.SignUpScreen
 import com.mom.intelli.util.ROOT_GRAPH_ROUTE
+import com.mom.intelli.util.Screen
 
 
 //Xrhsimopoioume thn texnikh nested nav graph gia kaluterh organwsh
@@ -15,13 +18,30 @@ import com.mom.intelli.util.ROOT_GRAPH_ROUTE
 fun SetupNavGraph(
     navController: NavHostController,
     intelliViewModel: IntelliViewModel,
-    context: Context
+    context: Context,
+    startDestination: String
 ) {
     NavHost(
         navController = navController,
-        startDestination = HOME_GRAPH_ROUTE,
+        startDestination = startDestination,
         route = ROOT_GRAPH_ROUTE
     ){
+        composable(
+            route = Screen.OnBoarding.route
+        ){
+            OnBoardingScreen(navController = navController)
+        }
+        composable(
+            route = Screen.SignIn.route
+        ){
+            SignInScreen(navController = navController)
+        }
+        composable(
+            route = Screen.SignUp.route
+        ){
+            SignUpScreen(navController = navController)
+        }
+
         homeNavGraph(navController = navController, intelliViewModel = intelliViewModel,context)
 
         eshopNavGraph(navController = navController, intelliViewModel = intelliViewModel)

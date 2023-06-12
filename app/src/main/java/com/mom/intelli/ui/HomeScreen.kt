@@ -44,6 +44,8 @@ import com.mom.intelli.ui.theme.FooterText
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
+import com.mom.intelli.util.Screen
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
@@ -70,7 +72,7 @@ fun HomeScreen(
                         colors = TopAppBarDefaults
                             .centerAlignedTopAppBarColors(MainBackgroundColor),
                         actions = {
-                            IconButton(onClick = { /*TODO*/ }) {
+                            IconButton(onClick = {  navController.navigate(route = Screen.OnBoarding.route) }) {
                                 Icon(
                                     imageVector = Icons.Default.Info,
                                     contentDescription = "Online Help",
