@@ -114,9 +114,8 @@ class IntelliViewModel : ViewModel() {
        return intelliService!!.signUp(user)
     }
 
-    suspend fun signIn (user: User) : Boolean{
-        this.user = user
-        return intelliService!!.signIn(user)
+    suspend fun signIn (email : String, password : String, rememberMe : Boolean) : Boolean{
+        return intelliService!!.signIn(email,password,rememberMe)
     }
 
 }

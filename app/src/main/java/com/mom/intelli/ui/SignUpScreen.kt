@@ -1,6 +1,7 @@
 package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,18 +36,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.user.User
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SignUpBtnClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextFieldColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
+import com.mom.intelli.util.Screen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
-    navController: NavController
+    navController: NavController,
+    intelliViewModel: IntelliViewModel
 ) {
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -87,7 +97,7 @@ fun SignUpScreen(
 
                     OutlinedTextField(
                         value = nameText,
-                        label = { Text(text = "Email") },
+                        label = { Text(text = "Name") },
                         onValueChange = { nameText = it },
                         maxLines = 1,
                         singleLine = false,
@@ -187,7 +197,30 @@ fun SignUpScreen(
                                 .padding(horizontal = 10.dp)
                                 .height(50.dp)
                                 .fillMaxWidth(),
-                            onClick = {/*todo*/ }
+                            onClick = {
+                                var userSignUp = false
+                                coroutineScope.launch {
+                                    withContext(Dispatchers.IO) {
+                                      userSignUp =  intelliViewModel.signUp(
+                                            User(
+                                                0,
+                                                fullname = nameText.text,
+                                                email = emailText.text,
+                                                password = passwordText.text,
+                                                null,
+                                                rememberMe = true
+                                            )
+                                        )
+                                    }
+                                    if (userSignUp){
+                                        navController.navigate(Screen.SignIn.route) // na pigenei sto sign up
+                                    } else {
+                                        Log.d("Sex", "Skata")
+                                        // vgale error pop up den ksero ti
+                                    }
+                                }
+
+                            }
                         ) {
                             Text(
                                 text = "Sign Up",
