@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var splashViewModel: SplashViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
+        intelliViewModel.init(this)
 
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition{
