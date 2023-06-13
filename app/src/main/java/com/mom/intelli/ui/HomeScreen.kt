@@ -124,7 +124,7 @@ fun MainList(
         ) {
             Text(
                 text = if(currentTime > startMorningTime && currentTime < endMorningTime )
-                        { "Good morning, Name"}
+                        { "Good morning, " }
                         else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
                         {"Good afternoon, Name"}
                         else
