@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.smarthome.Smarthome
@@ -53,6 +54,7 @@ import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextFieldColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.OnBoardingViewModel
 import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +66,8 @@ import kotlinx.coroutines.withContext
 @Composable
 fun SignInScreen(
     intelliViewModel: IntelliViewModel,
-    navController: NavController
+    navController: NavController,
+    onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -202,6 +205,7 @@ fun SignInScreen(
                                     }
                                     if (correctData){
                                         navController.navigate(HOME_GRAPH_ROUTE)
+                                        onBoardingViewModel.saveOnBoardingState(completed = true)
                                     } else {
                                         Log.d("Sign in ", "fail")
                                         // δεν ξέρω

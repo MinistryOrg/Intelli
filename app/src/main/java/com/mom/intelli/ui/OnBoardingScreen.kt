@@ -117,8 +117,8 @@ fun OnBoardingScreen(
                         modifier = Modifier.padding(top = 25.dp),
                         pagerState = pagerState
                     ){
-                        onBoardingViewModel.saveOnBoardingState(completed = true)
                         navController.navigate(Screen.SignIn.route)
+
                     }
                 }
             }
