@@ -1,4 +1,4 @@
-package com.mom.intelli.ui
+package com.mom.intelli.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.mom.intelli.data.calendar.Reminder

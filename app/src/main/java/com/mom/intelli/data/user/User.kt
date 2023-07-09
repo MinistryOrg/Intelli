@@ -12,6 +12,14 @@ data class User(
     @ColumnInfo(name = "fullname") val fullname : String?,
     @ColumnInfo(name = "email")    val email    : String?,
     @ColumnInfo(name = "password") var password : String?,
+<<<<<<< HEAD
     @ColumnInfo(name = "salt")     var salt     : String?, // to uncrypt the password
     @ColumnInfo(name = "remember") var remember : Boolean?,
 )
+=======
+    @ColumnInfo(name = "salt")     var salt     : String?,
+    @ColumnInfo(name="remember_me") val rememberMe : Boolean = false
+) {
+
+}
+>>>>>>> fc1c753879f4c9e16c4ed5c869e3296e281800ff

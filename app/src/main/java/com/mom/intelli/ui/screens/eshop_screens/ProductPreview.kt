@@ -41,7 +41,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.ui.ImgEshopLogo
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor

@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mom.intelli.ui.HomeScreen
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.screens.CalendarScreen
 import com.mom.intelli.ui.screens.EmailScreen
 import com.mom.intelli.ui.screens.EshopScreen

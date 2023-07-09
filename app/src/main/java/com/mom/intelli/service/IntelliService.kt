@@ -1,6 +1,7 @@
 package com.mom.intelli.service
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -16,9 +17,11 @@ import com.mom.intelli.util.serviceUtil.NewsUtil
 import com.mom.intelli.util.serviceUtil.WeatherUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.time.LocalDate
+import java.util.Base64
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
@@ -157,56 +160,43 @@ class IntelliService(var context: Context) {
         return weatherUtil.getWeather()
     }
 
-    suspend fun signUp (user : User) : Boolean {
+    // Function to hash a password
+    private fun hashPassword(password: String): String {
+        val messageDigest = MessageDigest.getInstance("SHA-256")
+        val hashedBytes = messageDigest.digest(password.toByteArray(StandardCharsets.UTF_8))
+        return Base64.getEncoder().encodeToString(hashedBytes)
+    }
+
+    // Function to check if a password matches the hashed password
+    private fun checkPassword(enterPassword: String, password : String): Boolean {
+        val enteredHashedPassword = hashPassword(enterPassword)
+        return enteredHashedPassword == password
+    }
+
+    suspend fun signUp(user: User): Boolean {
         val userList = userDao.getAll()
-        for (i in userList) { // check  if the user already exist
-            if(user.email == i.email || user.username == i.username) {
+        for (i in userList) {
+            if (user.email == i.email) {
                 return false
             }
         }
-        val hash = hashPassword(user.password!!)
-        user.password = hash[0]
-        user.salt = hash[1]
+
+        val hashedPassword = hashPassword(user.password!!)
+        user.password = hashedPassword
         userDao.insertAll(user)
+
         return true
     }
 
-    suspend fun signIn (user: User) : Boolean{
+    suspend fun signIn(email: String, password: String, rememberMe: Boolean): Boolean {
         val userList = userDao.getAll()
-        for (i in userList) { // if the user exist log in
-            val correctPassword  = checkPassword(user.password!!,  user.salt!!, i.password!!)
-            if(user.username == i.username && correctPassword){
+        for (i in userList) {
+            val correctPassword = checkPassword(password, i.password!!)
+            if (email == i.email && correctPassword) {
                 return true
             }
         }
         return false
-    }
-
-    private fun hashPassword(password: String): List<String> {
-        // random value used for hashing
-        val salt = ByteArray(16).also { SecureRandom().nextBytes(it) }
-        // Set up the key specifications for password-based encryption
-        val iterations = 10000
-        val keyLength = 256
-        val spec = PBEKeySpec(password.toCharArray(), salt, iterations, keyLength)
-        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
-        // Generate the encrypted password
-        return listOf(secretKeyFactory.generateSecret(spec).encoded.toString(), salt.toString()) // idk if works with string
-    }
-
-    private fun checkPassword(password: String, salt : String, hashedPassword: String): Boolean {
-        // Set up the key specifications for password-based encryption
-        val iterations = 10000
-        val keyLength = 256
-        val spec = PBEKeySpec(password.toCharArray(), salt.toByteArray(), iterations, keyLength)
-        val secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
-        // Generate the encrypted password using the entered password and retrieved salt
-        val hashedEnteredPassword = secretKeyFactory.generateSecret(spec).encoded
-
-        return MessageDigest.isEqual( // compare the password
-            hashedEnteredPassword,
-            hashedPassword.toByteArray()
-        ) // and returns true or false
     }
 
 }

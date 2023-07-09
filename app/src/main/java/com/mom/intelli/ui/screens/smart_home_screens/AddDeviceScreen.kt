@@ -1,11 +1,9 @@
 package com.mom.intelli.ui.screens.smart_home_screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -52,7 +50,7 @@ import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.DeviceItemClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor

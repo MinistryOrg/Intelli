@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mom.intelli.R
-import com.mom.intelli.ui.IntelliViewModel
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CardBorderClr
 import com.mom.intelli.ui.theme.CardClr
 import com.mom.intelli.ui.theme.CustomFont

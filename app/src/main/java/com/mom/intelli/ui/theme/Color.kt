@@ -7,8 +7,12 @@ val MainBackgroundColor = Color(0xFF121212)
 val TextWhite = Color(0xffeeeeee)
 val IconsColor = Color(0xFF9B9B9B)
 val FooterText = Color(0xFF2C2C2C)
+val BoardingBtnClr = Color(0xFF237EC7)
 
-//Colors For Home Screen
+//Colors For Sign In/ Sign up
+val SignInBtnClr = Color(0xFF3981EE)
+val SignUpBtnClr = Color(0xFF1D1C5C)
+val CheckedClr = Color(0xFF377CE4)
 
 //Colors For Calendar
 //val CalendarBoxClr = Color(0xFF271A47)
