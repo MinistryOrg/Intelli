@@ -83,7 +83,7 @@ fun SmartHomeWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.smart_home_1),
+                painter = painterResource(id = R.drawable.smart_home),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)

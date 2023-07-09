@@ -118,7 +118,7 @@ fun CalendarWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.calendar),
+                painter = painterResource(id = R.drawable.calendar_1),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor),

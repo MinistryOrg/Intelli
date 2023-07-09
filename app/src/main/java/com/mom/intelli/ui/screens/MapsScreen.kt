@@ -50,7 +50,7 @@ fun MapsWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.maps_1),
+                painter = painterResource(id = R.drawable.maps),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)
