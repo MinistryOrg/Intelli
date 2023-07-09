@@ -10,11 +10,7 @@ import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.user.User
 
-<<<<<<< HEAD
-@Database(entities = [Device::class, Smarthome::class, CheckOut::class, Reminder::class, User :: class], version = 14 )
-=======
 @Database(entities = [Device::class, Smarthome::class, CheckOut::class, Reminder::class, User :: class], version = 16)
->>>>>>> fc1c753879f4c9e16c4ed5c869e3296e281800ff
 @TypeConverters(ReminderListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun deviceDao(): DeviceDao
