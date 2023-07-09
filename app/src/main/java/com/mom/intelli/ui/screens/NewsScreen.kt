@@ -182,6 +182,9 @@ fun NewsMainScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+
+    var newsSize = 5
+
     var sportNews by remember {
         mutableStateOf<NewsApiResponse?>(null)
     }
@@ -244,7 +247,10 @@ fun NewsMainScreen(
                 userScrollEnabled = true
             ){
                 majorNews?.let { news ->
-                    items(5) {
+                    if (news.results.size < 5){
+                        newsSize = news.results.size
+                    }
+                    items(newsSize) {
                         NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
@@ -276,7 +282,10 @@ fun NewsMainScreen(
                 userScrollEnabled = true
             ){
                 sportNews?.let { news ->
-                    items(5) {
+                    if (news.results.size < 5){
+                        newsSize = news.results.size
+                    }
+                    items(newsSize) {
                         NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
@@ -308,7 +317,10 @@ fun NewsMainScreen(
                 userScrollEnabled = true
             ){
                 newsForYou?.let { news ->
-                    items(5) {
+                    if (news.results.size < 5){
+                        newsSize = news.results.size
+                    }
+                    items(newsSize) {
                         NewsBoxItem(news.results[it],intelliViewModel)
                     }
                 }
