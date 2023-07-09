@@ -11,8 +11,7 @@ data class User(
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "fullname") val fullname : String?,
     @ColumnInfo(name = "email")    val email    : String?,
-    @ColumnInfo(name = "username") val username : String?,
     @ColumnInfo(name = "password") var password : String?,
-    @ColumnInfo(name = "salt")     var salt     : String?,
-    @ColumnInfo(name="first_time") val firstTime : Boolean = true
+    @ColumnInfo(name = "salt")     var salt     : String?, // to uncrypt the password
+    @ColumnInfo(name = "remember") var remember : Boolean?,
 )

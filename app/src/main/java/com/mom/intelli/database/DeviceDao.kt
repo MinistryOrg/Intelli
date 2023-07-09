@@ -17,4 +17,7 @@ interface DeviceDao {
     @Delete
     fun delete(device: Device)
 
+    //    @Query("SELECT category FROM device GROUP BY category ORDER BY COUNT(*) DESC LIMIT 1")
+//    fun getMostUsedCategory(user: User): List<Device>
+
 }

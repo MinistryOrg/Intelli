@@ -10,5 +10,5 @@ data class Device(
     @ColumnInfo(name = "id") val id: Long = 0,
     @ColumnInfo(name = "name") val name : String?,
     @ColumnInfo(name = "image") val image: Int?,
-    // category
+    //@ColumnInfo(name = "category") val category : String?
 )

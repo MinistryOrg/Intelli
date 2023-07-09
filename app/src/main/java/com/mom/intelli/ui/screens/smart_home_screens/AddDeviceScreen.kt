@@ -192,8 +192,6 @@ fun MainAddDeviceScreen(
                     )
                 }
                 3 -> {
-                    //Cardslider(painter = painterResource(id = R.drawable.web_camera_on), title = "Web Camera", onClick = {selectedImage = R.drawable.web_camera_on}, page,intelliViewModel)
-                    //selectedImage = R.drawable.web_camera_on
                     Cardslider(
                         painter = painterResource(id = R.drawable.web_camera_on),
                         title = "Web camee",
