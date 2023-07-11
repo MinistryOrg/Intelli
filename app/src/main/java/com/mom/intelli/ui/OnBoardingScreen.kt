@@ -19,6 +19,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -176,6 +177,7 @@ fun FinishButton(
             visible = pagerState.currentPage == 5
         ) {
             Button(
+                shape = RoundedCornerShape(13.dp),
                 onClick = onClick,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = BoardingBtnClr,

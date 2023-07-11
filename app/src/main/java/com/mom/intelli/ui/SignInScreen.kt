@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -41,13 +40,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.data.smarthome.Smarthome
-import com.mom.intelli.data.user.User
 import com.mom.intelli.ui.theme.CheckedClr
-import com.mom.intelli.ui.theme.DeviceItemClr
+import com.mom.intelli.ui.theme.DialogCredBtnClr
+import com.mom.intelli.ui.theme.DialogCredClr
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SignInBtnClr
 import com.mom.intelli.ui.theme.SignUpBtnClr
@@ -71,6 +71,8 @@ fun SignInScreen(
     onBoardingViewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var showWrongCredentialsDialog by remember { mutableStateOf(false) }
+
 
     Scaffold(
         modifier = Modifier,
@@ -193,7 +195,7 @@ fun SignInScreen(
                             .padding(vertical = 10.dp)
                     ) {
                         Button(
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(13.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = SignInBtnClr),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
@@ -209,11 +211,11 @@ fun SignInScreen(
                                         navController.navigate(HOME_GRAPH_ROUTE)
                                         onBoardingViewModel.saveOnBoardingState(completed = true)
                                     } else {
-                                        Log.d("Sign in ", "fail")
-                                        // δεν ξέρω
+                                      //error sign in
+                                        showWrongCredentialsDialog = true
                                     }
                                 }
-                                //To evala na se phgainei sto homescreen mexri na to ftiaxeis
+
 
                             }
                         ) {
@@ -238,7 +240,7 @@ fun SignInScreen(
                             .padding(vertical = 10.dp)
                     ) {
                         Button(
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(13.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = SignUpBtnClr),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
@@ -262,8 +264,25 @@ fun SignInScreen(
                     ){
                         Image(painter = painterResource(id = R.drawable.kaira_signin), contentDescription = null, modifier = Modifier.height(250.dp))
                     }
+
+                    if(showWrongCredentialsDialog){
+                        Dialog(
+                            onDismissRequest = { showWrongCredentialsDialog = false },
+                            properties = DialogProperties(dismissOnClickOutside = true)
+                        ) {
+                            DialogBox(
+                                "Wrong Credentials. Try Again!",
+                                "Try Again.",
+                                DialogCredClr,
+                                DialogCredBtnClr,
+                                onCloseWindow = { showWrongCredentialsDialog = false}
+                            )
+                            
+                        }
+                    }
                 }
             }
         }
     )
 }
+

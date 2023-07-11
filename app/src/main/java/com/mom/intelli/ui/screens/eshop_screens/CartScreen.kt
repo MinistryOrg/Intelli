@@ -154,7 +154,7 @@ fun MainCartScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Button(
-                shape = RoundedCornerShape(30.dp),
+                shape = RoundedCornerShape(13.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = FloatingCartClr),
                 modifier = Modifier
                     .height(60.dp),

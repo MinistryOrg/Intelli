@@ -16,6 +16,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -35,9 +37,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.user.User
+import com.mom.intelli.ui.theme.DialogCredBtnClr
+import com.mom.intelli.ui.theme.DialogCredClr
+import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SignUpBtnClr
 import com.mom.intelli.ui.theme.TextColor
@@ -56,6 +63,7 @@ fun SignUpScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+    var showErrorSignUpDialog by remember { mutableStateOf(false)}
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         modifier = Modifier,
@@ -67,7 +75,19 @@ fun SignUpScreen(
                 CenterAlignedTopAppBar(
                     { ImgLogo() },
                     colors = TopAppBarDefaults
-                        .centerAlignedTopAppBarColors(MainBackgroundColor)
+                        .centerAlignedTopAppBarColors(MainBackgroundColor),
+                    navigationIcon = {
+                        IconButton(
+                            onClick = { navController.popBackStack() }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.arrow_back),
+                                contentDescription = "Back",
+                                tint = IconsColor,
+                                modifier = Modifier.padding(horizontal = 5.dp)
+                            )
+                        }
+                    }
                 )
             }
         },
@@ -194,7 +214,7 @@ fun SignUpScreen(
                             .padding(vertical = 10.dp)
                     ) {
                         Button(
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(13.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = SignUpBtnClr),
                             modifier = Modifier
                                 .padding(horizontal = 10.dp)
@@ -218,8 +238,8 @@ fun SignUpScreen(
                                     if (userSignUp){
                                         navController.navigate(Screen.SignIn.route) // na pigenei sto sign up
                                     } else {
-                                        Log.d("Sex", "Skata")
-                                        // vgale error pop up den ksero ti
+                                        //error sign up
+                                        showErrorSignUpDialog = true
                                     }
                                 }
 
@@ -239,6 +259,21 @@ fun SignUpScreen(
                             .padding(vertical = 10.dp)
                     ){
                         Image(painter = painterResource(id = R.drawable.kaira_signup), contentDescription = null, modifier = Modifier.height(200.dp))
+                    }
+
+                    if(showErrorSignUpDialog){
+                        Dialog(
+                            onDismissRequest = { showErrorSignUpDialog= false },
+                            properties = DialogProperties(dismissOnClickOutside = true)
+                        ) {
+                            DialogBox(
+                                textTitle = "Something went wrong.\n Try Again Please.",
+                                textBtn = "Try Again!",
+                                DialogClr = DialogCredClr,
+                                DialogBtnClr = DialogCredBtnClr,
+                                onCloseWindow = {showErrorSignUpDialog = false}
+                            )
+                        }
                     }
                 }
             }

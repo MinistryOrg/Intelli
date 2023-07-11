@@ -1,6 +1,5 @@
 package com.mom.intelli.ui.theme
 
-import android.app.Dialog
 import androidx.compose.ui.graphics.Color
 //Main Color
 val MainBackgroundColor = Color(0xFF121212)
@@ -13,6 +12,8 @@ val BoardingBtnClr = Color(0xFF237EC7)
 val SignInBtnClr = Color(0xFF3981EE)
 val SignUpBtnClr = Color(0xFF1D1C5C)
 val CheckedClr = Color(0xFF377CE4)
+val DialogCredClr = Color(0xFF121212)
+val DialogCredBtnClr = Color(0xFF3981EE)
 
 //Colors For Calendar
 //val CalendarBoxClr = Color(0xFF271A47)
@@ -20,8 +21,9 @@ val CalendarBoxClr = Color(0xFF1C1724)
 val CalendarReminderBoxClr = Color(0xFF271E3C)
 val CurrentMonthTxtClr = Color(0xFFeeeeee)
 val OtherMonthTxtClr = Color(0xFF707070)
-val DaysClr = Color(0xFFDAB2FF)
+val DaysClr = Color(0xFFCC95FF)
 val SelectedDayClr = Color(0xFFB777F4)
+val UnSelectedDayClr = Color(0xFF442B5C)
 val DialogBoxClr = Color(0xFF6248A2)
 val CalTextFieldBorderClr = Color(0xFF271A47)
 
@@ -40,9 +42,11 @@ val SendEmailBtnClr = Color(0xFF023C91)
 val CancelBtnClr = Color(0xFFBE3333)
 
 //Colors For Maps
+val LightTrafficClr = Color(0xFF136D2D)
+val HeavyTrafficClr = Color(0xFF8B0C17)
 
 //Colors For News And Sports
-val DividerClr = Color(0xFF2C171D)
+val DividerClr = Color(0xB5FFFFFF)
 val MajorNewsBoxClr = Color(0xFF302F2F)
 
 //val MajorNewsBoxClr = Color(0xFF3C1923)

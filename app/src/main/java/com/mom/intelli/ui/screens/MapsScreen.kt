@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,10 +25,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
+import com.mom.intelli.ui.theme.HeavyTrafficClr
+import com.mom.intelli.ui.theme.LightTrafficClr
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 
@@ -77,17 +81,57 @@ fun MapsWidget(
 
                 Row(
                     modifier = Modifier
-                        .padding(top = 30.dp)
+                        .padding(top = 30.dp, end=5.dp)
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.car_icon),
-                        contentDescription = "car_icon",
-                        modifier = Modifier
-                            .size(20.dp),
-                    )
-                    Text(text = "jadnja")
+
+                    Column() {
+                        Icon(
+                            painter = painterResource(id = R.drawable.car_icon),
+                            contentDescription = "car_icon",
+                            tint = LightTrafficClr,
+                            modifier = Modifier
+                                .size(44.dp)
+                                .padding(end = 24.dp),
+                        )
+                    }
+                    Column() {
+                        Text(
+                            text = "Peiraias - Glyfada | 7'",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TextWhite
+                        )
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(top = 70.dp, end=5.dp)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Column() {
+                        Icon(
+                            painter = painterResource(id = R.drawable.car_icon),
+                            contentDescription = "car_icon",
+                            tint = HeavyTrafficClr,
+                            modifier = Modifier
+                                .size(30.dp)
+                                .padding(end = 10.dp),
+                        )
+                    }
+                   Column() {
+                       Text(
+                           text = "Syntagma - Omonia | 25'",
+                           fontSize = 10.sp,
+                           fontWeight = FontWeight.Bold,
+                           color = TextWhite
+                       )
+                   }
                 }
                 Box(
                     modifier = Modifier

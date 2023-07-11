@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -281,10 +282,11 @@ fun MainCheckoutScreen(
                 .padding(vertical = 10.dp)
         ) {
             Button(
-                shape = RoundedCornerShape(30.dp),
+                shape = RoundedCornerShape(13.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = FloatingCartClr),
                 modifier = Modifier
-                    .height(60.dp),
+                    .height(60.dp)
+                    .width(150.dp),
                 onClick = {
                     coroutineScope.launch {
                         intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,selectedOption.toString(),intelliViewModel.getCartDevices()))
@@ -302,12 +304,3 @@ fun MainCheckoutScreen(
         }
     }
 }
-
-
-//@Preview
-//@Composable
-//fun CheckOutPrev() {
-//    IntelliTheme() {
-//        MainCheckoutScreen(navController = rememberNavController())
-//    }
-//}

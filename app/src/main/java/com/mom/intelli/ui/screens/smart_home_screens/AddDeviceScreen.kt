@@ -235,7 +235,7 @@ fun MainAddDeviceScreen(
                 .padding(vertical = 30.dp)
         ) {
             Button(
-                shape = RoundedCornerShape(30.dp),
+                shape = RoundedCornerShape(13.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = DeviceItemClr),
                 modifier = Modifier
                     .height(60.dp),

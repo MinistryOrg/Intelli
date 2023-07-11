@@ -72,6 +72,7 @@ import com.mom.intelli.ui.theme.DaysClr
 import com.mom.intelli.ui.theme.DialogBoxClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
+import com.mom.intelli.ui.theme.OtherMonthTxtClr
 import com.mom.intelli.ui.theme.SelectedDayClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
@@ -79,6 +80,7 @@ import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.TextStyle
 import java.util.Calendar
 import java.util.Locale
@@ -333,7 +335,7 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(13.dp),
                 onClick = { showAddReminderDialog = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SelectedDayClr
@@ -360,7 +362,7 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
                 onDismissRequest = {
                     showAddReminderDialog = false
                 },
-                properties = DialogProperties(dismissOnClickOutside = false)
+                properties = DialogProperties(dismissOnClickOutside = true)
             ) {
                 AddReminderScreen(
                     viewModel = viewModel,
@@ -381,6 +383,8 @@ fun CalendarGrid(
     onDateSelected: (LocalDate) -> Unit
 ) {
     val dates = remember(currentMonth) { generateDatesForMonth(currentMonth) }
+    val currentMonthYear = YearMonth.from(currentMonth)
+    val currentDate = LocalDate.now()
     LazyVerticalGrid(columns = GridCells.Fixed(7)) {
         items(dates) { date ->
             Box(
@@ -390,22 +394,30 @@ fun CalendarGrid(
                     .clickable { onDateSelected(date) },
                 contentAlignment = Alignment.Center
             ) {
-                if (date == selectedDate) {
-                    // Highlight the selected date
-                    // Customize the appearance as needed
-                    Text(
-                        text = date.dayOfMonth.toString(),
-                        color = Color.White,
-                        modifier = Modifier
-                            .background(SelectedDayClr, shape = CircleShape)
-                            .padding(8.dp)
-                    )
+
+                val textColor = if (date.month == currentMonthYear.month) {
+                    if (date == currentDate) {
+                        // Highlight the current date
+                        DaysClr
+                    } else {
+                        // Color for dates in the current month
+                        TextWhite
+                    }
                 } else {
-                    Text(
-                        text = date.dayOfMonth.toString(),
-                        color = TextWhite
-                    )
+                    // Color for dates outside the current month
+                    OtherMonthTxtClr
                 }
+
+                Text(
+                    text = date.dayOfMonth.toString(),
+                    color = textColor,
+                    modifier = Modifier
+                        .background(
+                            if (date == selectedDate) SelectedDayClr else Color.Transparent,
+                            shape = CircleShape
+                        )
+                        .padding(8.dp)
+                )
             }
         }
     }
@@ -552,7 +564,7 @@ fun ReminderList(reminders : List<Reminder>) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(13.dp),
                 onClick = {
                     coroutineScope.launch {
                         val reminder =
