@@ -2,6 +2,7 @@ package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
 import android.icu.text.DateFormat
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -395,7 +396,8 @@ fun CalendarGrid(
                 contentAlignment = Alignment.Center
             ) {
 
-                val textColor = if (date.month == currentMonthYear.month) {
+                val textColor = if (date.month.equals(currentDate.month) && date.month.equals(currentMonthYear.month)) {
+                    Log.d("IN", "Date month" + date.month + " " + "Current Month " + currentMonthYear.month)
                     if (date == currentDate) {
                         // Highlight the current date
                         DaysClr
