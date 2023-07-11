@@ -115,7 +115,7 @@ fun EmailWidget(
                     ) {
                         //[Button to view emails]
                         Button(
-                            shape = RoundedCornerShape(30.dp),
+                            shape = RoundedCornerShape(13.dp),
                             border = BorderStroke(1.dp, TextWhite),
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Transparent),
                             modifier = Modifier
@@ -137,7 +137,7 @@ fun EmailWidget(
                         }
                         //[Button to Send email]
                         Button(
-                            shape = RoundedCornerShape(30.dp),
+                            shape = RoundedCornerShape(13.dp),
                             border = BorderStroke(1.dp, TextWhite),
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Transparent),
                             modifier = Modifier
@@ -311,15 +311,16 @@ fun EmainMainScreen(
         }
         Box(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .align(Alignment.BottomCenter)
                 .padding(20.dp)
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
                 Button(
-                    shape = RoundedCornerShape(30.dp),
+                    shape = RoundedCornerShape(13.dp),
                     colors = ButtonDefaults.outlinedButtonColors( containerColor = CancelBtnClr),
                     modifier = Modifier
-                        .height(40.dp),
+                        .height(40.dp)
+                        .width(140.dp),
                     onClick = {navController.popBackStack()}
                 ) {
                     Text(
@@ -329,10 +330,11 @@ fun EmainMainScreen(
                 }
                 //[BUTTON TO SEND EMAIL]
                 Button(
-                    shape = RoundedCornerShape(30.dp),
-                    colors = ButtonDefaults.outlinedButtonColors( containerColor = SendEmailBtnClr), //TODO CHANGE SEND BUTTON COLOR TO SOMETHING BLUE
+                    shape = RoundedCornerShape(13.dp),
+                    colors = ButtonDefaults.outlinedButtonColors( containerColor = SendEmailBtnClr),
                     modifier = Modifier
                         .height(40.dp)
+                        .width(150.dp)
                     ,
                     onClick = {
                         intelliViewModel.sendEmail(emailAddress = emailText.text, emailSubject = subjText.text, emailBody = text.text )
@@ -358,13 +360,3 @@ fun EmainMainScreen(
 }
 
 
-//@Preview
-//@Composable
-//fun EmailPrev(){
-//    IntelliTheme {
-//        EmainMainScreen(
-//            navController = rememberNavController(),
-//            intelliViewModel = intelliViewModel
-//        )
-//    }
-//}

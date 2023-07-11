@@ -36,7 +36,7 @@ val SearchBckgClr = Color(0xFFF9F9F9)
 val TextFieldColor = Color(0xFFDEDBE2)
 val TextColor = Color(0xffeeeeee)
 val DecorColor = Color(0xffeeeeee)
-val SendEmailBtnClr = Color(0xFF64409E)
+val SendEmailBtnClr = Color(0xFF023C91)
 val CancelBtnClr = Color(0xFFBE3333)
 
 //Colors For Maps

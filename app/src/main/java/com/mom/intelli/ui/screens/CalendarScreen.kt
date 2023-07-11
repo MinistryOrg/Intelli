@@ -333,6 +333,7 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
+                shape = RoundedCornerShape(10.dp),
                 onClick = { showAddReminderDialog = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = SelectedDayClr
@@ -551,6 +552,7 @@ fun ReminderList(reminders : List<Reminder>) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
+                shape = RoundedCornerShape(10.dp),
                 onClick = {
                     coroutineScope.launch {
                         val reminder =
