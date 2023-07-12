@@ -28,7 +28,7 @@ fun DialogBox(
     DialogClr: Color,
     DialogBtnClr: Color,
     onCloseWindow: () -> Unit
-) {
+){
     Column(
         modifier = Modifier
             .padding(10.dp)
