@@ -188,7 +188,6 @@ class IntelliService(var context: Context) {
         return withContext(Dispatchers.IO) {
             deviceDao.delete(device)
         }
-
     }
 
     suspend fun deleteSmarthomeDevice(smarthome: Smarthome){

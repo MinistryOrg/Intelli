@@ -53,10 +53,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
-import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.CircleToggleClr
 import com.mom.intelli.ui.theme.CustomFont
@@ -67,6 +65,7 @@ import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.theme.ToggleOffClr
 import com.mom.intelli.ui.theme.ToggleOnClr
+import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.launch
 
@@ -139,6 +138,7 @@ fun SmartHomeScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -210,17 +210,22 @@ fun SmartHomeScreen(
 @Composable
 fun MainSmartHomeScreen(
     navController: NavController,
-    intelliViewModel: IntelliViewModel
+    intelliViewModel: IntelliViewModel,
 ) {
 
-    var smarthome by remember {
-        mutableStateOf<List<Smarthome>?>(null)
+    var smarthome by remember { mutableStateOf<List<Smarthome>?>(null) }
+
+    val onDeleteDevice: (Smarthome) -> Unit = { deletedDevice ->
+        // Implement the logic to remove the deleted device from the screen
+        // This could involve updating the state or re-fetching the updated device list
+        // For example:
+        smarthome = smarthome?.filter { it != deletedDevice }
     }
+
     LaunchedEffect(Unit) {
-        val fetchedSmarthomes = intelliViewModel.getSmarthome()
-        smarthome = fetchedSmarthomes
-        // Handle the completion of the database operation if needed
+        smarthome = intelliViewModel.getSmarthome()
     }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -251,7 +256,7 @@ fun MainSmartHomeScreen(
             content = {
                 smarthome?.let { value ->
                     value.forEach { smarthome ->
-                        item { DeviceItems(smarthome = smarthome, intelliViewModel) }
+                        item { DeviceItems(smarthome = smarthome, intelliViewModel,onDeleteDevice) }
                     }
                 }
             })
@@ -263,7 +268,8 @@ fun MainSmartHomeScreen(
 @Composable
 fun DeviceItems(
     smarthome: Smarthome,
-    intelliViewModel: IntelliViewModel
+    intelliViewModel: IntelliViewModel,
+    onDeleteDevice: (Smarthome) -> Unit
 ) {
     var smarthomeOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
@@ -290,6 +296,7 @@ fun DeviceItems(
                     onClick = {
                         coroutineScope.launch {
                             intelliViewModel.deleteSmarthomeDevice(smarthome)
+                            onDeleteDevice(smarthome)
                         }
                     }
                 ) {
