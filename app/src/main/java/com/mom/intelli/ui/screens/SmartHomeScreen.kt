@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -265,32 +266,25 @@ fun DeviceItems(
             containerColor = DeviceItemClr
         )
     ) {
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Image(painter = painterResource(id = smarthome.image!!.toInt()), contentDescription = "light_on", modifier = Modifier.height(100.dp))
-//            Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
-//
-//            /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
-//            Switch(
-//                modifier = Modifier.semantics { contentDescription = "Demo" },
-//                checked = checked.value,
-//                onCheckedChange = { checked.value = it },
-//                colors = SwitchDefaults.colors(
-//                    checkedThumbColor = CircleToggleClr,
-//                    uncheckedThumbColor = CircleToggleClr,
-//                    uncheckedBorderColor = ToggleOffClr,
-//                    checkedTrackColor = ToggleOnClr,
-//                    uncheckedTrackColor = ToggleOffClr,
-//
-//                )
-//            )
-//        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(
+                    onClick = { IntelliViewModel }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete_icon),
+                        contentDescription = "delete_device",
+                        tint = TextWhite,
+                        modifier = Modifier.padding(horizontal = 5.dp)
+                    )
+                }
+            }
             Image(
                 painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else smarthome.offImage!!.toInt()),
                 contentDescription = if (lampOn) "light_on" else "light_off",
