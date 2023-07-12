@@ -1,7 +1,6 @@
 package com.mom.intelli.service
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -19,11 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
-import java.security.SecureRandom
 import java.time.LocalDate
 import java.util.Base64
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
 
 
 class IntelliService(var context: Context) {
@@ -90,7 +86,7 @@ class IntelliService(var context: Context) {
         }
     }
 
-    suspend fun deleteDevice(devices: List<Device>) {
+    suspend fun deleteCheckOutDevices(devices: List<Device>) {
         return withContext(Dispatchers.IO) {
             devices.forEach{ value ->
                 deviceDao.delete(value)
@@ -186,6 +182,14 @@ class IntelliService(var context: Context) {
         userDao.insertAll(user)
 
         return true
+    }
+
+    fun deleteDevice(device: Device){
+        deviceDao.delete(device)
+    }
+
+    fun deleteSmarthomeDevice(smarthome: Smarthome){
+        smarthomeDao.delete(smarthome)
     }
 
     suspend fun signIn(email: String, password: String, rememberMe: Boolean): Boolean {

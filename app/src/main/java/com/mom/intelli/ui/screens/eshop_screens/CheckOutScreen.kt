@@ -290,7 +290,7 @@ fun MainCheckoutScreen(
                 onClick = {
                     coroutineScope.launch {
                         intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,selectedOption.toString(),intelliViewModel.getCartDevices()))
-                        intelliViewModel.deleteDevice(intelliViewModel.getCartDevices())
+                        intelliViewModel.deleteCheckOutDevices(intelliViewModel.getCartDevices())
                     }
                 }
             ) {

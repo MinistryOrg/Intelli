@@ -1,7 +1,6 @@
 package com.mom.intelli.ui.viewmodels
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -9,14 +8,13 @@ import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.user.User
-import com.mom.intelli.data.weather.WeatherApiResponse
 import com.mom.intelli.data.weather.WeatherData
 import com.mom.intelli.service.IntelliService
 import java.time.LocalDate
 
 class IntelliViewModel : ViewModel() {
     private var intelliService: IntelliService? = null
-    public var user : User ?= null
+    var user : User ?= null
     fun init(context: Context) {
         intelliService = IntelliService(context = context)
     }
@@ -69,9 +67,10 @@ class IntelliViewModel : ViewModel() {
         return intelliService!!.getSmarthome()
     }
 
-    suspend fun deleteDevice(devices : List<Device>){
-        return intelliService!!.deleteDevice(devices)
+    suspend fun deleteCheckOutDevices(devices : List<Device>){
+        return intelliService!!.deleteCheckOutDevices(devices)
     }
+
 
     suspend fun insertReminderToDatabase(reminder: Reminder){
         intelliService!!.insertReminder(reminder)
@@ -109,6 +108,14 @@ class IntelliViewModel : ViewModel() {
     }
     fun openContactsApp() {
         intelliService!!.openContactsApp()
+    }
+
+    fun deleteDevice(device: Device){
+        intelliService!!.deleteDevice(device)
+    }
+
+    fun deleteSmarthomeDevice(smarthome: Smarthome){
+        intelliService!!.deleteSmarthomeDevice(smarthome)
     }
 
     suspend fun signUp (user : User) : Boolean {
