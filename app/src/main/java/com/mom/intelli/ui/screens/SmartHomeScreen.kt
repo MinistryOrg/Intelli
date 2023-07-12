@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -256,7 +257,6 @@ fun DeviceItems(
    smarthome: Smarthome,
    intelliViewModel: IntelliViewModel
 ) {
-    intelliViewModel.deleteSmarthomeDevice(smarthome) // auto valto sto on clicjk
     var lampOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
     Card(
@@ -272,6 +272,21 @@ fun DeviceItems(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IconButton(
+                    onClick = {  }
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.delete_icon),
+                        contentDescription = "delete_device",
+                        tint = TextWhite,
+                        modifier = Modifier.padding(horizontal = 5.dp)
+                    )
+                }
+            }
             Image(
                 painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else smarthome.offImage!!.toInt()),
                 contentDescription = if (lampOn) "light_on" else "light_off",
