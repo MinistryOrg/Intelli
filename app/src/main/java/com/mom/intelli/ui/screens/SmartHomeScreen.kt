@@ -244,6 +244,7 @@ fun MainSmartHomeScreen(
                 smarthome?.let { value ->
                     value.forEach { smarthome ->
                         item { DeviceItems(smarthome = smarthome,intelliViewModel) }
+
                     }
                 }
             })

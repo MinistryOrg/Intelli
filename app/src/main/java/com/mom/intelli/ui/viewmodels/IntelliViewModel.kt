@@ -110,7 +110,7 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.openContactsApp()
     }
 
-    fun deleteDevice(device: Device){
+    suspend fun deleteDevice(device: Device){
         intelliService!!.deleteDevice(device)
     }
 
