@@ -41,6 +41,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -48,13 +49,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.eshop.CheckOut
+import com.mom.intelli.ui.DialogBox
+import com.mom.intelli.ui.DialogBoxThankYou
 import com.mom.intelli.ui.ImgEshopLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.DecorColor
+import com.mom.intelli.ui.theme.DialogCredClr
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -62,6 +68,7 @@ import com.mom.intelli.ui.theme.SelectTabTxtClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextFieldColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,6 +141,9 @@ fun MainCheckoutScreen(
 
     val radioOptions = listOf("Credit Card", "Debit Card", "Paypal")
     var (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+
+    var showEmptyFieldDialog by remember { mutableStateOf(false) }
+    var showThankYouDialog by remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -289,10 +299,18 @@ fun MainCheckoutScreen(
                     .height(60.dp)
                     .width(150.dp),
                 onClick = {
-                    coroutineScope.launch {
-                        intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,selectedOption.toString(),intelliViewModel.getCartDevices()))
-                        intelliViewModel.deleteCheckOutDevices(intelliViewModel.getCartDevices())
+                    if (nameText.text.isEmpty() || emailText.text.isEmpty() || addressText.text.isEmpty() || countryText.text.isEmpty() || selectedOption.isEmpty()){
+                        showEmptyFieldDialog = true
+                    }else{
+                        coroutineScope.launch {
+                            intelliViewModel.insertCheckOut(CheckOut(0,nameText.text,addressText.text,countryText.text,selectedOption.toString(),intelliViewModel.getCartDevices()))
+                            intelliViewModel.deleteCheckOutDevices(intelliViewModel.getCartDevices())
+
+                            showThankYouDialog = true
+                        }
+
                     }
+
                 }
             ) {
                 Text(
@@ -303,5 +321,38 @@ fun MainCheckoutScreen(
                 )
             }
         }
+        if(showEmptyFieldDialog){
+            Dialog(
+                onDismissRequest = { showEmptyFieldDialog = false },
+                properties = DialogProperties(dismissOnClickOutside = true)
+            ) {
+                DialogBox(
+                    "You need to fill all the fields!",
+                    "OK",
+                    DialogCredClr,
+                    FloatingCartClr,
+                    onCloseWindow = { showEmptyFieldDialog = false}
+                )
+
+            }
+        }
+
+        if(showThankYouDialog){
+            Dialog(
+                onDismissRequest = { showThankYouDialog = false },
+                properties = DialogProperties(dismissOnClickOutside = true)
+            ) {
+                DialogBoxThankYou(
+                    navController,
+                    "Thank you for your order!",
+                    "OK",
+                    DialogCredClr,
+                    FloatingCartClr,
+                    onCloseWindow = { showThankYouDialog = false}
+                )
+
+            }
+        }
+
     }
 }

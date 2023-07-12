@@ -42,8 +42,8 @@ val SendEmailBtnClr = Color(0xFF023C91)
 val CancelBtnClr = Color(0xFFBE3333)
 
 //Colors For Maps
-val LightTrafficClr = Color(0xFF136D2D)
-val HeavyTrafficClr = Color(0xFF8B0C17)
+val LightTrafficClr = Color(0xFF499951)
+val HeavyTrafficClr = Color(0xFFC4424D)
 
 //Colors For News And Sports
 val DividerClr = Color(0xB5FFFFFF)

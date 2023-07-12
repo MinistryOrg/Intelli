@@ -38,6 +38,7 @@ import com.mom.intelli.ui.screens.NewsWidget
 import com.mom.intelli.ui.screens.OtherAppWidget
 import com.mom.intelli.ui.screens.SearchInternetWidget
 import com.mom.intelli.ui.screens.SmartHomeWidget
+import com.mom.intelli.ui.screens.TrafficWidget
 import com.mom.intelli.ui.screens.WeatherWidget
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.FooterText
@@ -140,6 +141,7 @@ fun MainList(
             SearchInternetWidget(paddingValues = vrtpadding, intelliViewModel)
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
+            TrafficWidget(paddingValues=vrtpadding)
             NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
             EshopWidget(paddingValues = vrtpadding, navController = navController,intelliViewModel)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
