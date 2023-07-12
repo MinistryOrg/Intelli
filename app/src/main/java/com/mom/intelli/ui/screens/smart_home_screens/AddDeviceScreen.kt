@@ -244,7 +244,7 @@ fun MainAddDeviceScreen(
                     .height(60.dp),
                 onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
 
-                    if(nameText.toString().isNullOrEmpty()){
+                    if(nameText.toString().isNotBlank()){
                         val selectedOnImage = when {
                             lightSelected -> R.drawable.light_bulb_on
                             tvSelected -> R.drawable.tv_on

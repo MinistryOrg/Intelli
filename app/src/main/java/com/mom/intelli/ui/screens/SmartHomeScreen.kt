@@ -36,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.data.eshop.CheckOut
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.ImgSmartHomeLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
@@ -62,6 +64,7 @@ import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.theme.ToggleOffClr
 import com.mom.intelli.ui.theme.ToggleOnClr
 import com.mom.intelli.util.Screen
+import kotlinx.coroutines.launch
 
 @Composable
 fun SmartHomeWidget(
@@ -110,7 +113,7 @@ fun SmartHomeWidget(
                         modifier = Modifier.padding(start = 30.dp)
                     )
                 }
-                Box(modifier = Modifier.align(Alignment.TopEnd)){
+                Box(modifier = Modifier.align(Alignment.TopEnd)) {
                     Icon(
                         painter = painterResource(id = R.drawable.arrow_right_icon),
                         contentDescription = "go_to_app_icon",
@@ -177,7 +180,7 @@ fun SmartHomeScreen(
                     .background(FloatingAddDeviceClr, shape = RoundedCornerShape(30.dp))
                     .padding(10.dp)
                     .clickable { navController.navigate(route = Screen.SmartHomeAddDevice.route) }
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "cart",
@@ -192,7 +195,7 @@ fun SmartHomeScreen(
                     .background(MainBackgroundColor)
                     .fillMaxSize()
                     .padding(top = 70.dp)
-            ){
+            ) {
                 MainSmartHomeScreen(navController, intelliViewModel)
             }
         }
@@ -205,6 +208,7 @@ fun MainSmartHomeScreen(
     navController: NavController,
     intelliViewModel: IntelliViewModel
 ) {
+
     var smarthome by remember {
         mutableStateOf<List<Smarthome>?>(null)
     }
@@ -243,8 +247,7 @@ fun MainSmartHomeScreen(
             content = {
                 smarthome?.let { value ->
                     value.forEach { smarthome ->
-                        item { DeviceItems(smarthome = smarthome,intelliViewModel) }
-
+                        item { DeviceItems(smarthome = smarthome, intelliViewModel) }
                     }
                 }
             })
@@ -255,11 +258,13 @@ fun MainSmartHomeScreen(
 
 @Composable
 fun DeviceItems(
-   smarthome: Smarthome,
-   intelliViewModel: IntelliViewModel
+    smarthome: Smarthome,
+    intelliViewModel: IntelliViewModel
 ) {
-    var lampOn by remember { mutableStateOf(true) }
+    var smarthomeOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+
     Card(
         modifier = Modifier
             .background(DeviceItemClr, shape = RoundedCornerShape(10.dp))
@@ -278,7 +283,11 @@ fun DeviceItems(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = {  }
+                    onClick = {
+                        coroutineScope.launch {
+                            intelliViewModel.deleteSmarthomeDevice(smarthome)
+                        }
+                    }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.delete_icon),
@@ -289,16 +298,16 @@ fun DeviceItems(
                 }
             }
             Image(
-                painter = painterResource(id = if (lampOn) smarthome.image!!.toInt() else smarthome.offImage!!.toInt()),
-                contentDescription = if (lampOn) "light_on" else "light_off",
+                painter = painterResource(id = if (smarthomeOn) smarthome.image!!.toInt() else smarthome.offImage!!.toInt()),
+                contentDescription = if (smarthomeOn) "light_on" else "light_off",
                 modifier = Modifier.height(100.dp)
             )
             Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
 
             Switch(
                 modifier = Modifier.semantics { contentDescription = "Demo" },
-                checked = lampOn,
-                onCheckedChange = { lampOn = it },
+                checked = smarthomeOn,
+                onCheckedChange = { smarthomeOn = it },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = CircleToggleClr,
                     uncheckedThumbColor = CircleToggleClr,

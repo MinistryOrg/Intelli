@@ -185,11 +185,17 @@ class IntelliService(var context: Context) {
     }
 
     suspend fun deleteDevice(device: Device){
-        deviceDao.delete(device)
+        return withContext(Dispatchers.IO) {
+            deviceDao.delete(device)
+        }
+
     }
 
     suspend fun deleteSmarthomeDevice(smarthome: Smarthome){
-        smarthomeDao.delete(smarthome)
+        return withContext(Dispatchers.IO) {
+            smarthomeDao.delete(smarthome)
+        }
+
     }
 
     suspend fun signIn(email: String, password: String, rememberMe: Boolean): Boolean {
