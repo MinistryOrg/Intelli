@@ -15,6 +15,7 @@ import java.time.LocalDate
 class IntelliViewModel : ViewModel() {
     private var intelliService: IntelliService? = null
     var user : User ?= null
+
     fun init(context: Context) {
         intelliService = IntelliService(context = context)
     }
