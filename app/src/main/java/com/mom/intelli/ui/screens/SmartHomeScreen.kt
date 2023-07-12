@@ -243,7 +243,7 @@ fun MainSmartHomeScreen(
             content = {
                 smarthome?.let { value ->
                     value.forEach { smarthome ->
-                        item { DeviceItems(smarthome = smarthome) }
+                        item { DeviceItems(smarthome = smarthome, intelliViewModel) }
                     }
                 }
             })
@@ -254,7 +254,8 @@ fun MainSmartHomeScreen(
 
 @Composable
 fun DeviceItems(
-   smarthome: Smarthome
+   smarthome: Smarthome,
+   intelliViewModel: IntelliViewModel
 ) {
     var lampOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
@@ -275,7 +276,7 @@ fun DeviceItems(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 IconButton(
-                    onClick = { IntelliViewModel }
+                    onClick = { intelliViewModel.deleteSmarthomeDevice(smarthome) }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.delete_icon),
