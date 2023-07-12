@@ -62,6 +62,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.calendar.Reminder
+import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.viewmodels.CalendarViewModel
 import com.mom.intelli.ui.ImgCalendarLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
@@ -269,6 +270,14 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
             .fillMaxWidth()
     ) {
 
+        val onReminder: (Reminder) -> Unit = { rem ->
+            // Implement the logic to remove the deleted device from the screen
+            // This could involve updating the state or re-fetching the updated device list
+            // For example:
+            reminders = reminders?.filter { it != rem }
+        }
+
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -370,7 +379,7 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
                     navController,
                     intelliViewModel,
                     showAddReminderDialog,
-                    onCloseWindow = { showAddReminderDialog = false }
+                    onCloseWindow = { showAddReminderDialog = false },
                 )
             }
         }
@@ -498,7 +507,7 @@ fun ReminderList(reminders : List<Reminder>) {
         navController: NavController,
         intelliViewModel: IntelliViewModel,
         showAddReminderDialog: Boolean,
-        onCloseWindow: () -> Unit // Callback function to close the window
+        onCloseWindow: () -> Unit
     ) {
         var title by remember { mutableStateOf("") }
         var description by remember { mutableStateOf("") }
