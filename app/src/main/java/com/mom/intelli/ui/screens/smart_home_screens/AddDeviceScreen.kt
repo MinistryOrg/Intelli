@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.screens.smart_home_screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,12 +47,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.smarthome.Smarthome
+import com.mom.intelli.ui.DialogBox
 import com.mom.intelli.ui.ImgSmartHomeLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.DeviceItemClr
+import com.mom.intelli.ui.theme.DialogCredClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextColor
@@ -115,9 +120,8 @@ fun AddDeviceScreen(
     )
 }
 
-//TODO prospathisa na to kanw clickable gia na kserei ti epilexei alla nomizw exw vlakeies kai tha prepei na to doume mazi auto pws tha ginei na epilegei thn swsth epilogh
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainAddDeviceScreen(
     navController: NavController,
@@ -127,8 +131,7 @@ fun MainAddDeviceScreen(
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
 
-    var selected by remember{ mutableStateOf(false)} //todo gia selected device
-    var selectedImage by remember{ mutableStateOf(R.drawable.light_bulb_on)}
+    var showEmptyErrorDialog by remember { mutableStateOf(false)}
 
     var lightSelected by remember { mutableStateOf(true) }
     var tvSelected by remember { mutableStateOf(false) }
@@ -192,7 +195,7 @@ fun MainAddDeviceScreen(
                 3 -> {
                     Cardslider(
                         painter = painterResource(id = R.drawable.web_camera_on),
-                        title = "Web camee",
+                        title = "Web cam",
                         onClick = {
                             lightSelected = false
                             tvSelected = false
@@ -240,26 +243,33 @@ fun MainAddDeviceScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
-                    val selectedOnImage = when {
-                        lightSelected -> R.drawable.light_bulb_on
-                        tvSelected -> R.drawable.tv_on
-                        speakerSelected -> R.drawable.speaker_on
-                        webCameraSelected -> R.drawable.web_camera_on
-                        else -> R.drawable.light_bulb_on
-                    }
 
-                    val selectedOffImage = when {
-                        lightSelected -> R.drawable.light_bulb_off
-                        tvSelected -> R.drawable.tv_off
-                        speakerSelected -> R.drawable.speaker_off
-                        webCameraSelected -> R.drawable.web_camera_off
-                        else -> R.drawable.light_bulb_off
-                    }
+                    if(nameText.toString().isNullOrEmpty()){
+                        val selectedOnImage = when {
+                            lightSelected -> R.drawable.light_bulb_on
+                            tvSelected -> R.drawable.tv_on
+                            speakerSelected -> R.drawable.speaker_on
+                            webCameraSelected -> R.drawable.web_camera_on
+                            else -> R.drawable.light_bulb_on
+                        }
 
-                    coroutineScope.launch {
-                        intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedOnImage, selectedOffImage))
+                        val selectedOffImage = when {
+                            lightSelected -> R.drawable.light_bulb_off
+                            tvSelected -> R.drawable.tv_off
+                            speakerSelected -> R.drawable.speaker_off
+                            webCameraSelected -> R.drawable.web_camera_off
+                            else -> R.drawable.light_bulb_off
+                        }
+
+                        coroutineScope.launch {
+                            intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedOnImage, selectedOffImage))
+                        }
+
+                        navController.popBackStack()
                     }
-                    /*todo*/
+                    else{
+                        showEmptyErrorDialog = true
+                    }
                 }
             ) {
                 Text(
@@ -267,6 +277,21 @@ fun MainAddDeviceScreen(
                     color = TextWhite,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
+                )
+            }
+        }
+
+        if(showEmptyErrorDialog){
+            Dialog(
+                onDismissRequest = {showEmptyErrorDialog = false },
+                properties = DialogProperties(dismissOnClickOutside = true)
+            ) {
+                DialogBox(
+                    textTitle = "Please fill the TextField.",
+                    textBtn = "Try Again",
+                    DialogClr = DialogCredClr,
+                    DialogBtnClr = DeviceItemClr,
+                    onCloseWindow = {showEmptyErrorDialog = false}
                 )
             }
         }
@@ -300,9 +325,9 @@ fun Cardslider(
                 onClick()
             }) {
                 if (selected) {
-                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
+                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null, tint = TextWhite)
                 } else { // den vrika eikona p na kanei otan vreis nai na ginete prasion
-                   // Icon(imageVector = Icons.Default.Circle, contentDescription = null)
+                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = null)
                 }
             }
         }

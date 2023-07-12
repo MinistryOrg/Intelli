@@ -114,7 +114,7 @@ class IntelliViewModel : ViewModel() {
         intelliService!!.deleteDevice(device)
     }
 
-    fun deleteSmarthomeDevice(smarthome: Smarthome){
+    suspend fun deleteSmarthomeDevice(smarthome: Smarthome){
         intelliService!!.deleteSmarthomeDevice(smarthome)
     }
 

@@ -184,11 +184,11 @@ class IntelliService(var context: Context) {
         return true
     }
 
-    fun deleteDevice(device: Device){
+    suspend fun deleteDevice(device: Device){
         deviceDao.delete(device)
     }
 
-    fun deleteSmarthomeDevice(smarthome: Smarthome){
+    suspend fun deleteSmarthomeDevice(smarthome: Smarthome){
         smarthomeDao.delete(smarthome)
     }
 

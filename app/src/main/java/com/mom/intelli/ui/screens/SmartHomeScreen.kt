@@ -242,7 +242,7 @@ fun MainSmartHomeScreen(
             content = {
                 smarthome?.let { value ->
                     value.forEach { smarthome ->
-                        item { DeviceItems(smarthome = smarthome) }
+                        item { DeviceItems(smarthome = smarthome,intelliViewModel) }
                     }
                 }
             })
@@ -253,8 +253,10 @@ fun MainSmartHomeScreen(
 
 @Composable
 fun DeviceItems(
-   smarthome: Smarthome
+   smarthome: Smarthome,
+   intelliViewModel: IntelliViewModel
 ) {
+    intelliViewModel.deleteSmarthomeDevice(smarthome) // auto valto sto on clicjk
     var lampOn by remember { mutableStateOf(true) }
     val checked = remember { mutableStateOf(false) }
     Card(
@@ -264,29 +266,8 @@ fun DeviceItems(
         colors = CardDefaults.cardColors(
             containerColor = DeviceItemClr
         )
+
     ) {
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Image(painter = painterResource(id = smarthome.image!!.toInt()), contentDescription = "light_on", modifier = Modifier.height(100.dp))
-//            Text(text = smarthome.name.toString(), fontWeight = FontWeight.Bold, color = TextWhite)
-//
-//            /*todo edw einai to toggle button kai tha prepei na vroume pws otan pataei gia off na ginetai h eikona off kai otan on na efanizetai h eikona on*/
-//            Switch(
-//                modifier = Modifier.semantics { contentDescription = "Demo" },
-//                checked = checked.value,
-//                onCheckedChange = { checked.value = it },
-//                colors = SwitchDefaults.colors(
-//                    checkedThumbColor = CircleToggleClr,
-//                    uncheckedThumbColor = CircleToggleClr,
-//                    uncheckedBorderColor = ToggleOffClr,
-//                    checkedTrackColor = ToggleOnClr,
-//                    uncheckedTrackColor = ToggleOffClr,
-//
-//                )
-//            )
-//        }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
