@@ -38,11 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.mom.intelli.ui.components.ImgLogo
 import com.mom.intelli.ui.theme.BoardingBtnClr
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.viewmodels.OnBoardingViewModel
-import com.mom.intelli.util.HOME_GRAPH_ROUTE
 import com.mom.intelli.util.OnBoardingPage
 import com.mom.intelli.util.Screen
 

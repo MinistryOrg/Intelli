@@ -47,14 +47,13 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.ui.DialogBox
-import com.mom.intelli.ui.ImgEmailLogo
+import com.mom.intelli.ui.components.DialogBox
+import com.mom.intelli.ui.components.ImgEmailLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CancelBtnClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DecorColor
 import com.mom.intelli.ui.theme.DialogCredClr
-import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SendEmailBtnClr
@@ -211,7 +210,7 @@ fun EmailScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

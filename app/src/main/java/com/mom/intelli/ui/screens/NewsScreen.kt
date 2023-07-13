@@ -48,7 +48,7 @@ import coil.compose.AsyncImage
 import com.mom.intelli.R
 import com.mom.intelli.data.news.NewsApiResponse
 import com.mom.intelli.data.news.Results
-import com.mom.intelli.ui.ImgnNewsLogo
+import com.mom.intelli.ui.components.ImgnNewsLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.IconsColor
@@ -154,7 +154,7 @@ fun NewsScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

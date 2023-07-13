@@ -48,11 +48,10 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.eshop.Device
-import com.mom.intelli.ui.DialogBox
-import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.components.DialogBox
+import com.mom.intelli.ui.components.ImgEshopLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
-import com.mom.intelli.ui.theme.DialogCredBtnClr
 import com.mom.intelli.ui.theme.DialogCredClr
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
@@ -92,7 +91,7 @@ fun CartScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

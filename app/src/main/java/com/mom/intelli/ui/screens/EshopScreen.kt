@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.components.ImgEshopLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.screens.eshop_screens.OrdersScreen
 import com.mom.intelli.ui.screens.eshop_screens.StoreScreen
@@ -150,7 +150,7 @@ fun EshopScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

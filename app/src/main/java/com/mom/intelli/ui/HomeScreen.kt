@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.mom.intelli.ui.components.ImgLogo
 import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.screens.EmailWidget
 import com.mom.intelli.ui.screens.EshopWidget

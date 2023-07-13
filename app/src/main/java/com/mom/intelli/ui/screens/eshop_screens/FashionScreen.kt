@@ -24,7 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.components.ImgEshopLogo
 import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
@@ -61,7 +61,7 @@ fun FashionScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

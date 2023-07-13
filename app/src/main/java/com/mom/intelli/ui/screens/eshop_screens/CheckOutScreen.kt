@@ -41,7 +41,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -54,9 +53,9 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.eshop.CheckOut
-import com.mom.intelli.ui.DialogBox
-import com.mom.intelli.ui.DialogBoxThankYou
-import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.ui.components.DialogBox
+import com.mom.intelli.ui.components.DialogBoxThankYou
+import com.mom.intelli.ui.components.ImgEshopLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.DecorColor
@@ -102,7 +101,7 @@ fun CheckOutScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

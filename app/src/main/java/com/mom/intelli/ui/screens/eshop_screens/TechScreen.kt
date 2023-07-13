@@ -38,9 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mom.intelli.R
-import com.mom.intelli.data.IphoneProduct
-import com.mom.intelli.data.TechProducts
-import com.mom.intelli.ui.ImgEshopLogo
+import com.mom.intelli.data.eshop.IphoneProduct
+import com.mom.intelli.data.eshop.TechProducts
+import com.mom.intelli.ui.components.ImgEshopLogo
 import com.mom.intelli.ui.theme.BorderClr
 import com.mom.intelli.ui.theme.BoxClr
 import com.mom.intelli.ui.theme.FloatingCartClr
@@ -84,7 +84,7 @@ fun TechScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

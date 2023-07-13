@@ -1,7 +1,6 @@
 package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +44,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.ui.components.DialogBox
+import com.mom.intelli.ui.components.ImgLogo
 import com.mom.intelli.ui.theme.CheckedClr
 import com.mom.intelli.ui.theme.DialogCredBtnClr
 import com.mom.intelli.ui.theme.DialogCredClr

@@ -62,9 +62,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.calendar.Reminder
-import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.ui.viewmodels.CalendarViewModel
-import com.mom.intelli.ui.ImgCalendarLogo
+import com.mom.intelli.ui.components.ImgCalendarLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CalTextFieldBorderClr
 import com.mom.intelli.ui.theme.CalendarBoxClr
@@ -216,7 +215,7 @@ fun CalendarScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",

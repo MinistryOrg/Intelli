@@ -1,7 +1,6 @@
 package com.mom.intelli.ui.screens.smart_home_screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,8 +51,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
 import com.mom.intelli.data.smarthome.Smarthome
-import com.mom.intelli.ui.DialogBox
-import com.mom.intelli.ui.ImgSmartHomeLogo
+import com.mom.intelli.ui.components.DialogBox
+import com.mom.intelli.ui.components.ImgSmartHomeLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.DeviceItemClr
 import com.mom.intelli.ui.theme.DialogCredClr
@@ -61,6 +60,7 @@ import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -94,7 +94,7 @@ fun AddDeviceScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Info,
                                 contentDescription = "Online Help",
