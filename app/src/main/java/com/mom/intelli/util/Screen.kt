@@ -14,6 +14,8 @@ sealed class Screen (val route : String) {
 
     object SignUp : Screen("signup_screen")
 
+    object OnlineHelp : Screen("online_help_screen")
+
     object Home : Screen("home_screen")
 
     //CALENDAR SCREEN

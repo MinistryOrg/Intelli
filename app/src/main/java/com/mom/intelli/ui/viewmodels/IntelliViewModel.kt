@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.viewmodels
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -126,8 +127,10 @@ class IntelliViewModel : ViewModel() {
     suspend fun signIn (email : String, password : String, rememberMe : Boolean) : Boolean{
         user = intelliService!!.signIn(email,password,rememberMe)
         if (user != null){
+
             return true
         }
+
         return false
     }
 

@@ -2,6 +2,7 @@ package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -73,7 +74,7 @@ fun HomeScreen(
                         colors = TopAppBarDefaults
                             .centerAlignedTopAppBarColors(MainBackgroundColor),
                         actions = {
-                            IconButton(onClick = {  navController.navigate(route = Screen.OnBoarding.route) }) {
+                            IconButton(onClick = {  navController.navigate(route = Screen.OnlineHelp.route) }) {
                                 Icon(
                                     imageVector = Icons.Default.Info,
                                     contentDescription = "Online Help",
@@ -124,12 +125,16 @@ fun MainList(
                 .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = if(currentTime > startMorningTime && currentTime < endMorningTime )
-                        { "Good morning, " + intelliViewModel.user!!.fullname}
-                        else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
-                        {"Good afternoon, " + intelliViewModel.user!!.fullname}
-                        else
-                        {"Good evening, Name" + intelliViewModel.user!!.fullname},
+                text = if(intelliViewModel.user != null){
+                    if(currentTime > startMorningTime && currentTime < endMorningTime )
+                    { "Good morning, " + intelliViewModel.user!!.fullname}
+                    else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
+                    {"Good afternoon, " + intelliViewModel.user!!.fullname}
+                    else
+                    {"Good evening, Name" + intelliViewModel.user!!.fullname}
+                } else {
+                         "Error!"
+                },
                 color = TextWhite,
                 fontFamily = CustomFont,
                 fontWeight = FontWeight.ExtraBold,
@@ -155,7 +160,8 @@ fun MainList(
                     color = FooterText,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.clickable { navController.navigate(route = Screen.OnBoarding.route) }
                 )
             }
         }
