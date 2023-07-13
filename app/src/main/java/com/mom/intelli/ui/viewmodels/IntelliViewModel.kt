@@ -124,7 +124,11 @@ class IntelliViewModel : ViewModel() {
     }
 
     suspend fun signIn (email : String, password : String, rememberMe : Boolean) : Boolean{
-        return intelliService!!.signIn(email,password,rememberMe)
+        user = intelliService!!.signIn(email,password,rememberMe)
+        if (user != null){
+            return true
+        }
+        return false
     }
 
 }

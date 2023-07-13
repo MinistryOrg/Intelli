@@ -125,11 +125,11 @@ fun MainList(
         ) {
             Text(
                 text = if(currentTime > startMorningTime && currentTime < endMorningTime )
-                        { "Good morning, " }
+                        { "Good morning, " + intelliViewModel.user!!.fullname}
                         else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
-                        {"Good afternoon, Name"}
+                        {"Good afternoon, " + intelliViewModel.user!!.fullname}
                         else
-                        {"Good evening, Name"},
+                        {"Good evening, Name" + intelliViewModel.user!!.fullname},
                 color = TextWhite,
                 fontFamily = CustomFont,
                 fontWeight = FontWeight.ExtraBold,

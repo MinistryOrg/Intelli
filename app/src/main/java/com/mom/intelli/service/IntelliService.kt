@@ -197,15 +197,15 @@ class IntelliService(var context: Context) {
 
     }
 
-    suspend fun signIn(email: String, password: String, rememberMe: Boolean): Boolean {
+    suspend fun signIn(email: String, password: String, rememberMe: Boolean): User? {
         val userList = userDao.getAll()
         for (i in userList) {
             val correctPassword = checkPassword(password, i.password!!)
             if (email == i.email && correctPassword) {
-                return true
+                return i
             }
         }
-        return false
+        return null
     }
 
 }
