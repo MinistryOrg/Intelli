@@ -1,7 +1,9 @@
 package com.mom.intelli.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +24,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +46,7 @@ import com.mom.intelli.ui.screens.NewsWidget
 import com.mom.intelli.ui.screens.OtherAppWidget
 import com.mom.intelli.ui.screens.SearchInternetWidget
 import com.mom.intelli.ui.screens.SmartHomeWidget
+import com.mom.intelli.ui.screens.TrafficWidget
 import com.mom.intelli.ui.screens.WeatherWidget
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.FooterText
@@ -46,6 +55,9 @@ import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.TextWhite
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.util.Screen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atTime
@@ -72,7 +84,7 @@ fun HomeScreen(
                         colors = TopAppBarDefaults
                             .centerAlignedTopAppBarColors(MainBackgroundColor),
                         actions = {
-                            IconButton(onClick = {  navController.navigate(route = Screen.OnBoarding.route) }) {
+                            IconButton(onClick = { navController.navigate(route = Screen.OnlineHelp.route) }) {
                                 Icon(
                                     imageVector = Icons.Default.Info,
                                     contentDescription = "Online Help",
@@ -96,7 +108,6 @@ fun HomeScreen(
 }
 
 
-
 @SuppressLint("RememberReturnType")
 @Composable
 fun MainList(
@@ -108,8 +119,11 @@ fun MainList(
     val currentTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
     val startMorningTime = currentTime.date.atTime(5, 0)
     val endMorningTime = currentTime.date.atTime(12, 0)
-    val startAfternoonTime = currentTime.date.atTime(12,0)
-    val endAfternoonTime = currentTime.date.atTime(18,0)
+    val startAfternoonTime = currentTime.date.atTime(12, 0)
+    val endAfternoonTime = currentTime.date.atTime(18, 0)
+    var rememberMeUserExist by remember { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier
@@ -122,13 +136,27 @@ fun MainList(
                 .background(MainBackgroundColor)
                 .verticalScroll(rememberScrollState())
         ) {
+            LaunchedEffect(Unit){
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        rememberMeUserExist = intelliViewModel.rememberMeUserExist()
+                        Log.d("test", "E? $rememberMeUserExist")
+                    }
+                }
+            }
+
             Text(
-                text = if(currentTime > startMorningTime && currentTime < endMorningTime )
-                        { "Good morning, " + intelliViewModel.user!!.fullname}
-                        else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
-                        {"Good afternoon, " + intelliViewModel.user!!.fullname}
-                        else
-                        {"Good evening, Name" + intelliViewModel.user!!.fullname},
+                text = if (rememberMeUserExist || intelliViewModel.user != null) {
+                    if (currentTime > startMorningTime && currentTime < endMorningTime) {
+                        "Good morning, " + intelliViewModel.user!!.fullname
+                    } else if (currentTime >= startAfternoonTime && currentTime < endAfternoonTime) {
+                        "Good afternoon, " + intelliViewModel.user!!.fullname
+                    } else {
+                        "Good evening, Name" + intelliViewModel.user!!.fullname
+                    }
+                } else {
+                    "Error!"
+                },
                 color = TextWhite,
                 fontFamily = CustomFont,
                 fontWeight = FontWeight.ExtraBold,
@@ -136,24 +164,31 @@ fun MainList(
             )
 
             CalendarWidget(paddingValues = vrtpadding, navController = navController)
-            WeatherWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
+            WeatherWidget(
+                paddingValues = vrtpadding,
+                navController = navController,
+                intelliViewModel
+            )
             SearchInternetWidget(paddingValues = vrtpadding, intelliViewModel)
             EmailWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
-            MapsWidget(paddingValues = vrtpadding, navController = navController ,intelliViewModel)
-            NewsWidget(paddingValues = vrtpadding, navController= navController, intelliViewModel)
-            EshopWidget(paddingValues = vrtpadding, navController = navController,intelliViewModel)
+            MapsWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
+            TrafficWidget(paddingValues = vrtpadding)
+            NewsWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
+            EshopWidget(paddingValues = vrtpadding, navController = navController, intelliViewModel)
             SmartHomeWidget(paddingValues = vrtpadding, navController = navController)
             OtherAppWidget(paddingValues = vrtpadding, intelliViewModel)
 
             Spacer(modifier = Modifier.height(20.dp))
-            Column(modifier = Modifier.align(Alignment.CenterHorizontally)
+            Column(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
                     text = "Copyright of Ministry Org 2023-2024",
                     color = FooterText,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.clickable { navController.navigate(route = Screen.OnBoarding.route) }
                 )
             }
         }

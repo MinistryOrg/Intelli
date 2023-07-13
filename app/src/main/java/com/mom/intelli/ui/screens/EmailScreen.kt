@@ -43,13 +43,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.mom.intelli.R
+import com.mom.intelli.ui.DialogBox
 import com.mom.intelli.ui.ImgEmailLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CancelBtnClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DecorColor
+import com.mom.intelli.ui.theme.DialogCredClr
+import com.mom.intelli.ui.theme.FloatingCartClr
 import com.mom.intelli.ui.theme.IconsColor
 import com.mom.intelli.ui.theme.MainBackgroundColor
 import com.mom.intelli.ui.theme.SendEmailBtnClr
@@ -238,6 +243,9 @@ fun EmainMainScreen(
     var emailText by remember{ mutableStateOf (TextFieldValue("") ) }
     var subjText by remember{ mutableStateOf (TextFieldValue("") ) }
     var text by remember{ mutableStateOf (TextFieldValue("") ) }
+
+    var showEmptyFieldDialog by remember { mutableStateOf(false)}
+
     Box(
         modifier = Modifier
             .background(MainBackgroundColor)
@@ -337,7 +345,11 @@ fun EmainMainScreen(
                         .width(150.dp)
                     ,
                     onClick = {
-                        intelliViewModel.sendEmail(emailAddress = emailText.text, emailSubject = subjText.text, emailBody = text.text )
+                        if(emailText.text.isEmpty()){
+                            showEmptyFieldDialog = true
+                        }else{
+                            intelliViewModel.sendEmail(emailAddress = emailText.text, emailSubject = subjText.text, emailBody = text.text )
+                        }
                     }
                 ) {
                     Text(
@@ -355,6 +367,22 @@ fun EmainMainScreen(
                 }
             }
         }
+        if(showEmptyFieldDialog){
+            Dialog(
+                onDismissRequest = { showEmptyFieldDialog = false },
+                properties = DialogProperties(dismissOnClickOutside = true)
+            ) {
+                DialogBox(
+                    "You need to fill the email address you want to send",
+                    "Try Again",
+                    DialogCredClr,
+                    SendEmailBtnClr,
+                    onCloseWindow = { showEmptyFieldDialog = false}
+                )
+
+            }
+        }
+
     }
 
 }

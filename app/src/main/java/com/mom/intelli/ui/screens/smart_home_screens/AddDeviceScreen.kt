@@ -243,8 +243,10 @@ fun MainAddDeviceScreen(
                 modifier = Modifier
                     .height(60.dp),
                 onClick = { // auto prepei na paei stin sinartisi apo kato i na mpoun ola se ena
-
-                    if(nameText.toString().isNotBlank()){
+                    if(nameText.text.isEmpty()){
+                        showEmptyErrorDialog = true
+                    }
+                    else{
                         val selectedOnImage = when {
                             lightSelected -> R.drawable.light_bulb_on
                             tvSelected -> R.drawable.tv_on
@@ -260,15 +262,10 @@ fun MainAddDeviceScreen(
                             webCameraSelected -> R.drawable.web_camera_off
                             else -> R.drawable.light_bulb_off
                         }
-
                         coroutineScope.launch {
                             intelliViewModel.insertSmarthomeToDatabase(Smarthome(id = 0,nameText.text,selectedOnImage, selectedOffImage))
                         }
-
                         navController.popBackStack()
-                    }
-                    else{
-                        showEmptyErrorDialog = true
                     }
                 }
             ) {

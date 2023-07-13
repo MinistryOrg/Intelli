@@ -18,7 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.util.Screen
 
 
 @Composable
@@ -28,7 +30,7 @@ fun DialogBox(
     DialogClr: Color,
     DialogBtnClr: Color,
     onCloseWindow: () -> Unit
-) {
+){
     Column(
         modifier = Modifier
             .padding(10.dp)
@@ -56,3 +58,45 @@ fun DialogBox(
         }
     }
 }
+
+
+@Composable
+fun DialogBoxThankYou(
+    navController: NavController,
+    textTitle: String,
+    textBtn: String,
+    DialogClr: Color,
+    DialogBtnClr: Color,
+    onCloseWindow: () -> Unit
+){
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .background(DialogClr)
+            .fillMaxWidth()
+            .padding(vertical = 25.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(
+            text = textTitle,
+            color = TextWhite,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            shape = RoundedCornerShape(13.dp),
+            onClick = {
+                onCloseWindow()
+                navController.navigate(Screen.Eshop.route)
+            },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = DialogBtnClr
+            )
+        ) {
+            Text(textBtn)
+        }
+    }
+}
+

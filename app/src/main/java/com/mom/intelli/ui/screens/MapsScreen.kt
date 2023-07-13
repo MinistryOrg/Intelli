@@ -79,60 +79,6 @@ fun MapsWidget(
                     )
                 }
 
-                Row(
-                    modifier = Modifier
-                        .padding(top = 30.dp, end=5.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Column() {
-                        Icon(
-                            painter = painterResource(id = R.drawable.car_icon),
-                            contentDescription = "car_icon",
-                            tint = LightTrafficClr,
-                            modifier = Modifier
-                                .size(44.dp)
-                                .padding(end = 24.dp),
-                        )
-                    }
-                    Column() {
-                        Text(
-                            text = "Peiraias - Glyfada | 7'",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = TextWhite
-                        )
-                    }
-                }
-                Row(
-                    modifier = Modifier
-                        .padding(top = 70.dp, end=5.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Column() {
-                        Icon(
-                            painter = painterResource(id = R.drawable.car_icon),
-                            contentDescription = "car_icon",
-                            tint = HeavyTrafficClr,
-                            modifier = Modifier
-                                .size(30.dp)
-                                .padding(end = 10.dp),
-                        )
-                    }
-                   Column() {
-                       Text(
-                           text = "Syntagma - Omonia | 25'",
-                           fontSize = 10.sp,
-                           fontWeight = FontWeight.Bold,
-                           color = TextWhite
-                       )
-                   }
-                }
                 Box(
                     modifier = Modifier
                         .align(Alignment.BottomEnd)

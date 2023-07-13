@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.OnBoardingScreen
+import com.mom.intelli.ui.OnlineHelpScreen
 import com.mom.intelli.ui.SignInScreen
 import com.mom.intelli.ui.SignUpScreen
 import com.mom.intelli.util.ROOT_GRAPH_ROUTE
@@ -31,6 +32,13 @@ fun SetupNavGraph(
         ){
             OnBoardingScreen(navController = navController)
         }
+
+        composable(
+            route = Screen.OnlineHelp.route
+        ){
+            OnlineHelpScreen(navController = navController)
+        }
+
         composable(
             route = Screen.SignIn.route
         ){

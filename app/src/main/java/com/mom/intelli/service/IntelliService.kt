@@ -1,6 +1,7 @@
 package com.mom.intelli.service
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -204,6 +205,7 @@ class IntelliService(var context: Context) {
             val correctPassword = checkPassword(password, i.password!!)
             if (email == i.email && correctPassword) {
                 i.rememberMe = rememberMe
+                Log.d("test", "add the remember me value " + i.rememberMe.toString())
                 userDao.updateUser(i)
                 return i
             }
@@ -212,10 +214,11 @@ class IntelliService(var context: Context) {
     }
 
     // bad practice
-    fun rememberMeUserExist(): User? {
+    suspend fun rememberMeUserExist(): User? {
         val userList = userDao.getAll()
         for (i in userList) {
             if (i.rememberMe) {
+                Log.d("test", "User with remember me " + i.fullname)
                 return i
             }
         }
