@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
                 val screen by splashViewModel.startDestination
                 navController = rememberNavController()
                 SetupNavGraph(navController = navController, intelliViewModel,this, startDestination = screen)
-
             }
         }
     }

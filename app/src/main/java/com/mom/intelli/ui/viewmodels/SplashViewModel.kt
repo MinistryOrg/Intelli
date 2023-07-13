@@ -16,7 +16,7 @@ import dagger.hilt.android.HiltAndroidApp
 
 
 class SplashViewModel @Inject constructor(
-    private val repository: OnBoardingStoreData
+    private val repository: OnBoardingStoreData,
 ) : ViewModel() {
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
     val isLoading: State<Boolean> = _isLoading

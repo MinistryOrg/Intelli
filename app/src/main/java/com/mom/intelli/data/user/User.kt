@@ -13,7 +13,7 @@ data class User(
     @ColumnInfo(name = "email")    val email    : String?,
     @ColumnInfo(name = "password") var password : String?,
     @ColumnInfo(name = "salt")     var salt     : String?,
-    @ColumnInfo(name="remember_me") val rememberMe : Boolean = false
+    @ColumnInfo(name="remember_me") var rememberMe : Boolean
 ) {
 
 }

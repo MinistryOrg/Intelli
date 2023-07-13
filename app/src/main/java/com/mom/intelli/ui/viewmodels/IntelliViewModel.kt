@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.viewmodels
 
 import android.content.Context
+import androidx.compose.runtime.internal.updateLiveLiteralValue
 import androidx.lifecycle.ViewModel
 import com.mom.intelli.data.calendar.Reminder
 import com.mom.intelli.data.eshop.CheckOut
@@ -130,5 +131,14 @@ class IntelliViewModel : ViewModel() {
         }
         return false
     }
+
+    fun rememberMeUserExist () : Boolean{
+        user = intelliService!!.rememberMeUserExist()
+        if (user != null){
+            return true
+        }
+        return false
+    }
+
 
 }

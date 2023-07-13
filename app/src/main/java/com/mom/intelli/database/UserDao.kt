@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.mom.intelli.data.eshop.Device
 import com.mom.intelli.data.smarthome.Smarthome
 import com.mom.intelli.data.user.User
@@ -18,4 +19,7 @@ interface UserDao {
 
     @Delete
     fun delete(user: User)
+
+    @Update
+    suspend fun updateUser(user: User)
 }

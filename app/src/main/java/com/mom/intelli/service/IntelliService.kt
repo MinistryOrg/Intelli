@@ -23,10 +23,10 @@ import java.util.Base64
 
 
 class IntelliService(var context: Context) {
-    private val intentAppsUtil : IntentAppsUtil = IntentAppsUtil()
-    private val newsUtil : NewsUtil = NewsUtil()
-    private val emailUtil : EmailUtil = EmailUtil()
-    private val weatherUtil : WeatherUtil = WeatherUtil(context)
+    private val intentAppsUtil: IntentAppsUtil = IntentAppsUtil()
+    private val newsUtil: NewsUtil = NewsUtil()
+    private val emailUtil: EmailUtil = EmailUtil()
+    private val weatherUtil: WeatherUtil = WeatherUtil(context)
 
     private val db = Room.databaseBuilder(
         context,
@@ -35,9 +35,9 @@ class IntelliService(var context: Context) {
 
 
     private val deviceDao = db.deviceDao()
-    private val smarthomeDao  = db.smarthomeDao()
+    private val smarthomeDao = db.smarthomeDao()
     private val checkOutDao = db.checkOutDao()
-    private val reminderDao  = db.reminderDao()
+    private val reminderDao = db.reminderDao()
     private val userDao = db.userDao()
 
     fun showEmail() {
@@ -45,7 +45,7 @@ class IntelliService(var context: Context) {
     }
 
     fun sendEmail(emailAddress: String, emailSubject: String, emailBody: String) {
-        emailUtil.sendEmail(context,emailAddress,emailSubject, emailBody)
+        emailUtil.sendEmail(context, emailAddress, emailSubject, emailBody)
     }
 
     fun openMaps() {
@@ -77,10 +77,10 @@ class IntelliService(var context: Context) {
     }
 
     fun openNewsLink(link: String, action: String) {
-        newsUtil.openNewsLink(link,context, action)
+        newsUtil.openNewsLink(link, context, action)
     }
 
-    suspend fun insertDeviceToDatabase(device: Device){
+    suspend fun insertDeviceToDatabase(device: Device) {
         return withContext(Dispatchers.IO) {
             deviceDao.insertAll(device)
         }
@@ -88,71 +88,72 @@ class IntelliService(var context: Context) {
 
     suspend fun deleteCheckOutDevices(devices: List<Device>) {
         return withContext(Dispatchers.IO) {
-            devices.forEach{ value ->
+            devices.forEach { value ->
                 deviceDao.delete(value)
             }
         }
 
     }
 
-    suspend fun getCartDevices() : List<Device>{
+    suspend fun getCartDevices(): List<Device> {
         return withContext(Dispatchers.IO) {
             deviceDao.getAll()
         }
     }
 
-    suspend fun insertSmarthomeToDatabase(smarthome: Smarthome){
+    suspend fun insertSmarthomeToDatabase(smarthome: Smarthome) {
         return withContext(Dispatchers.IO) {
             smarthomeDao.insertAll(smarthome)
         }
     }
 
-    suspend fun getSmarthome() : List<Smarthome>{
+    suspend fun getSmarthome(): List<Smarthome> {
         return withContext(Dispatchers.IO) {
             smarthomeDao.getAll()
         }
     }
 
-    suspend fun insertCheckOut(checkOut : CheckOut){
+    suspend fun insertCheckOut(checkOut: CheckOut) {
         return withContext(Dispatchers.IO) {
             checkOutDao.insertAll(checkOut)
         }
     }
 
-    suspend fun getCheckOut() : List<CheckOut>{
+    suspend fun getCheckOut(): List<CheckOut> {
         return withContext(Dispatchers.IO) {
             checkOutDao.getAll()
         }
     }
 
-    suspend fun insertReminder(reminder: Reminder){
+    suspend fun insertReminder(reminder: Reminder) {
         return withContext(Dispatchers.IO) {
             reminderDao.insertAll(reminder)
         }
     }
 
-    suspend fun deleteReminder(reminder: Reminder){
+    suspend fun deleteReminder(reminder: Reminder) {
         return withContext(Dispatchers.IO) {
             reminderDao.delete(reminder)
         }
     }
 
-    suspend fun getReminders() : List<Reminder>{
+    suspend fun getReminders(): List<Reminder> {
         return withContext(Dispatchers.IO) {
             reminderDao.getAll()
         }
     }
 
-    suspend fun getRemindersByDate(date : LocalDate) : List<Reminder>{
+    suspend fun getRemindersByDate(date: LocalDate): List<Reminder> {
         return withContext(Dispatchers.IO) {
             reminderDao.getByDate(date)
         }
     }
+
     suspend fun getNews(category: String): NewsApiResponse {
-        return newsUtil.getNews(category,context)
+        return newsUtil.getNews(category, context)
     }
 
-    suspend fun getWeather() : WeatherData {
+    suspend fun getWeather(): WeatherData {
         return weatherUtil.getWeather()
     }
 
@@ -164,7 +165,7 @@ class IntelliService(var context: Context) {
     }
 
     // Function to check if a password matches the hashed password
-    private fun checkPassword(enterPassword: String, password : String): Boolean {
+    private fun checkPassword(enterPassword: String, password: String): Boolean {
         val enteredHashedPassword = hashPassword(enterPassword)
         return enteredHashedPassword == password
     }
@@ -184,13 +185,13 @@ class IntelliService(var context: Context) {
         return true
     }
 
-    suspend fun deleteDevice(device: Device){
+    suspend fun deleteDevice(device: Device) {
         return withContext(Dispatchers.IO) {
             deviceDao.delete(device)
         }
     }
 
-    suspend fun deleteSmarthomeDevice(smarthome: Smarthome){
+    suspend fun deleteSmarthomeDevice(smarthome: Smarthome) {
         return withContext(Dispatchers.IO) {
             smarthomeDao.delete(smarthome)
         }
@@ -202,6 +203,19 @@ class IntelliService(var context: Context) {
         for (i in userList) {
             val correctPassword = checkPassword(password, i.password!!)
             if (email == i.email && correctPassword) {
+                i.rememberMe = rememberMe
+                userDao.updateUser(i)
+                return i
+            }
+        }
+        return null
+    }
+
+    // bad practice
+    fun rememberMeUserExist(): User? {
+        val userList = userDao.getAll()
+        for (i in userList) {
+            if (i.rememberMe) {
                 return i
             }
         }
