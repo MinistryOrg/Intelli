@@ -51,6 +51,7 @@ import com.mom.intelli.ui.components.DialogBox
 import com.mom.intelli.ui.components.ImgEmailLogo
 import com.mom.intelli.ui.viewmodels.IntelliViewModel
 import com.mom.intelli.ui.theme.CancelBtnClr
+import com.mom.intelli.ui.theme.ColClr
 import com.mom.intelli.ui.theme.CustomFont
 import com.mom.intelli.ui.theme.DecorColor
 import com.mom.intelli.ui.theme.DialogCredClr
@@ -256,8 +257,11 @@ fun EmainMainScreen(
                 .padding(vertical = 80.dp)
         ){
             Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                modifier = Modifier.padding(horizontal = 40.dp)
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 20.dp)
+                    .background(ColClr, RoundedCornerShape(13.dp))
+                    .padding(horizontal = 20.dp, vertical = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
             ) {
                 //[TEXTFIELD TO ADD THE EMAIL ADDRESS YOU WANT TO SEND]
                 OutlinedTextField(
@@ -274,7 +278,9 @@ fun EmainMainScreen(
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,
                         cursorColor = DecorColor,
-                        unfocusedLabelColor = TextColor
+                        unfocusedLabelColor = TextColor,
+                        focusedContainerColor = MainBackgroundColor,
+                        unfocusedContainerColor = MainBackgroundColor
                     )
                 )
                 //[TEXTFIELD TO ADD THE SUBJECT OF THE EMAIL YOU WANT TO SEND]
@@ -292,7 +298,9 @@ fun EmainMainScreen(
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,
                         cursorColor = DecorColor,
-                        unfocusedLabelColor = TextColor
+                        unfocusedLabelColor = TextColor,
+                        focusedContainerColor = MainBackgroundColor,
+                        unfocusedContainerColor = MainBackgroundColor
                     )
                 )
                 //[TEXTFIELD TO ADD THE CONTEXT OF THE EMAIL YOU WANT TO SEND]
@@ -308,7 +316,9 @@ fun EmainMainScreen(
                         focusedLabelColor = TextColor,
                         focusedSupportingTextColor = TextColor,
                         cursorColor = DecorColor,
-                        unfocusedLabelColor = TextColor
+                        unfocusedLabelColor = TextColor,
+                        focusedContainerColor = MainBackgroundColor,
+                        unfocusedContainerColor = MainBackgroundColor
                     ),
                     singleLine = false,
                     modifier = Modifier

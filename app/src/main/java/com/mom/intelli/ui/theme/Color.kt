@@ -7,7 +7,8 @@ val TextWhite = Color(0xffeeeeee)
 val IconsColor = Color(0xFF9B9B9B)
 val FooterText = Color(0xFF2C2C2C)
 val BoardingBtnClr = Color(0xFF237EC7)
-val ExpCardClr = Color(0xFF2B2A2A)
+
+//Online Help
 val CalendarClr = Color(0xFF5C2FA5)
 val WeatherClr = Color(0xFF2F5EA5)
 val InternetClr = Color(0xFFD4D4D4)
@@ -51,6 +52,7 @@ val TextColor = Color(0xffeeeeee)
 val DecorColor = Color(0xffeeeeee)
 val SendEmailBtnClr = Color(0xFF023C91)
 val CancelBtnClr = Color(0xFFBE3333)
+val ColClr = Color(0xFF091D3A)
 
 //Colors For Maps
 val LightTrafficClr = Color(0xFF499951)
