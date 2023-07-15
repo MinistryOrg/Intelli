@@ -65,6 +65,7 @@ fun SignUpScreen(
     intelliViewModel: IntelliViewModel
 ) {
     var showErrorSignUpDialog by remember { mutableStateOf(false)}
+    var showEmptySignUpDialog by remember { mutableStateOf(false)}
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         modifier = Modifier,
@@ -222,27 +223,33 @@ fun SignUpScreen(
                                 .height(50.dp)
                                 .fillMaxWidth(),
                             onClick = {
-                                var userSignUp = false
-                                coroutineScope.launch {
-                                    withContext(Dispatchers.IO) {
-                                      userSignUp =  intelliViewModel.signUp(
-                                            User(
-                                                0,
-                                                fullname = nameText.text,
-                                                email = emailText.text,
-                                                password = passwordText.text,
-                                                null,
-                                                rememberMe = true
+                                if(nameText.text.isEmpty() || emailText.text.isEmpty() || passwordText.text.isEmpty() || confirmPasswordText.text.isEmpty()){
+                                    showEmptySignUpDialog = true
+                                }
+                                else{
+                                    var userSignUp = false
+                                    coroutineScope.launch {
+                                        withContext(Dispatchers.IO) {
+                                            userSignUp =  intelliViewModel.signUp(
+                                                User(
+                                                    0,
+                                                    fullname = nameText.text,
+                                                    email = emailText.text,
+                                                    password = passwordText.text,
+                                                    null,
+                                                    rememberMe = true
+                                                )
                                             )
-                                        )
-                                    }
-                                    if (userSignUp){
-                                        navController.navigate(Screen.SignIn.route) // na pigenei sto sign up
-                                    } else {
-                                        //error sign up
-                                        showErrorSignUpDialog = true
+                                        }
+                                        if (userSignUp){
+                                            navController.navigate(Screen.SignIn.route) // na pigenei sto sign up
+                                        } else {
+                                            //error sign up
+                                            showErrorSignUpDialog = true
+                                        }
                                     }
                                 }
+
 
                             }
                         ) {
@@ -273,6 +280,20 @@ fun SignUpScreen(
                                 DialogClr = DialogCredClr,
                                 DialogBtnClr = DialogCredBtnClr,
                                 onCloseWindow = {showErrorSignUpDialog = false}
+                            )
+                        }
+                    }
+                    if(showEmptySignUpDialog){
+                        Dialog(
+                            onDismissRequest = { showEmptySignUpDialog= false },
+                            properties = DialogProperties(dismissOnClickOutside = true)
+                        ) {
+                            DialogBox(
+                                textTitle = "Please fill all the fields.",
+                                textBtn = "OK!",
+                                DialogClr = DialogCredClr,
+                                DialogBtnClr = DialogCredBtnClr,
+                                onCloseWindow = {showEmptySignUpDialog = false}
                             )
                         }
                     }

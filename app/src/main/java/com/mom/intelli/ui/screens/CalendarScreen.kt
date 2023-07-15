@@ -2,7 +2,6 @@ package com.mom.intelli.ui.screens
 
 import android.annotation.SuppressLint
 import android.icu.text.DateFormat
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -77,6 +76,7 @@ import com.mom.intelli.ui.theme.OtherMonthTxtClr
 import com.mom.intelli.ui.theme.SelectedDayClr
 import com.mom.intelli.ui.theme.TextColor
 import com.mom.intelli.ui.theme.TextWhite
+import com.mom.intelli.ui.theme.UnSelectedDayClr
 import com.mom.intelli.util.Screen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -121,7 +121,7 @@ fun CalendarWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.calendar_1),
+                painter = painterResource(id = R.drawable.calendar),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor),
@@ -270,9 +270,6 @@ fun CalendarScreen(viewModel: CalendarViewModel, navController: NavController, i
     ) {
 
         val onReminder: (Reminder) -> Unit = { rem ->
-            // Implement the logic to remove the deleted device from the screen
-            // This could involve updating the state or re-fetching the updated device list
-            // For example:
             reminders = reminders?.filter { it != rem }
         }
 
@@ -405,10 +402,9 @@ fun CalendarGrid(
             ) {
 
                 val textColor = if (date.month.equals(currentDate.month) && date.month.equals(currentMonthYear.month)) {
-                    Log.d("IN", "Date month" + date.month + " " + "Current Month " + currentMonthYear.month)
                     if (date == currentDate) {
                         // Highlight the current date
-                        DaysClr
+                        TextWhite
                     } else {
                         // Color for dates in the current month
                         TextWhite
@@ -423,7 +419,7 @@ fun CalendarGrid(
                     color = textColor,
                     modifier = Modifier
                         .background(
-                            if (date == selectedDate) SelectedDayClr else Color.Transparent,
+                            if (date == selectedDate) SelectedDayClr else if(date == currentDate) UnSelectedDayClr else Color.Transparent,
                             shape = CircleShape
                         )
                         .padding(8.dp)

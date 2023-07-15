@@ -166,7 +166,7 @@ fun MainAddDeviceScreen(
                 1 -> {
                     Cardslider(
                         painter = painterResource(id = R.drawable.tv_on),
-                        title = "Tv",
+                        title = "Smart TV",
                         onClick = {
                             lightSelected = false
                             tvSelected = true

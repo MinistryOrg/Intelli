@@ -26,11 +26,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.mom.intelli.R
 import com.mom.intelli.ui.components.ImgLogo
 import com.mom.intelli.ui.screens.CalendarWidget
 import com.mom.intelli.ui.screens.EmailWidget
@@ -73,7 +75,20 @@ fun HomeScreen(
                     CenterAlignedTopAppBar(
                         { ImgLogo() },
                         colors = TopAppBarDefaults
-                            .centerAlignedTopAppBarColors(MainBackgroundColor),
+                            .centerAlignedTopAppBarColors(MainBackgroundColor)
+                        ,
+                        navigationIcon = {
+                            IconButton(
+                                onClick = { navController.navigate(Screen.SignIn.route) }
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.login_icon),
+                                    contentDescription = "Sign in",
+                                    tint = IconsColor,
+                                    modifier = Modifier.padding(horizontal = 5.dp)
+                                )
+                            }
+                        },
                         actions = {
                             IconButton(onClick = {  navController.navigate(route = Screen.OnlineHelp.route) }) {
                                 Icon(
@@ -134,7 +149,12 @@ fun MainList(
                     else
                     {"Good evening, Name" + intelliViewModel.user!!.fullname}
                 } else {
-                         "Error!"
+                    if(currentTime > startMorningTime && currentTime < endMorningTime )
+                    { "Good morning!"}
+                    else if(currentTime >= startAfternoonTime && currentTime < endAfternoonTime)
+                    {"Good afternoon!"}
+                    else
+                    {"Good evening!"}
                 },
                 color = TextWhite,
                 fontFamily = CustomFont,

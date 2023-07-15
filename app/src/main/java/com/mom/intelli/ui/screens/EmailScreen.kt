@@ -83,7 +83,7 @@ fun EmailWidget(
                 .background(MainBackgroundColor)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.email_2),
+                painter = painterResource(id = R.drawable.email),
                 contentDescription = null,
                 modifier = Modifier
                     .background(MainBackgroundColor)
@@ -382,7 +382,7 @@ fun EmainMainScreen(
                 properties = DialogProperties(dismissOnClickOutside = true)
             ) {
                 DialogBox(
-                    "You need to fill the email address you want to send",
+                    "You need to fill the email address\nyou want to send",
                     "Try Again",
                     DialogCredClr,
                     SendEmailBtnClr,

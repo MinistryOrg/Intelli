@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -33,20 +35,23 @@ fun DialogBox(
 ){
     Column(
         modifier = Modifier
-            .padding(10.dp)
+            .padding(5.dp)
             .clip(RoundedCornerShape(15.dp))
             .background(DialogClr)
             .fillMaxWidth()
             .padding(vertical = 25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ){
         Text(
             text = textTitle,
             color = TextWhite,
             fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = 1.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(18.dp))
         Button(
             shape = RoundedCornerShape(13.dp),
             onClick = { onCloseWindow() },

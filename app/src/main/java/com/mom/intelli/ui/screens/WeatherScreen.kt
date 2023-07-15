@@ -265,8 +265,6 @@ fun WeatherWidget(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp
                             )
-                            Log.d("Eikonidio", w.iconID)
-
                         }
                     }
                 }

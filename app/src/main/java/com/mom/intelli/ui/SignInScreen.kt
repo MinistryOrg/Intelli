@@ -73,6 +73,7 @@ fun SignInScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var showWrongCredentialsDialog by remember { mutableStateOf(false) }
+    var showEmptySignInDialog by remember { mutableStateOf(false) }
 
 
     Scaffold(
@@ -203,17 +204,22 @@ fun SignInScreen(
                                 .height(50.dp)
                                 .fillMaxWidth(),
                             onClick = {
-                                var correctData = false
-                                coroutineScope.launch {
-                                    withContext(Dispatchers.IO) {
-                                        correctData = intelliViewModel.signIn(emailText.text,passwordText.text,checkedState)
-                                    }
-                                    if (correctData){
-                                        navController.navigate(HOME_GRAPH_ROUTE)
-                                        onBoardingViewModel.saveOnBoardingState(completed = true)
-                                    } else {
-                                      //error sign in
-                                        showWrongCredentialsDialog = true
+                                if(emailText.text.isEmpty() || passwordText.text.isEmpty()){
+                                    showEmptySignInDialog = true
+
+                                }else{
+                                    var correctData = false
+                                    coroutineScope.launch {
+                                        withContext(Dispatchers.IO) {
+                                            correctData = intelliViewModel.signIn(emailText.text,passwordText.text,checkedState)
+                                        }
+                                        if (correctData){
+                                            navController.navigate(HOME_GRAPH_ROUTE)
+                                            onBoardingViewModel.saveOnBoardingState(completed = true)
+                                        } else {
+                                            //error sign in
+                                            showWrongCredentialsDialog = true
+                                        }
                                     }
                                 }
 
@@ -279,6 +285,21 @@ fun SignInScreen(
                                 onCloseWindow = { showWrongCredentialsDialog = false}
                             )
                             
+                        }
+                    }
+                    if(showEmptySignInDialog){
+                        Dialog(
+                            onDismissRequest = { showEmptySignInDialog = false },
+                            properties = DialogProperties(dismissOnClickOutside = true)
+                        ) {
+                            DialogBox(
+                                "Please fill all the fields.",
+                                "OK!",
+                                DialogCredClr,
+                                DialogCredBtnClr,
+                                onCloseWindow = { showEmptySignInDialog = false}
+                            )
+
                         }
                     }
                 }

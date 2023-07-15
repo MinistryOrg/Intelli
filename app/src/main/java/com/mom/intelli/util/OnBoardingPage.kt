@@ -20,18 +20,18 @@ sealed class OnBoardingPage (
     )
     object Third : OnBoardingPage(
         image = R.drawable.kaira_onboarding_3,
-        description = "Planning your days"
+        description = "Planning your days..."
     )
     object Fourth : OnBoardingPage(
         image = R.drawable.kaira_onboarding_4,
-        description = "Check your forecast"
+        description = "Checking the forecast..."
     )
     object Fifth : OnBoardingPage(
         image = R.drawable.kaira_onboarding_5,
-        description = "Shopping"
+        description = "Shopping your favourite products..."
     )
     object Sixth : OnBoardingPage(
         image = R.drawable.kaira_onboarding_6,
-        description = "and a lot more!"
+        description = "..and so much more!" + "\n Click continue and get started."
     )
 }

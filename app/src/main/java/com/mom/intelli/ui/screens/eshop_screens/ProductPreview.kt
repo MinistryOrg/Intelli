@@ -1,6 +1,7 @@
 package com.mom.intelli.ui.screens.eshop_screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -127,6 +129,10 @@ fun MainProductPreview(navController: NavController, intelliViewModel: IntelliVi
     val pageCount = 4
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
+
+    val toastTxt = "Added to the cart successfully!"
+    val duration = Toast.LENGTH_LONG
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -226,6 +232,8 @@ fun MainProductPreview(navController: NavController, intelliViewModel: IntelliVi
                 onClick = {
                     coroutineScope.launch {
                         intelliViewModel.insertDeviceToDatabase(Device(0,"Apple iPhone 13 Pro Max 5G (6GB/128GB) Graphite", R.drawable.iphone_13_pro_max.toInt()))
+
+                        Toast.makeText(context, toastTxt, duration).show()
                     }
 
                 }
