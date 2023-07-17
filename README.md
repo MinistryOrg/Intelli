@@ -15,46 +15,47 @@ It is a university project, which deals with human-computer interaction.
 
 ## On Boarding 
 
-![on boardings](https://github.com/MinistryOrg/Intelli/assets/29844061/61d3daf8-b33c-4300-b3e7-3212dbc36dc0)
+![on boardings](https://github.com/MinistryOrg/Intelli/assets/29844061/42ff140f-1c41-4b65-a525-aa7d846efe3a)
 
 ## Sign In/ Sign Up
 
-![sign in_up](https://github.com/MinistryOrg/Intelli/assets/29844061/44f583f3-5422-4c49-b730-607a60ccbca7)
+![sign in_up](https://github.com/MinistryOrg/Intelli/assets/29844061/1d765251-7f25-4a57-ab7e-bda9abe63aea)
 
 ## Home 
 
-![Home](https://github.com/MinistryOrg/Intelli/assets/29844061/a7442d59-3a27-426f-a08f-c153c696d1e4)
-
+![Home](https://github.com/MinistryOrg/Intelli/assets/29844061/71d7880c-6f17-4719-b86d-3c92896e36e3)
 
 ## Calendar
 
-![calendar](https://github.com/MinistryOrg/Intelli/assets/29844061/0230cbb3-2bbe-4ef8-a7bd-2b02712d644f)
+![calendar](https://github.com/MinistryOrg/Intelli/assets/29844061/93daebf9-45ef-4031-94d5-46833cfaba03)
 
 ## Weather
 
 ### **Day**
 
-![weather day](https://github.com/MinistryOrg/Intelli/assets/29844061/b14edc96-08b8-4174-b8aa-58c3dad12b86)
+![weather day](https://github.com/MinistryOrg/Intelli/assets/29844061/115ff70f-296f-4f7d-96fa-8d902bf7089f)
 
 ### **Night**
 
-![weather night](https://github.com/MinistryOrg/Intelli/assets/29844061/f9624903-6e9b-458e-89c8-292f62f437f6)
+![weather night](https://github.com/MinistryOrg/Intelli/assets/29844061/5e725ed3-2832-4860-bbe1-f56b9100ba66)
 
 ## Email
 
-![image](https://github.com/MinistryOrg/Intelli/assets/29844061/d653e677-fc46-4a8c-b19e-97122477109a)
+![email](https://github.com/MinistryOrg/Intelli/assets/29844061/7cf4208b-3450-4619-bfc2-3309df681c7a)
+
 
 ## News & Sports
 
-![News](https://github.com/MinistryOrg/Intelli/assets/29844061/1680adee-49e0-42ed-a29b-08d9b1bdb038)
+![News](https://github.com/MinistryOrg/Intelli/assets/29844061/6d689bc1-6908-4b20-9a00-c8389196eb34)
 
 ## E-shop
 
-![eshop](https://github.com/MinistryOrg/Intelli/assets/29844061/548db51f-61ed-4f74-b43e-769ce713d86e)
+![eshop](https://github.com/MinistryOrg/Intelli/assets/29844061/67fb4c50-b11e-497d-807b-59997d0c6442)
+
 
 ## Smart Home
 
-![smart home](https://github.com/MinistryOrg/Intelli/assets/29844061/698da931-5df6-4bba-acfa-46ad328876ed)
+![smart home](https://github.com/MinistryOrg/Intelli/assets/29844061/f9553c55-2426-41eb-a707-f01b3dce611a)
 
 ## Online Help
 
