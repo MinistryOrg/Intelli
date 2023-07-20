@@ -41,7 +41,7 @@ It is a university project, which deals with human-computer interaction.
 
 ## Email
 
-![email](https://github.com/MinistryOrg/Intelli/assets/29844061/7cf4208b-3450-4619-bfc2-3309df681c7a)
+![email](https://github.com/MinistryOrg/Intelli/assets/29844061/97ca3a14-67e5-494f-a6fa-3f1331b2182b)
 
 
 ## News & Sports
